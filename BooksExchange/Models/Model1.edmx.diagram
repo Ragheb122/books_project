@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="29deae5737994ba3ab803e04d80d1602" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="book_exchangeModel.Chat" Width="1.5" PointX="2.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="book_exchangeModel.Message" Width="1.5" PointX="6" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="book_exchangeModel.Post" Width="1.5" PointX="5.625" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="book_exchangeModel.Review" Width="1.5" PointX="0.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="book_exchangeModel.User" Width="1.5" PointX="2.875" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="book_exchangeModel.FK_Chats_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="book_exchangeModel.FK_Chats_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="book_exchangeModel.FK_Messages_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="book_exchangeModel.FK_Messages_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="book_exchangeModel.FK_Posts_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="book_exchangeModel.FK_Reviews_Users" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="book_exchangeModel.City" Width="1.5" PointX="8.375" PointY="0.75" />
+        <AssociationConnector Association="book_exchangeModel.FK_Messages_Chats" />
+        <EntityTypeShape EntityType="book_exchangeModel.GiftRequest" Width="1.5" PointX="5.125" PointY="11.125" />
+        <AssociationConnector Association="book_exchangeModel.FK_GiftRequests_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
