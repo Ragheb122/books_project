@@ -1,0 +1,769 @@
+{
+	"info": {
+		"_postman_id": "cb830519-c6bc-4789-836e-7afa766154c9",
+		"name": "book exchange",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8351242",
+		"_collection_link": "https://lively-astronaut-932621.postman.co/workspace/Sendrr~141430c7-9aa6-4ebe-bad6-017dd3442087/collection/8351242-cb830519-c6bc-4789-836e-7afa766154c9?action=share&creator=8351242&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test-1@test.com",
+							"type": "text"
+						},
+						{
+							"key": "mobile",
+							"value": "20123456789",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123",
+							"type": "text"
+						},
+						{
+							"key": "repassword",
+							"value": "123123",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/venom/Desktop/13051626_10206068438451081_2611337391084096817_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}default/register",
+					"host": [
+						"{{url}}default"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test-1@test.com",
+							"type": "text"
+						},
+						{
+							"key": "mobile",
+							"value": "20123456789",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123",
+							"type": "text"
+						},
+						{
+							"key": "repassword",
+							"value": "123123",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/venom/Desktop/13051626_10206068438451081_2611337391084096817_n.jpg"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}posts/EditPost",
+					"host": [
+						"{{url}}posts"
+					],
+					"path": [
+						"EditPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test@test.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}default/login",
+					"host": [
+						"{{url}}default"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Preferences",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "id[0]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "id[1]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "id[3]",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}default/SetPreferences",
+					"host": [
+						"{{url}}default"
+					],
+					"path": [
+						"SetPreferences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function (){",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "title-1",
+							"type": "text"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "genera[0]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "genera[1]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "genera[3]",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/venom/Desktop/13051626_10206068438451081_2611337391084096817_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}posts/addpost",
+					"host": [
+						"{{url}}posts"
+					],
+					"path": [
+						"addpost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function (){",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "title-1",
+							"type": "text"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "genera[0]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "genera[1]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "genera[3]",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/venom/Desktop/13051626_10206068438451081_2611337391084096817_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}userprofile/EditProfile",
+					"host": [
+						"{{url}}userprofile"
+					],
+					"path": [
+						"EditProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "posts without pref or login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function (){",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}posts",
+					"host": [
+						"{{url}}posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "static posts without pref or login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}posts/books",
+					"host": [
+						"{{url}}posts"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "posts by ref",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 800ms\", function (){",
+							"    pm.expect(pm.response.responseTime).to.be.below(800);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}posts/booksref?token={{token}}",
+					"host": [
+						"{{url}}posts"
+					],
+					"path": [
+						"booksref"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "1",
+							"description": "post id goes here",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}posts/removepost",
+					"host": [
+						"{{url}}posts"
+					],
+					"path": [
+						"removepost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mark Post As Traded/Given away",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "1",
+							"description": "post id goes here",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}posts/MarkAsTraded",
+					"host": [
+						"{{url}}posts"
+					],
+					"path": [
+						"MarkAsTraded"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Redeem gift card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "10",
+							"description": "gift card amount the has been selected by the user",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}userprofile/RedeemGiftCard",
+					"host": [
+						"{{url}}userprofile"
+					],
+					"path": [
+						"RedeemGiftCard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "start chat",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "2",
+							"description": "id of the user you want to start chat with, if there's already an existing chat it will return the old chat messages",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}chat/startchat",
+					"host": [
+						"{{url}}chat"
+					],
+					"path": [
+						"startchat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "1",
+							"description": "chat id",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "this is a message",
+							"type": "text"
+						},
+						{
+							"key": "userID",
+							"value": "2",
+							"description": "id of the user you're sending the message to",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}chat/SendMessage",
+					"host": [
+						"{{url}}chat"
+					],
+					"path": [
+						"SendMessage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get chats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}chat?token={{token}}",
+					"host": [
+						"{{url}}chat"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get chat Messages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}chat/ChatMessages?token={{token}}&id=1",
+					"host": [
+						"{{url}}chat"
+					],
+					"path": [
+						"ChatMessages"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "id",
+							"value": "1",
+							"description": "chat id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}default/SendCode?email=test@test.com",
+					"host": [
+						"{{url}}default"
+					],
+					"path": [
+						"SendCode"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "test@test.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Code",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test@test.com",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "123412",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12341234",
+							"type": "text"
+						},
+						{
+							"key": "repassword",
+							"value": "12341234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}default/CheckCode",
+					"host": [
+						"{{url}}default"
+					],
+					"path": [
+						"CheckCode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user info by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}default/UserInfoById?id=1&profile=false",
+					"host": [
+						"{{url}}default"
+					],
+					"path": [
+						"UserInfoById"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "profile",
+							"value": "false",
+							"description": "true = لو عايز تجيب الداتا اللي ها تعرضها في البروفايل, false = لو ها تجيب الداتا الاساسية بس"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "mijanij109-001-site1.atempurl.com/",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "aeriojgmafdvmgerio3290",
+			"type": "string"
+		}
+	]
+}
