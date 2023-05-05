@@ -35,5 +35,6 @@ namespace BooksExchange.Models
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<UserPreference> UserPreferences { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<VerifyCode> VerifyCodes { get; set; }
     }
 }

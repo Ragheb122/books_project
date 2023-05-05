@@ -151,5 +151,18 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> EditPost(int id, string title, string token, int[] genera, string description, HttpPostedFileBase image = null)
+        {
+            if (!await Helpers.UserExist(token))
+                return Json(new { code = HttpStatusCode.Forbidden });
+
+            string img = string.Empty;
+            if(image != null)
+            {
+                img = await UploadImage(image);
+            }
+            return Json(new { code = HttpStatusCode.OK, message = await UpdateData.UpdatePost(id, title, token, genera, description, img) });
+        }
     }
 }

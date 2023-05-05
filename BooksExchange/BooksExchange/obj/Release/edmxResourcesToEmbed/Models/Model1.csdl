@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="book_exchangeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="book_exchangeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Chats" EntityType="book_exchangeModel.Chat" />
+    <EntitySet Name="Cities" EntityType="book_exchangeModel.City" />
+    <EntitySet Name="Generas" EntityType="book_exchangeModel.Genera" />
+    <EntitySet Name="GiftRequests" EntityType="book_exchangeModel.GiftRequest" />
+    <EntitySet Name="Messages" EntityType="book_exchangeModel.Message" />
+    <EntitySet Name="Posts" EntityType="book_exchangeModel.Post" />
+    <EntitySet Name="PostsGeneras" EntityType="book_exchangeModel.PostsGenera" />
+    <EntitySet Name="Reviews" EntityType="book_exchangeModel.Review" />
+    <EntitySet Name="UserPreferences" EntityType="book_exchangeModel.UserPreference" />
+    <EntitySet Name="Users" EntityType="book_exchangeModel.User" />
+    <AssociationSet Name="FK_Chats_Users" Association="book_exchangeModel.FK_Chats_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Chat" EntitySet="Chats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Chats_Users1" Association="book_exchangeModel.FK_Chats_Users1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Chat" EntitySet="Chats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Messages_Chats" Association="book_exchangeModel.FK_Messages_Chats">
+      <End Role="Chat" EntitySet="Chats" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsGeneras_Generas" Association="book_exchangeModel.FK_PostsGeneras_Generas">
+      <End Role="Genera" EntitySet="Generas" />
+      <End Role="PostsGenera" EntitySet="PostsGeneras" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPreferences_Generas" Association="book_exchangeModel.FK_UserPreferences_Generas">
+      <End Role="Genera" EntitySet="Generas" />
+      <End Role="UserPreference" EntitySet="UserPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GiftRequests_Users" Association="book_exchangeModel.FK_GiftRequests_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="GiftRequest" EntitySet="GiftRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Messages_Users" Association="book_exchangeModel.FK_Messages_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Messages_Users1" Association="book_exchangeModel.FK_Messages_Users1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_Users" Association="book_exchangeModel.FK_Posts_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsGeneras_Posts" Association="book_exchangeModel.FK_PostsGeneras_Posts">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="PostsGenera" EntitySet="PostsGeneras" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_Users" Association="book_exchangeModel.FK_Reviews_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPreferences_Users" Association="book_exchangeModel.FK_UserPreferences_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserPreference" EntitySet="UserPreferences" />
+    </AssociationSet>
+    <EntitySet Name="VerifyCodes" EntityType="book_exchangeModel.VerifyCode" />
+    <AssociationSet Name="FK_VerifyCodes_Users" Association="book_exchangeModel.FK_VerifyCodes_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="VerifyCode" EntitySet="VerifyCodes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Chat">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_one" Type="Int32" Nullable="false" />
+    <Property Name="user_two" Type="Int32" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_Chats_Users" FromRole="Chat" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="book_exchangeModel.FK_Chats_Users1" FromRole="Chat" ToRole="User" />
+    <NavigationProperty Name="Messages" Relationship="book_exchangeModel.FK_Messages_Chats" FromRole="Chat" ToRole="Message" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Genera">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PostsGeneras" Relationship="book_exchangeModel.FK_PostsGeneras_Generas" FromRole="Genera" ToRole="PostsGenera" />
+    <NavigationProperty Name="UserPreferences" Relationship="book_exchangeModel.FK_UserPreferences_Generas" FromRole="Genera" ToRole="UserPreference" />
+  </EntityType>
+  <EntityType Name="GiftRequest">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="sent" Type="Boolean" Nullable="false" />
+    <Property Name="requested" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_GiftRequests_Users" FromRole="GiftRequest" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sent_by" Type="Int32" Nullable="false" />
+    <Property Name="recived_by" Type="Int32" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="message1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="seen" Type="Boolean" Nullable="false" />
+    <Property Name="chat_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Chat" Relationship="book_exchangeModel.FK_Messages_Chats" FromRole="Message" ToRole="Chat" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_Messages_Users" FromRole="Message" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="book_exchangeModel.FK_Messages_Users1" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="approved" Type="Boolean" Nullable="false" />
+    <Property Name="traded" Type="Boolean" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="redeemed" Type="Boolean" Nullable="false" />
+    <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_Posts_Users" FromRole="Post" ToRole="User" />
+    <NavigationProperty Name="PostsGeneras" Relationship="book_exchangeModel.FK_PostsGeneras_Posts" FromRole="Post" ToRole="PostsGenera" />
+  </EntityType>
+  <EntityType Name="PostsGenera">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="post_id" Type="Int32" Nullable="false" />
+    <Property Name="genera_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Genera" Relationship="book_exchangeModel.FK_PostsGeneras_Generas" FromRole="PostsGenera" ToRole="Genera" />
+    <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_PostsGeneras_Posts" FromRole="PostsGenera" ToRole="Post" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="review1" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_Reviews_Users" FromRole="Review" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserPreference">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="generas_id" Type="Int32" Nullable="false" />
+    <Property Name="count" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Genera" Relationship="book_exchangeModel.FK_UserPreferences_Generas" FromRole="UserPreference" ToRole="Genera" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_UserPreferences_Users" FromRole="UserPreference" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="mobile" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="city" Type="Int32" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="token" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Chats" Relationship="book_exchangeModel.FK_Chats_Users" FromRole="User" ToRole="Chat" />
+    <NavigationProperty Name="Chats1" Relationship="book_exchangeModel.FK_Chats_Users1" FromRole="User" ToRole="Chat" />
+    <NavigationProperty Name="GiftRequests" Relationship="book_exchangeModel.FK_GiftRequests_Users" FromRole="User" ToRole="GiftRequest" />
+    <NavigationProperty Name="Messages" Relationship="book_exchangeModel.FK_Messages_Users" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Messages1" Relationship="book_exchangeModel.FK_Messages_Users1" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Posts" Relationship="book_exchangeModel.FK_Posts_Users" FromRole="User" ToRole="Post" />
+    <NavigationProperty Name="Reviews" Relationship="book_exchangeModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
+    <NavigationProperty Name="UserPreferences" Relationship="book_exchangeModel.FK_UserPreferences_Users" FromRole="User" ToRole="UserPreference" />
+    <NavigationProperty Name="VerifyCodes" Relationship="book_exchangeModel.FK_VerifyCodes_Users" FromRole="User" ToRole="VerifyCode" />
+  </EntityType>
+  <Association Name="FK_Chats_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.Chat" Role="Chat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Chat">
+        <PropertyRef Name="user_one" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Chats_Users1">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.Chat" Role="Chat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Chat">
+        <PropertyRef Name="user_two" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Messages_Chats">
+    <End Type="book_exchangeModel.Chat" Role="Chat" Multiplicity="1" />
+    <End Type="book_exchangeModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chat">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="chat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsGeneras_Generas">
+    <End Type="book_exchangeModel.Genera" Role="Genera" Multiplicity="1" />
+    <End Type="book_exchangeModel.PostsGenera" Role="PostsGenera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genera">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PostsGenera">
+        <PropertyRef Name="genera_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPreferences_Generas">
+    <End Type="book_exchangeModel.Genera" Role="Genera" Multiplicity="1" />
+    <End Type="book_exchangeModel.UserPreference" Role="UserPreference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genera">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="UserPreference">
+        <PropertyRef Name="generas_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GiftRequests_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.GiftRequest" Role="GiftRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="GiftRequest">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Messages_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="sent_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Messages_Users1">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="recived_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsGeneras_Posts">
+    <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="1" />
+    <End Type="book_exchangeModel.PostsGenera" Role="PostsGenera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PostsGenera">
+        <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPreferences_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.UserPreference" Role="UserPreference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="UserPreference">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="VerifyCode">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_VerifyCodes_Users" FromRole="VerifyCode" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_VerifyCodes_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.VerifyCode" Role="VerifyCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="VerifyCode">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

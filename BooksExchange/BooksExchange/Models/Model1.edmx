@@ -108,6 +108,15 @@
           <Property Name="password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="image" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="VerifyCodes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Chats_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Chats" Type="Self.Chats" Multiplicity="*" />
@@ -252,6 +261,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VerifyCodes_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="VerifyCodes" Type="Self.VerifyCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VerifyCodes">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="book_exchangeModelStoreContainer">
           <EntitySet Name="Chats" EntityType="Self.Chats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
@@ -263,6 +284,7 @@
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VerifyCodes" EntityType="Self.VerifyCodes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Chats_Users" Association="Self.FK_Chats_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Chats" EntitySet="Chats" />
@@ -310,6 +332,10 @@
           <AssociationSet Name="FK_UserPreferences_Users" Association="Self.FK_UserPreferences_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserPreferences" EntitySet="UserPreferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VerifyCodes_Users" Association="Self.FK_VerifyCodes_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="VerifyCodes" EntitySet="VerifyCodes" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -374,6 +400,11 @@
           <AssociationSet Name="FK_UserPreferences_Users" Association="book_exchangeModel.FK_UserPreferences_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="UserPreference" EntitySet="UserPreferences" />
+          </AssociationSet>
+          <EntitySet Name="VerifyCodes" EntityType="book_exchangeModel.VerifyCode" />
+          <AssociationSet Name="FK_VerifyCodes_Users" Association="book_exchangeModel.FK_VerifyCodes_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="VerifyCode" EntitySet="VerifyCodes" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Chat">
@@ -502,6 +533,7 @@
           <NavigationProperty Name="Posts" Relationship="book_exchangeModel.FK_Posts_Users" FromRole="User" ToRole="Post" />
           <NavigationProperty Name="Reviews" Relationship="book_exchangeModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
           <NavigationProperty Name="UserPreferences" Relationship="book_exchangeModel.FK_UserPreferences_Users" FromRole="User" ToRole="UserPreference" />
+          <NavigationProperty Name="VerifyCodes" Relationship="book_exchangeModel.FK_VerifyCodes_Users" FromRole="User" ToRole="VerifyCode" />
         </EntityType>
         <Association Name="FK_Chats_Users">
           <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
@@ -647,6 +679,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VerifyCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_VerifyCodes_Users" FromRole="VerifyCode" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_VerifyCodes_Users">
+          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+          <End Type="book_exchangeModel.VerifyCode" Role="VerifyCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VerifyCode">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -762,6 +816,16 @@
                 <ScalarProperty Name="mobile" ColumnName="mobile" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VerifyCodes">
+            <EntityTypeMapping TypeName="book_exchangeModel.VerifyCode">
+              <MappingFragment StoreEntitySet="VerifyCodes">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

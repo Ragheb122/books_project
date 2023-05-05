@@ -25,6 +25,7 @@ namespace BooksExchange.Models
             this.Posts = new HashSet<Post>();
             this.Reviews = new HashSet<Review>();
             this.UserPreferences = new HashSet<UserPreference>();
+            this.VerifyCodes = new HashSet<VerifyCode>();
         }
     
         public int id { get; set; }
@@ -53,5 +54,7 @@ namespace BooksExchange.Models
         public virtual ICollection<Review> Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPreference> UserPreferences { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VerifyCode> VerifyCodes { get; set; }
     }
 }
