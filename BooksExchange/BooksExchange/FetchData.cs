@@ -171,7 +171,7 @@ namespace BooksExchange
                                 {
                                     object temp = new
                                     {
-                                        id = item.id,
+                                        id = item.post_id,
                                         title = item.Post.title,
                                         image = item.Post.image,
                                         description = item.Post.description,
@@ -189,6 +189,127 @@ namespace BooksExchange
                     }
                 }
                 return Data;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        static public async Task<List<object>> GetChats(string token)
+        {
+            try
+            {
+                int id = await Helpers.GetUserIDByToken(token);
+                List<object> Data = new List<object>();
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<Chat> chats = await db.Chats.Where(o => o.user_one == id || o.user_two == id).ToListAsync();
+                    foreach (Chat item in chats)
+                    {
+                        if (item != null)
+                        {
+                            Message mess = await db.Messages.Where(o => o.chat_id == item.id).OrderByDescending(p => p.id).FirstOrDefaultAsync();
+                            string message = string.Empty;
+                            string dateTime = string.Empty;
+                            if (mess != null)
+                            {
+                                message = mess.message1;
+                                dateTime = mess.created_at.ToString();
+                            }
+                            object temp = new
+                            {
+                                chatID = item.id,
+                                lastMessage = message,
+                                username = item.User1.name,
+                                MessageTime = dateTime
+                            };
+                            if (!Data.Contains(temp))
+                                Data.Add(temp);
+                        }
+                    }
+                }
+                return Data;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        static public async Task<List<object>> GetChatMessages(string token, int chat)
+        {
+            try
+            {
+                int id = await Helpers.GetUserIDByToken(token);
+                List<object> Data = new List<object>();
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<Message> mess = await db.Messages.Where(o => o.chat_id == chat && o.Chat.user_one == id)
+                        .OrderByDescending(p=>p.id).ToListAsync();
+                    foreach (Message item in mess)
+                    {
+                        if (item != null)
+                        {
+                            object temp = new
+                            {
+                                sender = item.User.name,
+                                sendImage = item.User.image,
+                                reciver = item.User1.name,
+                                reciverImage = item.User1.image,
+                                message = item.message1
+                            };
+                            if (!Data.Contains(temp))
+                                Data.Add(temp);
+                        }
+                    }
+                }
+                return Data;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        static public async Task<object> UserInfoById(int id, bool profile)
+        {
+            try
+            {
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<object> Obj = new List<object>();
+                    if (profile)
+                    {
+                        List<Post> posts = await db.Posts.Where(o => o.user_id == id && o.approved == true).OrderByDescending(p => p.id).ToListAsync();
+                        foreach (Post item in posts)
+                        {
+                            if (item != null)
+                            {
+                                object temp = new
+                                {
+                                    id = item.id,
+                                    image = item.image,
+                                    traded = item.traded,
+                                    title = item.title,
+                                    description = item.description
+                                };
+                                if (!Obj.Contains(temp))
+                                    Obj.Add(temp);
+                            }
+                        }
+                    }
+                    User user = await db.Users.FindAsync(id);
+                    object Data = new
+                    {
+                        userImage = user.image,
+                        mobile = user.mobile,
+                        email = user.email,
+                        name = user.name,
+                        posts = Obj
+                    };
+                    return Data;
+                }
             }
             catch (Exception)
             {

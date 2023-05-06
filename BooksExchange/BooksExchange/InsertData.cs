@@ -142,5 +142,119 @@ namespace BooksExchange
                 throw;
             }
         }
+        static public async Task<object> NewChat(string token, int userID)
+        {
+            try
+            {
+                int id = await Helpers.GetUserIDByToken(token);
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    Chat check = await db.Chats.Where(o => o.user_one == id && o.user_two == userID).FirstOrDefaultAsync();
+                    if (check != null)
+                    {
+                        object data = new
+                        {
+                            ReciverName = check.User1.name,
+                            ReciverImage = check.User1.image,
+                            ChatId = check.id,
+                            messages = await FetchData.GetChatMessages(token, check.id)
+                        };
+                        return data;
+                    }
+                    Chat chat = new Chat()
+                    {
+                        created_at = DateTime.Now,
+                        user_one = id,
+                        user_two = userID
+                    };
+                    db.Chats.Add(chat);
+                    if (await db.SaveChangesAsync() > 0)
+                    {
+                        object data = new
+                        {
+                            ReciverName = chat.User1.name,
+                            ReciverImage = chat.User1.image,
+                            ChatId = chat.id
+                        };
+                        return data;
+                    }
+                    else
+                    {
+                        object data = new { };
+                        return data;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        static public async Task<bool> NewMessage(string token, int ChatId, string message, int userID)
+        {
+            try
+            {
+                int id = await Helpers.GetUserIDByToken(token);
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    Chat chat = await db.Chats.Where(o => o.id == ChatId && o.user_one == id || o.user_two == id).FirstOrDefaultAsync();
+                    if (chat == null)
+                        return false;
+                    Message mess = new Message()
+                    {
+                        chat_id = ChatId,
+                        created_at = DateTime.Now,
+                        message1 = message,
+                        sent_by = id,
+                        recived_by = userID
+                    };
+                    db.Messages.Add(mess);
+                    if (await db.SaveChangesAsync() > 0)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        static public async Task<string> CreateVerifyCode(string email)
+        {
+            try
+            {
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    User user = await db.Users.Where(o => o.email == email).FirstOrDefaultAsync();
+                    if (user == null)
+                        return "user not registered yet";
+                    else
+                    {
+                        VerifyCode verify = await db.VerifyCodes.Where(o => o.user_id == user.id).FirstOrDefaultAsync();
+                        if (verify != null)
+                            return "code sent, please check your email!";
+                        string code_ = await Helpers.GetCode();
+                        VerifyCode code = new VerifyCode()
+                        {
+                            created_at = DateTime.Now,
+                            user_id = user.id,
+                            code = code_
+                        };
+                        db.VerifyCodes.Add(code);
+                        if(await db.SaveChangesAsync() > 0)
+                            return "please check your email!";
+                        return "something went wrong please try again!";
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -13,6 +13,26 @@ namespace BooksExchange.Controllers
 {
     public class UserProfileController : Controller
     {
+        public async Task<string> UploadImage(HttpPostedFileBase img)
+        {
+            try
+            {
+
+                if (img != null && img.ContentLength > 0)
+                {
+                    string ext = Path.GetExtension(img.FileName);
+                    var path = Path.Combine(Server.MapPath("~/images/" + img.FileName));
+                    img.SaveAs(path);
+                    return "/images/" + img.FileName;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet]
         public async Task<ActionResult> Index(int? id, string token = "", bool vistor = false)
         {
@@ -43,6 +63,30 @@ namespace BooksExchange.Controllers
                 if (await InsertData.MakeRedeemRequest(token, amount.Value))
                     return Json(new { code = HttpStatusCode.OK });
 
+                return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditProfile(string token, string name, string email, string mobile, string password, string repassword, HttpPostedFileBase image = null)
+        {
+            try
+            {
+                if (!await Helpers.UserExist(token))
+                    return Json(new { code = HttpStatusCode.Forbidden });
+                if (password != repassword)
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "passwords must match!" });
+                string img = string.Empty;
+                if (image != null)
+                {
+                    img = await UploadImage(image);
+                }
+                if (await UpdateData.UpdateUser(token, name, email, mobile, password, img))
+                    return Json(new { code = HttpStatusCode.OK });
                 return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
             }
             catch (Exception)

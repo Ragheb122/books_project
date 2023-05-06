@@ -15,6 +15,33 @@ namespace BooksExchange
 {
     public class Helpers
     {
+        static public async Task<string> GetCode(int length = 6)
+        {
+            string valid = "1234567890";
+            string s = "";
+            using (RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider())
+            {
+                while (s.Length != length)
+                {
+                    byte[] oneByte = new byte[1];
+                    provider.GetBytes(oneByte);
+                    char character = (char)oneByte[0];
+                    if (valid.Contains(character))
+                    {
+                        s += character;
+                    }
+                }
+            }
+            using (book_exchangeEntities db = new book_exchangeEntities())
+            {
+                VerifyCode UserCode = await db.VerifyCodes.FirstOrDefaultAsync(o => o.code == s);
+                if (UserCode != null)
+                    return await GetRandomString(64);
+                else
+                    return s;
+            }
+        }
+
         static public async Task<string> GetRandomString(int length = 64)
         {
             string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -292,6 +319,27 @@ namespace BooksExchange
             {
 
                 throw;
+            }
+        }
+        static public async Task<bool> CheckVerifyCode(string email, string code, string password)
+        {
+            using (book_exchangeEntities db = new book_exchangeEntities())
+            {
+                VerifyCode verify = await db.VerifyCodes.Where(o => o.User.email == email && o.code == code).FirstOrDefaultAsync();
+                if (verify == null)
+                    return false;
+                else
+                {
+                    int id = verify.user_id;
+                    User user = await db.Users.FindAsync(id);
+                    user.password = GetMD5Hash(password);
+                    db.Entry(verify).State = EntityState.Deleted;
+                    db.Entry(user).State = EntityState.Modified;
+                    if (await db.SaveChangesAsync() > 0)
+                        return true;
+                    else
+                        return false;
+                }
             }
         }
     }
