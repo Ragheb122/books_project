@@ -1,0 +1,23 @@
+['The Testament' 'Wild Animus' 'Timeline' 'To Kill a Mockingbird'
+ 'The Street Lawyer' 'The Joy Luck Club' 'The Catcher in the Rye'
+ 'The Five People You Meet in Heaven' 'Angels &amp; Demons'
+ 'Little Altars Everywhere: A Novel' 'Girl with a Pearl Earring'
+ 'A Painted House' 'The Secret Life of Bees' 'The Lovely Bones: A Novel'
+ 'The Firm' "She's Come Undone (Oprah's Book Club)"
+ 'The Red Tent (Bestselling Backlist)' 'The Nanny Diaries: A Novel'
+ 'Life of Pi' "Where the Heart Is (Oprah's Book Club (Paperback))"
+ 'The Da Vinci Code' 'A Time to Kill' 'The Rainmaker'
+ 'Divine Secrets of the Ya-Ya Sisterhood: A Novel'
+ "She's Come Undone (Oprah's Book Club (Paperback))" 'Jurassic Park'
+ 'Message in a Bottle' 'The Poisonwood Bible: A Novel'
+ 'A Prayer for Owen Meany'
+ "The No. 1 Ladies' Detective Agency (Today Show Book Club #8)"
+ 'Good in Bed' 'Summer Sisters' 'The Brethren' '1st to Die: A Novel'
+ 'Snow Falling on Cedars'
+ "Harry Potter and the Sorcerer's Stone (Harry Potter (Paperback))"
+ "Tuesdays with Morrie: An Old Man, a Young Man, and Life's Greatest Lesson"
+ 'Sphere' 'The Pelican Brief' 'Interview with the Vampire' 'The Notebook'
+ 'Midwives: A Novel' 'The Runaway Jury'
+ 'The Divine Secrets of the Ya-Ya Sisterhood: A Novel'
+ 'House of Sand and Fog' "The Pilot's Wife : A Novel" 'The Chamber'
+ 'The Summons' 'The Horse Whisperer']
