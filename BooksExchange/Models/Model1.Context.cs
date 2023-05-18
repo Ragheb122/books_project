@@ -25,12 +25,16 @@ namespace BooksExchange.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Chat> Chats { get; set; }
-        public virtual DbSet<Message> Messages { get; set; }
-        public virtual DbSet<Post> Posts { get; set; }
-        public virtual DbSet<Review> Reviews { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<BooksRate> BooksRates { get; set; }
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Genera> Generas { get; set; }
         public virtual DbSet<GiftRequest> GiftRequests { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<PostsGenera> PostsGeneras { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<UserPreference> UserPreferences { get; set; }
+        public virtual DbSet<UserRate> UserRates { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<VerifyCode> VerifyCodes { get; set; }
     }
 }

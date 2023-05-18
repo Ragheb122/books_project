@@ -14,6 +14,13 @@ namespace BooksExchange.Models
     
     public partial class Post
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Post()
+        {
+            this.BooksRates = new HashSet<BooksRate>();
+            this.PostsGeneras = new HashSet<PostsGenera>();
+        }
+    
         public int id { get; set; }
         public string image { get; set; }
         public string title { get; set; }
@@ -26,6 +33,10 @@ namespace BooksExchange.Models
         public bool redeemed { get; set; }
         public string url { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BooksRate> BooksRates { get; set; }
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PostsGenera> PostsGeneras { get; set; }
     }
 }

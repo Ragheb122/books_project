@@ -60,19 +60,39 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
-        [HttpPost]
-        public async Task<ActionResult> RemovePost(string token, int? id)
+        [HttpGet]
+        public async Task<ActionResult> BooksRef(string token)
         {
             try
             {
-                string[] Data = { token, id.ToString() };
+                int? id = await Helpers.GetUserIDByToken(token);
+                if (id != null && id.Value != 0)
+                {
+                    using (book_exchangeEntities db = new book_exchangeEntities())
+                    {
+                            return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetPostsByRef(id.Value) }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                    return Json(new { code = HttpStatusCode.Forbidden }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> RemovePost(string token, string id)
+        {
+            try
+            {
+                string[] Data = { token, id };
                 if (Helpers.NullOrEmpty(Data))
                     return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
                 if (!await Helpers.UserExist(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
-                if(!await Helpers.PostOwner(token, id.Value))
-                    return Json(new { code = HttpStatusCode.Forbidden });
-                if(await DeleteData.removePost(id.Value))
+                if(await DeleteData.removePost(id, token))
                     return Json(new { code = HttpStatusCode.OK });
                 else
                     return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
@@ -108,19 +128,19 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> AddPost(string title, string token, string description = "", HttpPostedFileBase image = null)
+        public async Task<ActionResult> AddPost(string title, string token, int[] genera, string description = "", HttpPostedFileBase image = null)
         {
             try
             {
                 string img = string.Empty;
                 if (image == null)
                     return Json(new { code = HttpStatusCode.BadRequest, error = "image is required!" });
-                string[] Data = { title, description, token };
+                string[] Data = { title, token };
                 if (Helpers.NullOrEmpty(Data))
                     return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required!" });
                 if (!await Helpers.UserExist(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
-                if (await InsertData.NewPost(title, description, await Helpers.GetUserIDByToken(token), await UploadImage(image)))
+                if (await InsertData.NewPost(title, description, await Helpers.GetUserIDByToken(token), await UploadImage(image), genera))
                     return Json(new { code = HttpStatusCode.OK });
                 else
                     return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
@@ -131,6 +151,47 @@ namespace BooksExchange.Controllers
 
                 throw;
             }
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditPost(int id, string title, string token, int[] genera, string description, HttpPostedFileBase image = null)
+        {
+            if (!await Helpers.UserExist(token))
+                return Json(new { code = HttpStatusCode.Forbidden });
+
+            string img = string.Empty;
+            if(image != null)
+            {
+                img = await UploadImage(image);
+            }
+            return Json(new { code = HttpStatusCode.OK, message = await UpdateData.UpdatePost(id, title, token, genera, description, img) });
+        }
+        [HttpGet]
+        public async Task<ActionResult> PostById(int id)
+        {
+            try
+            {
+                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetPostByID(id) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> RateBook(int? id, string token, int rate = 0)
+        {
+            string[] Data = { token };
+            if (Helpers.NullOrEmpty(Data) || id == null)
+                return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+            if(rate <= 0 || rate > 5)
+                return Json(new { code = HttpStatusCode.BadRequest, error = "rate must be greater than zero and less or equal five!" });
+            if (!await Helpers.UserExist(token))
+                return Json(new { code = HttpStatusCode.Forbidden });
+            if (await InsertData.NewBookRate(id.Value, token, rate))
+                return Json(new { code = HttpStatusCode.OK });
+
+            return Json(new { code = HttpStatusCode.InternalServerError, error = "something wrong please try again!" });
         }
     }
 }

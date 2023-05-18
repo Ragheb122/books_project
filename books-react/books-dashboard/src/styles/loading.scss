@@ -1,0 +1,48 @@
+@import "variables";
+
+.loading-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $primary;
+}
+
+.loading-page__spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  height: 30px;
+}
+
+.dot1,
+.dot2,
+.dot3 {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #fff;
+  margin: 0 5px;
+  animation: dot-animation 1.5s ease-in-out infinite;
+}
+
+.dot2 {
+  animation-delay: 0.5s;
+}
+
+.dot3 {
+  animation-delay: 1s;
+}
+
+@keyframes dot-animation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

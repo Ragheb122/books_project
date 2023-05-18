@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="29deae5737994ba3ab803e04d80d1602" Name="Diagram1" ZoomLevel="54">
+        <EntityTypeShape EntityType="book_exchangeModel.Chat" Width="1.5" PointX="5.25" PointY="11.375" />
+        <EntityTypeShape EntityType="book_exchangeModel.City" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="book_exchangeModel.Genera" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="book_exchangeModel.GiftRequest" Width="1.5" PointX="5.25" PointY="8.25" />
+        <EntityTypeShape EntityType="book_exchangeModel.Message" Width="1.5" PointX="7.5" PointY="10.125" />
+        <EntityTypeShape EntityType="book_exchangeModel.Post" Width="1.5" PointX="5.25" PointY="4" />
+        <EntityTypeShape EntityType="book_exchangeModel.PostsGenera" Width="1.5" PointX="7.5" PointY="4.75" />
+        <EntityTypeShape EntityType="book_exchangeModel.Review" Width="1.5" PointX="5.25" PointY="17.375" />
+        <EntityTypeShape EntityType="book_exchangeModel.UserPreference" Width="1.5" PointX="5.25" PointY="14.5" />
+        <EntityTypeShape EntityType="book_exchangeModel.User" Width="1.5" PointX="3" PointY="9.125" />
+        <AssociationConnector Association="book_exchangeModel.FK_Chats_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_Chats_Users1" />
+        <AssociationConnector Association="book_exchangeModel.FK_Messages_Chats" />
+        <AssociationConnector Association="book_exchangeModel.FK_PostsGeneras_Generas" />
+        <AssociationConnector Association="book_exchangeModel.FK_UserPreferences_Generas" />
+        <AssociationConnector Association="book_exchangeModel.FK_GiftRequests_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_Messages_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_Messages_Users1" />
+        <AssociationConnector Association="book_exchangeModel.FK_Posts_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_PostsGeneras_Posts" />
+        <AssociationConnector Association="book_exchangeModel.FK_Reviews_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_UserPreferences_Users" />
+        <EntityTypeShape EntityType="book_exchangeModel.VerifyCode" Width="1.5" PointX="5.25" PointY="20.125" />
+        <AssociationConnector Association="book_exchangeModel.FK_VerifyCodes_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_Users_Cities" />
+        <EntityTypeShape EntityType="book_exchangeModel.UserRate" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="book_exchangeModel.BooksRate" Width="1.5" PointX="10.5" PointY="8" />
+        <AssociationConnector Association="book_exchangeModel.FK_BooksRates_Posts" />
+        <AssociationConnector Association="book_exchangeModel.FK_BooksRates_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_UserRates_Users" />
+        <AssociationConnector Association="book_exchangeModel.FK_UserRates_Users1" />
+        <EntityTypeShape EntityType="book_exchangeModel.junk" Width="1.5" PointX="0.75" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
