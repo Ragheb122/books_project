@@ -20,6 +20,7 @@ import ForYou from "./pages/ForYou";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
 import Book from "./pages/Book";
+import About from "./pages/About";
 
 // components
 import Loading from "./components/Loading";
@@ -64,6 +65,7 @@ const App = () => {
       ) : isLogin ? (
         <UserContext.Provider value={userData}>
           <Routes>
+            <Route index path="/about" element={<About />} />
             <Route index path="/" element={<Home />} />
             <Route path="/static_books" element={<StaticBooks />} />
             <Route path="/for_you" element={<ForYou />} />
