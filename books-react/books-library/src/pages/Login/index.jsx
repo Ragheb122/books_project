@@ -52,7 +52,8 @@ const Login = () => {
       </div>
       <div className="row mt-5 justify-content-center">
         <div className="col-lg-4">
-          <h3 className="ms-auto w-fit mb-4">Login</h3>
+        <h3 style={{ textAlign: "center" }}>Login</h3>
+
 
           <div className="bg-white p-4 shadow-sm border rounded-4 py-4">
             <Form onSubmit={submitHandler}>
