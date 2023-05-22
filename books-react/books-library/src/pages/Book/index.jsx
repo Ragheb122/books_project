@@ -13,16 +13,6 @@ import cookie from "react-cookies";
 import userDataContext from "../../utils/context/UserContext";
 import getMsg from "../../utils/getMsg";
 
-const bookDataExpected = {
-  id: 1,
-  title: "الاب الغني والاب الفقير",
-  author: "الكاتب محمد",
-  image: "",
-  status: "Available",
-  description:
-    "هو رواية تدور أحداثها حول مراهق يدعى هولدن كولفيلد، وهو شخصية تصور الصراعات الداخلية التي يمر بها المراهقون أثناء محاولتهم العثور على هويتهم الحقيقية. يتضمن الكتاب عدة موضوعات مهمة، مثل الانعزالية، والبحث عن الذات، وعدم الثقة في النظام الاجتماعي. يتميز الكتاب",
-};
-
 const Book = () => {
   const userData = useContext(userDataContext);
   const navigate = useNavigate();

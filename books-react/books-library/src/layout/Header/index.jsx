@@ -38,7 +38,7 @@ const MenuProps = {
 const navs = [
   { title: "Home", href: "/" },
   // { title: "For You", href: "/for_you" },
-  { title: "Static Books", href: "/static_books" },
+  { title: "Recommended Books", href: "/static_books" },
   { title: "About", href: "/about" },
 
 ];

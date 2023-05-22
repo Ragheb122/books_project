@@ -97,8 +97,8 @@ const StaticBooks = () => {
   return (
     <Layout>
       <div className="container py-5">
-        <h2>Static Books</h2>
-        {/* حقل البحث */}
+        <h2>Recommended Books</h2>
+        {/* search */}
         <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="input-group">
@@ -144,7 +144,7 @@ const StaticBooks = () => {
           </div>
         </div>
 
-        {/* بطاقات المنتجات */}
+        {/* book's card  */}
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 mt-5">
           {(searchProducts?.length ? searchProducts : products).map(
             (product, idx) => (
