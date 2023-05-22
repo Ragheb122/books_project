@@ -144,7 +144,7 @@ const Navbar = () => {
         {/* Logo */}
         <Logo clickble size={60} />
 
-        {/* زر الـ Toggle */}
+        {/*  Toggle  button*/}
         <button
           className="navbar-toggler"
           type="button"
@@ -157,7 +157,7 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* القائمة */}
+        {/* menu */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             {navs.map((link, idx) => (
@@ -169,7 +169,7 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* الأزرار على اليسار */}
+          {/*  left side buttons  */}
           <ul className="navbar-nav ms-auto flex-center">
             <li className="nav-item me-2">
               <span
@@ -180,15 +180,7 @@ const Navbar = () => {
                 <i className="bi bi-gift-fill" />
               </span>
             </li>
-            {/* <li className="nav-item me-1">
-              <Link
-                to={`/chat`}
-                style={{ width: 50, height: 50 }}
-                className="flex-center btn btn-icon btn-lg btn-secondary rounded-circle"
-              >
-                <i className="bi bi-chat-dots-fill"></i>
-              </Link>
-            </li> */}
+            {}
             <li className="nav-item ms-1">
               <span
                 onClick={() => setShowModalBook(true)}
