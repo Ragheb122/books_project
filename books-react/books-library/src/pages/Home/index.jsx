@@ -98,7 +98,6 @@ const Home = () => {
     <Layout>
       <div className="container py-5">
         <h2>Home</h2>
-
         {/*search*/}
         <div className="row justify-content-center">
           <div className="col-md-8">

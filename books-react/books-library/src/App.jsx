@@ -17,7 +17,6 @@ import Sign from "./pages/Sign";
 import ForgetPassword from "./pages/ForgetPassword";
 import StaticBooks from "./pages/StaticBooks";
 import ForYou from "./pages/ForYou";
-import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
 import Book from "./pages/Book";
 import About from "./pages/About";
@@ -69,7 +68,6 @@ const App = () => {
             <Route index path="/" element={<Home />} />
             <Route path="/static_books" element={<StaticBooks />} />
             <Route path="/for_you" element={<ForYou />} />
-            <Route path="/chat" element={<Chat />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/book/:id" element={<Book />} />
             <Route path="*" element={<Navigate replace to="/" />} />
