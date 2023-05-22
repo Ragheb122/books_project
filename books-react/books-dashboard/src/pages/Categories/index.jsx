@@ -44,32 +44,6 @@ import moment from "moment";
 import getMessage from "../../utils/getMessage";
 
 // placeholder data
-import { data as collectedData } from "./makeData";
-
-const selectAccess = [
-  "المستخدمون",
-  "السائقين",
-  "الطلبات",
-  "انواع المركبات",
-  "الباقات",
-  "المدن",
-  "اسعار المناطق",
-  "الصفحات",
-  "الاشعارات",
-  "الاعدادات",
-  "المدراء",
-];
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const Categories = () => {
   const tableInstanceRef = useRef();
@@ -289,24 +263,6 @@ const Categories = () => {
   // get permtions
   useEffect(() => {
     const token = cookie.load("token");
-
-    // API(`admin/admins/create`).then(({ data }) => {
-    //   setSelectAccess(
-    //     data?.Data?.map((permtion) => ({
-    //       id: permtion?.id,
-    //       name: permtion?.name,
-    //     }))
-    //   );
-    // });
-
-    // API(`admin/countries?token=${token}`).then(({ data }) => {
-    //   setCountrys(
-    //     data?.data?.map((country) => ({
-    //       id: country.id,
-    //       name: country.name,
-    //     }))
-    //   );
-    // });
   }, []);
 
   // get user data
@@ -338,25 +294,7 @@ const Categories = () => {
       renderButtons={() => (
         <div className="flex-center">
           <ButtonGroup className="me-4">
-            {/* <Button
-              onClick={activeSelection}
-              disabled={!isBtnActive}
-              variant="primary"
-              className="flex-center text-white"
-            >
-              <span className="me-1">Active</span>
-              <i className="bi bi-check2 fs-5 flex-center" />
-            </Button>
-
-            <Button
-              onClick={disActiveSelection}
-              disabled={!isBtnActive}
-              variant="warning"
-              className="flex-center text-white"
-            >
-              <span className="me-1">Not Active</span>
-              <MdNotInterested size={20} />
-            </Button> */}
+            {}
 
             <Button
               onClick={deleteRows}
@@ -429,11 +367,11 @@ const Categories = () => {
         </Modal.Body>
         <Modal.Footer className="flex-center">
           <Button onClick={handleSubmit(saveHandelar)} variant="primary">
-            حفظ
+            save
           </Button>
 
           <Button variant="danger" onClick={closeModal}>
-            الغاء
+            cancel
           </Button>
         </Modal.Footer>
       </Modal>

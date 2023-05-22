@@ -14,7 +14,7 @@ const getCheckModal = ({
     confirmButtonColor: "#8950fc",
     cancelButtonColor: "#d33",
     confirmButtonText,
-    cancelButtonText: "Cansel",
+    cancelButtonText: "Cancel",
   }).then((result) => {
     if (result.isConfirmed) {
       cb().then(() => {

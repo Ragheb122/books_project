@@ -13,12 +13,7 @@ import MaterialReactTable from "material-react-table";
 //Material-UI Imports
 import {
   Box,
-  Checkbox,
   IconButton,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
 } from "@mui/material";
 
 // import { data as collectedData } from "./makeData";
@@ -27,7 +22,6 @@ import { Button, ButtonGroup, Col, FormGroup, Row } from "react-bootstrap";
 import { getCheckModal } from "../../utils/getModal";
 
 // icons
-import { MdNotInterested } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Form, Modal } from "react-bootstrap";
 import { InputGroup, Label } from "reactstrap";
@@ -46,19 +40,6 @@ import getMessage from "../../utils/getMessage";
 // placeholder data
 import { data as collectedData } from "./makeData";
 
-const selectAccess = [
-  "المستخدمون",
-  "السائقين",
-  "الطلبات",
-  "انواع المركبات",
-  "الباقات",
-  "المدن",
-  "اسعار المناطق",
-  "الصفحات",
-  "الاشعارات",
-  "الاعدادات",
-  "المدراء",
-];
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -197,7 +178,7 @@ const Accounts = () => {
     const rowsIds = getRowsIds();
 
     if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
+      alert("please choose at least one element");
     }
 
     const deleteCallBack = async () => {
@@ -224,7 +205,7 @@ const Accounts = () => {
     const rowsIds = getRowsIds();
 
     if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
+      alert("please choose at least one element");
     }
 
     const deleteCallBack = async () => {
@@ -331,24 +312,6 @@ const Accounts = () => {
   // get permtions
   useEffect(() => {
     const token = cookie.load("token");
-
-    // API(`admin/admins/create`).then(({ data }) => {
-    //   setSelectAccess(
-    //     data?.Data?.map((permtion) => ({
-    //       id: permtion?.id,
-    //       name: permtion?.name,
-    //     }))
-    //   );
-    // });
-
-    // API(`admin/countries?token=${token}`).then(({ data }) => {
-    //   setCountrys(
-    //     data?.data?.map((country) => ({
-    //       id: country.id,
-    //       name: country.name,
-    //     }))
-    //   );
-    // });
   }, []);
 
   // get user data
@@ -390,15 +353,7 @@ const Accounts = () => {
               <i className="bi bi-check2 fs-5 flex-center" />
             </Button>
 
-            {/* <Button
-              onClick={disActiveSelection}
-              disabled={!isBtnActive}
-              variant="warning"
-              className="flex-center text-white"
-            >
-              <MdNotInterested size={20} />
-              <span className="me-1">غير فعال</span>
-            </Button> */}
+            {}
 
             <Button
               onClick={deleteRows}
@@ -526,22 +481,7 @@ const Accounts = () => {
             </Row>
 
             <Row>
-              {/* <Col lg="6">
-                <FormGroup>
-                  <Label for="country_id">البلد</Label>
-                  <Form.Control
-                    {...register("country_id")}
-                    id="country_id"
-                    as="select"
-                  >
-                    {countrys?.map((country, idx) => (
-                      <option key={idx} value={country?.id}>
-                        {country?.name}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </FormGroup>
-              </Col> */}
+              {}
               <Col lg="12">
                 <FormGroup>
                   <Label for="mobile">Mobile</Label>
@@ -555,31 +495,7 @@ const Accounts = () => {
               </Col>
             </Row>
 
-            {/* <Row className="mb-3">
-              <Col lg="12" className="mt-3">
-                <FormGroup className="d-flex flex-column">
-                  <Label for="access">صلاحية</Label>
-                  <Select
-                    id="access"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput label="Tag" />}
-                    renderValue={(selected) => selected.join(", ")}
-                    MenuProps={MenuProps}
-                  >
-                    {selectAccess?.map((permtion) => (
-                      <MenuItem key={permtion?.id} value={permtion?.name}>
-                        <Checkbox
-                          checked={personName?.indexOf(permtion?.name) > -1}
-                        />
-                        <ListItemText primary={permtion?.name} />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormGroup>
-              </Col>
-            </Row> */}
+            {}
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="flex-center">

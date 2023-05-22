@@ -432,7 +432,7 @@ const GiftCards = () => {
         onHide={closeModal}
       >
         <Modal.Header>
-          <Modal.Title>تعديل او اضافة مدير</Modal.Title>
+          <Modal.Title>edit or add admin</Modal.Title>
 
           <button className="btn-close ms-auto me-0" onClick={closeModal} />
         </Modal.Header>
@@ -441,14 +441,14 @@ const GiftCards = () => {
             <Row className="mb-3">
               <Col lg="6">
                 <FormGroup>
-                  <Label for="name">الاسم</Label>
+                  <Label for="name">name</Label>
                   <Form.Control {...register("name")} id="name" type="text" />
                 </FormGroup>
               </Col>
 
               <Col lg="6">
                 <FormGroup>
-                  <Label for="email">البريد الالكتروني</Label>
+                  <Label for="email">email </Label>
                   <Form.Control {...register("email")} id="email" type="text" />
                 </FormGroup>
               </Col>
@@ -458,7 +458,7 @@ const GiftCards = () => {
               <Row className="mb-3">
                 <Col lg="6">
                   <FormGroup>
-                    <Label for="password">كلمة المرور</Label>
+                    <Label for="password">password</Label>
                     <InputGroup>
                       <Form.Control
                         {...register("password")}
@@ -481,7 +481,7 @@ const GiftCards = () => {
 
                 <Col lg="6">
                   <FormGroup>
-                    <Label for="confirm_password">تاكيد كلمة المرور</Label>
+                    <Label for="confirm_password">confirm password  </Label>
                     <InputGroup>
                       <Form.Control
                         {...register("confirm_password")}
@@ -509,7 +509,7 @@ const GiftCards = () => {
             <Row>
               <Col lg="6">
                 <FormGroup>
-                  <Label for="country_id">البلد</Label>
+                  <Label for="country_id">city</Label>
                   <Form.Control
                     {...register("country_id")}
                     id="country_id"
@@ -525,7 +525,7 @@ const GiftCards = () => {
               </Col>
               <Col lg="6">
                 <FormGroup>
-                  <Label for="mobile">موبايل</Label>
+                  <Label for="mobile">phone number</Label>
                   <Form.Control
                     maxLength={15}
                     {...register("mobile")}
@@ -539,7 +539,7 @@ const GiftCards = () => {
             <Row className="mb-3">
               <Col lg="12" className="mt-3">
                 <FormGroup className="d-flex flex-column">
-                  <Label for="access">صلاحية</Label>
+                  <Label for="access">accessibility</Label>
                   <Select
                     id="access"
                     multiple
@@ -565,11 +565,11 @@ const GiftCards = () => {
         </Modal.Body>
         <Modal.Footer className="flex-center">
           <Button onClick={handleSubmit(saveHandelar)} variant="primary">
-            حفظ
+            save
           </Button>
 
           <Button variant="danger" onClick={closeModal}>
-            الغاء
+            cancel
           </Button>
         </Modal.Footer>
       </Modal>
