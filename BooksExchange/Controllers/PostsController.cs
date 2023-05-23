@@ -48,11 +48,15 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult> Books()
+        public async Task<ActionResult> Books(string token)
         {
             try
             {
-                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetStaticsPosts() }, JsonRequestBehavior.AllowGet);
+                if(await Helpers.HaveRecommendtion(await Helpers.GetUserIDByToken(token)))
+                    return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetRecommendedData(await Helpers.GetUserIDByToken(token)) }, JsonRequestBehavior.AllowGet);
+                else
+                    return Json(new { code = HttpStatusCode.OK, Data = await Helpers.recommentionSysAsync(token) },JsonRequestBehavior.AllowGet);
+                //return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetStaticsPosts() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {

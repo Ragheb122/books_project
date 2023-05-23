@@ -67,12 +67,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="recommendtions">
+      <EntityTypeMapping TypeName="book_exchangeModel.recommendtion">
+        <MappingFragment StoreEntitySet="recommendtion">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Reviews">
       <EntityTypeMapping TypeName="book_exchangeModel.Review">
         <MappingFragment StoreEntitySet="Reviews">
           <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="review1" ColumnName="review" />
+          <ScalarProperty Name="review1" ColumnName="review1" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

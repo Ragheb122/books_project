@@ -60,12 +60,23 @@
     <Property Name="post_id" Type="int" Nullable="false" />
     <Property Name="genera_id" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="recommendtion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="url" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="image" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Reviews">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="review" Type="int" Nullable="false" />
+    <Property Name="review1" Type="int" Nullable="false" />
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="created_at" Type="datetime" Nullable="false" />
   </EntityType>
@@ -183,6 +194,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_recommendtion_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="recommendtion" Type="Self.recommendtion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="recommendtion">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Reviews_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
@@ -274,6 +297,7 @@
     <EntitySet Name="GiftRequests" EntityType="Self.GiftRequests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PostsGeneras" EntityType="Self.PostsGeneras" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="recommendtion" EntityType="Self.recommendtion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRates" EntityType="Self.UserRates" Schema="dbo" store:Type="Tables" />
@@ -302,6 +326,10 @@
     <AssociationSet Name="FK_PostsGeneras_Posts" Association="Self.FK_PostsGeneras_Posts">
       <End Role="Posts" EntitySet="Posts" />
       <End Role="PostsGeneras" EntitySet="PostsGeneras" />
+    </AssociationSet>
+    <AssociationSet Name="FK_recommendtion_Users" Association="Self.FK_recommendtion_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="recommendtion" EntitySet="recommendtion" />
     </AssociationSet>
     <AssociationSet Name="FK_Reviews_Users" Association="Self.FK_Reviews_Users">
       <End Role="Users" EntitySet="Users" />

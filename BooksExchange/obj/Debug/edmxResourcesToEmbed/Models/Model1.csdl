@@ -7,6 +7,7 @@
     <EntitySet Name="GiftRequests" EntityType="book_exchangeModel.GiftRequest" />
     <EntitySet Name="Posts" EntityType="book_exchangeModel.Post" />
     <EntitySet Name="PostsGeneras" EntityType="book_exchangeModel.PostsGenera" />
+    <EntitySet Name="recommendtions" EntityType="book_exchangeModel.recommendtion" />
     <EntitySet Name="Reviews" EntityType="book_exchangeModel.Review" />
     <EntitySet Name="UserPreferences" EntityType="book_exchangeModel.UserPreference" />
     <EntitySet Name="UserRates" EntityType="book_exchangeModel.UserRate" />
@@ -43,6 +44,10 @@
     <AssociationSet Name="FK_PostsGeneras_Posts" Association="book_exchangeModel.FK_PostsGeneras_Posts">
       <End Role="Post" EntitySet="Posts" />
       <End Role="PostsGenera" EntitySet="PostsGeneras" />
+    </AssociationSet>
+    <AssociationSet Name="FK_recommendtion_Users" Association="book_exchangeModel.FK_recommendtion_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="recommendtion" EntitySet="recommendtions" />
     </AssociationSet>
     <AssociationSet Name="FK_Reviews_Users" Association="book_exchangeModel.FK_Reviews_Users">
       <End Role="User" EntitySet="Users" />
@@ -136,6 +141,18 @@
     <NavigationProperty Name="Genera" Relationship="book_exchangeModel.FK_PostsGeneras_Generas" FromRole="PostsGenera" ToRole="Genera" />
     <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_PostsGeneras_Posts" FromRole="PostsGenera" ToRole="Post" />
   </EntityType>
+  <EntityType Name="recommendtion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="recommendtion" ToRole="User" />
+  </EntityType>
   <EntityType Name="Review">
     <Key>
       <PropertyRef Name="id" />
@@ -186,6 +203,7 @@
     <NavigationProperty Name="City1" Relationship="book_exchangeModel.FK_Users_Cities" FromRole="User" ToRole="City" />
     <NavigationProperty Name="GiftRequests" Relationship="book_exchangeModel.FK_GiftRequests_Users" FromRole="User" ToRole="GiftRequest" />
     <NavigationProperty Name="Posts" Relationship="book_exchangeModel.FK_Posts_Users" FromRole="User" ToRole="Post" />
+    <NavigationProperty Name="recommendtions" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="User" ToRole="recommendtion" />
     <NavigationProperty Name="Reviews" Relationship="book_exchangeModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
     <NavigationProperty Name="UserPreferences" Relationship="book_exchangeModel.FK_UserPreferences_Users" FromRole="User" ToRole="UserPreference" />
     <NavigationProperty Name="UserRates" Relationship="book_exchangeModel.FK_UserRates_Users" FromRole="User" ToRole="UserRate" />
@@ -295,6 +313,18 @@
       </Principal>
       <Dependent Role="PostsGenera">
         <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_recommendtion_Users">
+    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+    <End Type="book_exchangeModel.recommendtion" Role="recommendtion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="recommendtion">
+        <PropertyRef Name="user_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

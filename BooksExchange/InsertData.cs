@@ -25,9 +25,25 @@ namespace BooksExchange
                         token = await Helpers.GetRandomString(),
                         city = city,
                         created_at = DateTime.Now,
-                        image = img
+                        image = img,
                     };
                     db.Users.Add(use);
+                    if (books != null)
+                    {
+                        if (books.Length > 0)
+                        {
+                            foreach (int item in books)
+                            {
+                                BooksRate rate = new BooksRate()
+                                {
+                                    book_id = item,
+                                    rate = 5,
+                                    user_id = use.id
+                                };
+                                db.BooksRates.Add(rate);
+                            }
+                        }
+                    }
                     if (await db.SaveChangesAsync() > 0)
                         return true;
                     else

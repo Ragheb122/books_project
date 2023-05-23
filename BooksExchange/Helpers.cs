@@ -11,12 +11,15 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Net.Mail;
+using System.EnterpriseServices.Internal;
+using System.Diagnostics;
+using System.Web.Services.Description;
 
 namespace BooksExchange
 {
     public static class Helpers
     {
-
+        
         static public async Task<string> GetCode(int length = 6)
         {
             string valid = "1234567890";
@@ -168,53 +171,6 @@ namespace BooksExchange
                         return 0;
                     else
                         return u.id;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        static public async Task<int> GetLocation(string ip, int type)
-        {
-            try
-            {
-                if (type == 1)
-                {
-                    string url = "http://ipinfo.io/" + ip + "?access_key=fa61d231a30252";
-                    var request = System.Net.WebRequest.Create(url);
-                    using (WebResponse webresponse = request.GetResponse())
-                    {
-                        using (Stream stream = webresponse.GetResponseStream())
-                        {
-                            using (StreamReader reader = new StreamReader(stream))
-                            {
-                                string jsonResponse = reader.ReadToEnd();
-                                var ipInfo = JObject.Parse(jsonResponse);
-                                //return Json(new { code = HttpStatusCode.OK, city = (string)ipInfo["city"] });
-                                return await CheckCity((string)ipInfo["city"]);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    string url = "http://ipinfo.io/" + ip + "?access_key=fa61d231a30252";
-                    var request = System.Net.WebRequest.Create(url);
-                    using (WebResponse webresponse = request.GetResponse())
-                    {
-                        using (Stream stream = webresponse.GetResponseStream())
-                        {
-                            using (StreamReader reader = new StreamReader(stream))
-                            {
-                                string jsonResponse = reader.ReadToEnd();
-                                var ipInfo = JObject.Parse(jsonResponse);
-                                //return Json(new { code = HttpStatusCode.OK, city = (string)ipInfo["city"] });
-                                return await CheckCity((string)ipInfo["city"]);
-                            }
-                        }
-                    }
                 }
             }
             catch (Exception)
@@ -391,5 +347,113 @@ namespace BooksExchange
                 throw;
             }
         }
+        static public async Task<List<object>> recommentionSysAsync(string token)
+        {
+            string pythonFilePath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\main.py";
+            string booksCsvPath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\Books.csv";
+            string usersCsvPath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\Users.csv";
+            string ratingsCsvPath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\Ratings.csv";
+            string[] additionalArgs = await FetchData.UserFavBooks(token);
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "python";
+            startInfo.Arguments = $"\"{pythonFilePath}\" \"{booksCsvPath}\" \"{usersCsvPath}\" \"{ratingsCsvPath}\"";
+
+            // Append additional arguments to the command line
+            foreach (string arg in additionalArgs)
+            {
+                startInfo.Arguments += $" \"{arg}\"";
+            }
+
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+
+            using (Process process = new Process())
+            {
+                process.StartInfo = startInfo;
+                process.Start();
+
+                // Read the output from the Python script
+                string output = process.StandardOutput.ReadToEnd();
+
+                process.WaitForExit();
+
+                string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                List<Book_> books = new List<Book_>();
+                foreach (string line in lines)
+                {
+                    string[] parts = line.Split(',');
+                    if (parts[0] == "")
+                    {
+                        break;
+                    }
+                    Book_ book = new Book_();
+                    char charToRemove1 = '[';
+                    char charToRemove2 = ']';
+                    char charToRemove3 = '\'';
+
+                    string result1 = parts[0].Replace(charToRemove1.ToString(), string.Empty);
+                    string result2 = parts[3].Replace(charToRemove2.ToString(), string.Empty);
+                    string result3 = result2.Replace(charToRemove3.ToString(), string.Empty);
+
+                    book.ISBN = result1;
+                    book.Title = parts[1];
+                    book.Author = parts[2];
+                    book.image = result3;
+                    books.Add(book);
+                }
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<object> data = new List<object>();
+                    foreach (Book_ book in books)
+                    {
+                        // Console.WriteLine("book ISBN is:" + book.ISBN + "\n" + "book Title is:" + book.Title + "\n" + "author is:" + book.Author + "\n" + "image url is:" + book.image);
+                        object rate = new { rate = 0, amount = 0 };
+                        object temp = new
+                        {
+                            id = book.ISBN,
+                            title = book.Title,
+                            image = book.image,
+                            description = "-",
+                            traded = false,
+                            url = "-",
+                            rate = rate
+                        };
+                        recommendtion r = new recommendtion()
+                        {
+                            description = "-",
+                            image = book.image,
+                            title = book.Title,
+                            url = book.image,
+                            user_id = await GetUserIDByToken(token)
+                        };
+                        db.recommendtions.Add(r);
+                        if (!data.Contains(temp))
+                            data.Add(temp);
+                    }
+                    await db.SaveChangesAsync();
+                    return data;
+                }
+            }
+        }
+        static public async Task<bool> HaveRecommendtion(int id)
+        {
+            using (book_exchangeEntities db = new book_exchangeEntities())
+            {
+                recommendtion r = await db.recommendtions.FirstOrDefaultAsync(o => o.user_id == id);
+                if (r == null)
+                    return false;
+                else
+                    return true;
+            }
+        }
+    }
+    class Book_
+    {
+        public string ISBN { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string image { get; set; }
     }
 }

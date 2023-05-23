@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using BooksExchange.Models;
 using System.Threading.Tasks;
+using System.CodeDom.Compiler;
 
 namespace BooksExchange
 {
@@ -69,6 +70,7 @@ namespace BooksExchange
                                 traded = item.traded,
                                 userID = item.User.id,
                                 userName = item.User.name,
+                                mobile = item.User.mobile,
                                 userImage = item.User.image,
                                 locationID = item.User.city,
                                 location = item.User.City1.name,
@@ -414,6 +416,7 @@ namespace BooksExchange
                             userID = post.user_id,
                             userName = post.User.name,
                             userImage = post.User.image,
+                            mobile = post.User.mobile,
                             traded = post.traded,
                             created_at = post.created_at,
                             url = post.url,
@@ -733,19 +736,20 @@ namespace BooksExchange
             {
                 using (book_exchangeEntities db = new book_exchangeEntities())
                 {
-                    List<BooksRate> posts = await db.BooksRates.Where(o => o.Post.url != null).OrderByDescending(p => p.rate).Take(50).ToListAsync();
+                    List<Post> posts = await db.Posts.Where(o => o.url != null).Take(50).ToListAsync();
                     List<object> Obj = new List<object>();
-                    foreach (BooksRate item in posts)
+                    foreach (Post item in posts)
                     {
                         if (item != null)
                         {
                             object temp = new
                             {
-                                id = item.book_id,
-                                title = item.Post.title,
-                                image = item.Post.image,
-                                description = item.Post.description,
+                                id = item.id,
+                                title = item.title,
+                                image = item.image,
+                                description = item.description,
                             };
+
                             if (!Obj.Contains(temp))
                                 Obj.Add(temp);
                         }
@@ -759,6 +763,69 @@ namespace BooksExchange
                 throw;
             }
         }
-        
+        public static async Task<string[]> UserFavBooks(string token)
+        {
+            try
+            {
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    int id = await Helpers.GetUserIDByToken(token);
+                    List<BooksRate> rate = await db.BooksRates.Where(o => o.user_id == id).ToListAsync();
+                    string[] results = new string[rate.Count];
+                    int count = 0;
+                    foreach (BooksRate item in rate)
+                    {
+                        if (item != null)
+                        {
+                            results[count] = item.Post.title;
+                            count++;
+
+                        }
+                    }
+                    return results;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public static async Task<List<object>> GetRecommendedData(int id)
+        {
+            try
+            {
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<recommendtion> r = await db.recommendtions.Where(o => o.user_id == id).ToListAsync();
+                    List<object> results = new List<object>();
+                    foreach (recommendtion item in r)
+                    {
+                        if (item != null)
+                        {
+                            object rate = new { rate = 0, amount = 0 };
+                            object temp = new
+                            {
+                                id = "#",
+                                title = item.title,
+                                image = item.image,
+                                description = "-",
+                                traded = false,
+                                url = item.image,
+                                rate = rate
+                            };
+                            if (!results.Contains(temp))
+                                results.Add(temp);
+                        }
+                    }
+                    return results;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

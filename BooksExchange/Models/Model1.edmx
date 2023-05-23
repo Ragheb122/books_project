@@ -65,12 +65,23 @@
           <Property Name="post_id" Type="int" Nullable="false" />
           <Property Name="genera_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="recommendtion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="image" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Reviews">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="review" Type="int" Nullable="false" />
+          <Property Name="review1" Type="int" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
         </EntityType>
@@ -188,6 +199,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_recommendtion_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="recommendtion" Type="Self.recommendtion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recommendtion">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reviews_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
@@ -279,6 +302,7 @@
           <EntitySet Name="GiftRequests" EntityType="Self.GiftRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostsGeneras" EntityType="Self.PostsGeneras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recommendtion" EntityType="Self.recommendtion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRates" EntityType="Self.UserRates" Schema="dbo" store:Type="Tables" />
@@ -307,6 +331,10 @@
           <AssociationSet Name="FK_PostsGeneras_Posts" Association="Self.FK_PostsGeneras_Posts">
             <End Role="Posts" EntitySet="Posts" />
             <End Role="PostsGeneras" EntitySet="PostsGeneras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recommendtion_Users" Association="Self.FK_recommendtion_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="recommendtion" EntitySet="recommendtion" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_Users" Association="Self.FK_Reviews_Users">
             <End Role="Users" EntitySet="Users" />
@@ -348,6 +376,7 @@
           <EntitySet Name="GiftRequests" EntityType="book_exchangeModel.GiftRequest" />
           <EntitySet Name="Posts" EntityType="book_exchangeModel.Post" />
           <EntitySet Name="PostsGeneras" EntityType="book_exchangeModel.PostsGenera" />
+          <EntitySet Name="recommendtions" EntityType="book_exchangeModel.recommendtion" />
           <EntitySet Name="Reviews" EntityType="book_exchangeModel.Review" />
           <EntitySet Name="UserPreferences" EntityType="book_exchangeModel.UserPreference" />
           <EntitySet Name="UserRates" EntityType="book_exchangeModel.UserRate" />
@@ -384,6 +413,10 @@
           <AssociationSet Name="FK_PostsGeneras_Posts" Association="book_exchangeModel.FK_PostsGeneras_Posts">
             <End Role="Post" EntitySet="Posts" />
             <End Role="PostsGenera" EntitySet="PostsGeneras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recommendtion_Users" Association="book_exchangeModel.FK_recommendtion_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="recommendtion" EntitySet="recommendtions" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_Users" Association="book_exchangeModel.FK_Reviews_Users">
             <End Role="User" EntitySet="Users" />
@@ -477,6 +510,18 @@
           <NavigationProperty Name="Genera" Relationship="book_exchangeModel.FK_PostsGeneras_Generas" FromRole="PostsGenera" ToRole="Genera" />
           <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_PostsGeneras_Posts" FromRole="PostsGenera" ToRole="Post" />
         </EntityType>
+        <EntityType Name="recommendtion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="recommendtion" ToRole="User" />
+        </EntityType>
         <EntityType Name="Review">
           <Key>
             <PropertyRef Name="id" />
@@ -527,6 +572,7 @@
           <NavigationProperty Name="City1" Relationship="book_exchangeModel.FK_Users_Cities" FromRole="User" ToRole="City" />
           <NavigationProperty Name="GiftRequests" Relationship="book_exchangeModel.FK_GiftRequests_Users" FromRole="User" ToRole="GiftRequest" />
           <NavigationProperty Name="Posts" Relationship="book_exchangeModel.FK_Posts_Users" FromRole="User" ToRole="Post" />
+          <NavigationProperty Name="recommendtions" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="User" ToRole="recommendtion" />
           <NavigationProperty Name="Reviews" Relationship="book_exchangeModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
           <NavigationProperty Name="UserPreferences" Relationship="book_exchangeModel.FK_UserPreferences_Users" FromRole="User" ToRole="UserPreference" />
           <NavigationProperty Name="UserRates" Relationship="book_exchangeModel.FK_UserRates_Users" FromRole="User" ToRole="UserRate" />
@@ -636,6 +682,18 @@
             </Principal>
             <Dependent Role="PostsGenera">
               <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recommendtion_Users">
+          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
+          <End Type="book_exchangeModel.recommendtion" Role="recommendtion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recommendtion">
+              <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -771,12 +829,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="recommendtions">
+            <EntityTypeMapping TypeName="book_exchangeModel.recommendtion">
+              <MappingFragment StoreEntitySet="recommendtion">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="book_exchangeModel.Review">
               <MappingFragment StoreEntitySet="Reviews">
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="review1" ColumnName="review" />
+                <ScalarProperty Name="review1" ColumnName="review1" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

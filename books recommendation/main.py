@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt
@@ -5,10 +7,15 @@ import warnings
 warnings.filterwarnings("ignore")
 from sklearn.metrics.pairwise import cosine_similarity
 
+books_csv_path = sys.argv[1]
+users_csv_path = sys.argv[2]
+ratings_csv_path = sys.argv[3]
+additional_args = sys.argv[4:]
+
 # Read the CSV files into DataFrames
-books = pd.read_csv("Books.csv")
-users = pd.read_csv("Users.csv")
-ratings = pd.read_csv("Ratings.csv")
+books = pd.read_csv(books_csv_path)
+users = pd.read_csv(users_csv_path)
+ratings = pd.read_csv(ratings_csv_path)
 
 # Merge ratings with book information
 ratings_with_name = ratings.merge(books, on='ISBN')
@@ -60,6 +67,7 @@ def recommend(book_name):
     for i in similar_books:
         item = []
         temp_df = books[books['Book-Title'] == pt.index[i[0]]]
+        item.extend(list(temp_df.drop_duplicates('Book-Title')['ISBN'].values))
         item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Title'].values))
         item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Author'].values))
         item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
@@ -70,6 +78,23 @@ def recommend(book_name):
 def recommendBooks(books):
     return recommend(books[0]) + recommend(books[1]) + recommend(books[2]) + recommend(books[3]) + recommend(books[4])
 # Print the recommended books for the given books
-print(recommendBooks(["A Prayer for Owen Meany","Snow Falling on Cedars","The Summons",
-                      "Wild Animus",
-                      "House of Sand and Fog",]))
+# print(recommendBooks(["A Prayer for Owen Meany","Snow Falling on Cedars","The Summons",
+#                       "Wild Animus",
+#                       "House of Sand and Fog",]))
+
+if __name__ == '__main__':
+    if len(sys.argv) < 4:
+        print("Usage: python main.py <Books_CSV_Path> <Users_CSV_Path> <Ratings_CSV_Path> [additional_args...]")
+        sys.exit(1)
+
+    books_csv_path = sys.argv[1]
+    users_csv_path = sys.argv[2]
+    ratings_csv_path = sys.argv[3]
+    additional_args = sys.argv[4:]
+    # Read the CSV files into DataFrames
+    books = pd.read_csv(books_csv_path)
+    users = pd.read_csv(users_csv_path)
+    ratings = pd.read_csv(ratings_csv_path)
+    recommended_books = recommendBooks([additional_args[0],additional_args[1],additional_args[2],additional_args[3],additional_args[4]])
+    for book in recommended_books:
+        print(book)

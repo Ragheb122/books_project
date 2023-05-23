@@ -15,20 +15,22 @@ namespace BooksExchange.Models
 using System;
     using System.Collections.Generic;
     
-public partial class UserPreference
+public partial class recommendtion
 {
 
     public int id { get; set; }
 
+    public string title { get; set; }
+
+    public string description { get; set; }
+
+    public string url { get; set; }
+
+    public string image { get; set; }
+
     public int user_id { get; set; }
 
-    public int generas_id { get; set; }
 
-    public int count { get; set; }
-
-
-
-    public virtual Genera Genera { get; set; }
 
     public virtual User User { get; set; }
 
