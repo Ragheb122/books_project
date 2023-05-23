@@ -1,3 +1,4 @@
+
 import React, { useEffect, useMemo, useState } from "react";
 
 // Layout
@@ -9,6 +10,9 @@ import BookCard from "../../components/BookCard";
 
 // apis
 import API from "../../utils/API";
+
+// cookies
+import cookie from "react-cookies";
 
 const StaticBooks = () => {
   const [products, setProducts] = useState([]);
@@ -34,7 +38,9 @@ const StaticBooks = () => {
   // };
 
   useEffect(() => {
-    API(`/posts/books`).then(({ data }) => {
+    const token = cookie.load("token");
+
+    API(`/posts/books?token=${token}`).then(({ data }) => {
       if (data?.code == 200) {
         setProducts(
           data?.Data?.map((book) => ({
@@ -97,8 +103,8 @@ const StaticBooks = () => {
   return (
     <Layout>
       <div className="container py-5">
-        <h2>Recommended Books</h2>
-        {/* search */}
+        <h2>Static Books</h2>
+        {/* حقل البحث */}
         <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="input-group">
@@ -144,7 +150,7 @@ const StaticBooks = () => {
           </div>
         </div>
 
-        {/* book's card  */}
+        {/* بطاقات المنتجات */}
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 mt-5">
           {(searchProducts?.length ? searchProducts : products).map(
             (product, idx) => (
