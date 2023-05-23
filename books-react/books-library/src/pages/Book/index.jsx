@@ -113,7 +113,7 @@ const Book = () => {
               </p>
             )}
             <p>
-              <span>:Description</span>
+              <span>Description:</span>
 
               <span className="d-block">{bookData.description}</span>
             </p>
