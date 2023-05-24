@@ -6,9 +6,14 @@ import Layout from "../../layout";
 // components
 import { Pagination } from "react-bootstrap";
 import BookCard from "../../components/BookCard";
+
+// api
 import API from "../../utils/API";
 
-const Home = () => {
+// cookies
+import cookie from "react-cookies";
+
+const ForYou = () => {
   const [products, setProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
 
@@ -32,24 +37,21 @@ const Home = () => {
   // };
 
   useEffect(() => {
-    API(`/posts`).then(({ data }) => {
+    const token = cookie.load("token");
+    API(`posts/booksref?token=${token}`).then(({ data }) => {
       if (data?.code == 200) {
         setProducts(
-          data?.Data?.map((book, idx) => ({
+          data?.Data?.map((book) => ({
             id: book.id,
             name: book?.title,
             location: book.location,
             description: book?.description,
             image: book?.image,
             traded: book?.traded,
-            catgories: book?.cateories?.map((categ) => {
-              return categ?.name;
-            }),
             user: {
               id: book?.userID,
               img: book?.userImage,
               userName: book?.userName,
-              mobile: book?.mobile,
             },
           }))
         );
@@ -73,7 +75,7 @@ const Home = () => {
       return matchSearchQuery && matchSelectedLocation && matchSelectedCategory;
     });
 
-    setSearchProducts(filteredData.length ? filteredData : [0]);
+    setSearchProducts(filteredData);
   }, [searchQuery, selectedLocation, selectedCategory, products]);
 
   // get location and categories
@@ -98,8 +100,8 @@ const Home = () => {
   return (
     <Layout>
       <div className="container py-5">
-        <h2>Home</h2>
-        {/*search*/}
+        <h2>For You</h2>
+        {/* search  */}
         <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="input-group">
@@ -144,17 +146,13 @@ const Home = () => {
             </div>
           </div>
         </div>
-
         {/* book's card  */}
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 mt-5">
-          {(searchProducts[0] == 0
-            ? []
-            : searchProducts?.length
-            ? searchProducts
-            : products
-          ).map((product, idx) => (
-            <BookCard key={idx} data={product} />
-          ))}
+          {(searchProducts?.length ? searchProducts : products).map(
+            (product, idx) => (
+              <BookCard data={product} key={idx} />
+            )
+          )}
         </div>
 
         {/* Pagination */}
@@ -223,7 +221,6 @@ const Home = () => {
             )}
           </Pagination>
         </div>
-
         <div className="d-flex align-items-center small">
           <p>
             page {currentPage} from {totalPages} | total books:{" "}
@@ -235,4 +232,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ForYou;
