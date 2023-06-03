@@ -5,6 +5,8 @@ import Layout from "../../layout";
 
 // components
 import { Pagination } from "react-bootstrap";
+import LoadingBooks from '../../components/LoadingBooks';
+
 import BookCard from "../../components/BookCard";
 
 // apis
@@ -35,10 +37,11 @@ const StaticBooks = () => {
   // const handlePageChange = (pageNumber) => {
   //   setCurrentPage(pageNumber);
   // };
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const token = cookie.load("token");
-
     API(`/posts/books?token=${token}`).then(({ data }) => {
       if (data?.code == 200) {
         setProducts(
@@ -56,7 +59,8 @@ const StaticBooks = () => {
               userName: book?.username,
             },
           }))
-        );
+        )
+        setIsLoading(false);
       }
     });
   }, []);
@@ -102,7 +106,7 @@ const StaticBooks = () => {
   return (
     <Layout>
       <div className="container py-5">
-        <h2>Static Books</h2>
+        <h2>Recommended Books</h2>
         {/* حقل البحث */}
         <div className="row justify-content-center">
           <div className="col-md-8">
@@ -150,6 +154,9 @@ const StaticBooks = () => {
         </div>
 
         {/* بطاقات المنتجات */}
+        {isLoading ?(
+          <LoadingBooks/>
+        ):
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 mt-5">
           {(searchProducts[0] == 0
             ? []
@@ -160,6 +167,7 @@ const StaticBooks = () => {
             <BookCard staticBooks key={idx} data={product} />
           ))}
         </div>
+}
 
         {/* Pagination */}
         {/* <div className="d-flex justify-content-center mt-5">

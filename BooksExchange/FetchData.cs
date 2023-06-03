@@ -809,9 +809,9 @@ namespace BooksExchange
                                 id = "#",
                                 title = item.title,
                                 image = item.image,
-                                description = "-",
+                                description = item.description,
                                 traded = false,
-                                url = item.image,
+                                url = "https://www.amazon.com/books-used-books-textbooks/b?ie=UTF8&node=283155",
                                 rate = rate
                             };
                             if (!results.Contains(temp))

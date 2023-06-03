@@ -106,9 +106,7 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                 <div className="top">
                   <h5 className="text-dark">{data.name}</h5>
                   <p className="text-muted" style={{ wordBreak: "break-all" }}>
-                    {data.description?.length > 50
-                      ? `${data.description?.slice(0, 50)}...`
-                      : data.description}
+                    {data.description}
                   </p>
                   {/* {staticBooks && <Rate numStars={data.rate} />} */}
                 </div>
@@ -121,9 +119,7 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                 <div className="top">
                   <h5 className="text-dark">{data.name}</h5>
                   <p className="text-muted" style={{ wordBreak: "break-all" }}>
-                    {data.description?.length > 50
-                      ? `${data.description?.slice(0, 50)}...`
-                      : data.description}
+                    {data.description}
                   </p>
                   {/* {staticBooks && <Rate numStars={data.rate} />} */}
                 </div>

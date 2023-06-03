@@ -124,7 +124,7 @@ const Book = () => {
                 onClick={() => window.open(bookData.url)}
                 className="btn btn-success mb-2 flex-center"
               >
-                <span>Open link</span>
+                <span>Open Link</span>
               </button>
             ) : (
               <button

@@ -396,10 +396,15 @@ namespace BooksExchange
                     string result1 = parts[0].Replace(charToRemove1.ToString(), string.Empty);
                     string result2 = parts[3].Replace(charToRemove2.ToString(), string.Empty);
                     string result3 = result2.Replace(charToRemove3.ToString(), string.Empty);
+                    string isbn = result1.Replace(charToRemove3.ToString(), string.Empty);
+                    string title = parts[1].Replace(charToRemove3.ToString(), string.Empty);
+                    string author = parts[2].Replace(charToRemove3.ToString(), string.Empty);
+                    string finalTitle = title.Substring(1);
+                    string finalAuthor = author.Substring(1);
 
-                    book.ISBN = result1;
-                    book.Title = parts[1];
-                    book.Author = parts[2];
+                    book.ISBN = isbn;
+                    book.Title = finalTitle;
+                    book.Author = finalAuthor;
                     book.image = result3;
                     books.Add(book);
                 }
@@ -415,14 +420,16 @@ namespace BooksExchange
                             id = book.ISBN,
                             title = book.Title,
                             image = book.image,
-                            description = "-",
+                            description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
+                            + "ISBN:" + book.ISBN,
                             traded = false,
                             url = "-",
                             rate = rate
                         };
                         recommendtion r = new recommendtion()
                         {
-                            description = "-",
+                            description = "Author:"+ Environment.NewLine + book.Author + Environment.NewLine
+                            + "ISBN:" +Environment.NewLine + book.ISBN,
                             image = book.image,
                             title = book.Title,
                             url = book.image,

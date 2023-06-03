@@ -1,72 +1,74 @@
 import React, { useState } from 'react';
 // Layout
 import Layout from "../../layout";
+import "./searchBook.css";
+import LoadingChatGPT from '../../components/loadingChatGPT';
+
+
 
 function BookDescriptionGenerator() {
+  // State for user input
   const [userInput, setUserInput] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  // State for loading spinner visibility
+  const [isLoading, setIsLoading] = useState(false);
+
+  // State for generated description
   const [description, setDescription] = useState('');
-  const [error, setError] = useState('');
 
-  const handleInputChange = (event) => {
-    setUserInput(event.target.value);
-  };
+  // Function to handle button click event
+  const generateDescription = () => {
+    // Show loading spinner
+    setIsLoading(true);
 
-  const handleGenerateDescription = () => {
-    setLoading(true);
+    // Send the user input to the server-side code using AJAX or fetch API
+    fetch('http://localhost:5000/generate-description', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ userInput: userInput })
+})
+      .then(response => response.json())
+      .then(data => {
+        // Hide loading spinner
+        setIsLoading(false);
 
-    fetch('/generate-description', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userInput }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false);
+        // Set the generated description
         setDescription(data.description);
-        setError('');
       })
-      .catch((error) => {
-        setLoading(false);
-        setDescription('');
-        setError(`Error: ${error}`);
+      .catch(error => {
+        // Hide loading spinner
+        setIsLoading(false);
+
+        // Display error message
+        setDescription('Error: ' + error);
       });
   };
 
   return (
+    
     <Layout>
-    <div className="container py-5"></div>
-    <div>
-      <h1>Book Description Generator</h1>
-
-      <label htmlFor="book-input">Enter a book description or keywords:</label>
-      <input type="text" id="book-input" value={userInput} onChange={handleInputChange} />
-
-      <button id="generate-btn" onClick={handleGenerateDescription}>
-        Generate Description
-      </button>
-
-      {loading && (
-        <div id="loading-spinner">
-          <img src="spinner.gif" alt="Loading" width="50" height="50" />
-          <p>Loading...</p>
-        </div>
-      )}
-
-      {description && (
+    <div className="center-align">
+        <label htmlFor="book-input">Enter a book description or keywords:</label>
+        <input
+          type="text"
+          id="book-input"
+          value={userInput}
+          onChange={event => setUserInput(event.target.value)}
+        />
+  
+        <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-primary" onClick={generateDescription}>Generate Description</button>
+  
+        {isLoading ?(
+          <LoadingChatGPT/>
+        ):
+  
         <div id="result">
           <p>{description}</p>
         </div>
-      )}
-
-      {error && (
-        <div id="result">
-          <p>{error}</p>
-        </div>
-      )}
-    </div>
+}
+      </div>
     </Layout>
   );
 }
