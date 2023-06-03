@@ -120,7 +120,7 @@ const StaticBooks = () => {
                 aria-label="Search"
               />
 
-              <select
+              {/* <select
                 className="form-select custom-select-width"
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
@@ -131,7 +131,7 @@ const StaticBooks = () => {
                     {category?.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
 
               {/* <select
                 className="form-select custom-select-width"

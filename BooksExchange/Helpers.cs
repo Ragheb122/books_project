@@ -349,10 +349,10 @@ namespace BooksExchange
         }
         static public async Task<List<object>> recommentionSysAsync(string token)
         {
-            string pythonFilePath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\main.py";
-            string booksCsvPath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\Books.csv";
-            string usersCsvPath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\Users.csv";
-            string ratingsCsvPath = @"C:\computer science\4th\project\2\books_project-main\books_project-main\books recommendation\Ratings.csv";
+            string pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\main.py";
+            string booksCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Books.csv";
+            string usersCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Users.csv";
+            string ratingsCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Ratings.csv";
             string[] additionalArgs = await FetchData.UserFavBooks(token);
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -376,7 +376,7 @@ namespace BooksExchange
 
                 // Read the output from the Python script
                 string output = process.StandardOutput.ReadToEnd();
-
+                string error = process.StandardError.ReadToEnd();
                 process.WaitForExit();
 
                 string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
@@ -399,9 +399,16 @@ namespace BooksExchange
                     string isbn = result1.Replace(charToRemove3.ToString(), string.Empty);
                     string title = parts[1].Replace(charToRemove3.ToString(), string.Empty);
                     string author = parts[2].Replace(charToRemove3.ToString(), string.Empty);
-                    string finalTitle = title.Substring(1);
-                    string finalAuthor = author.Substring(1);
-
+                    string finalTitle = title;
+                    string finalAuthor = author;
+                    if (title[0] == ' ')
+                    {
+                        finalTitle = title.Substring(1);
+                    }
+                    if (author[0] == ' ')
+                    {
+                        finalAuthor = author.Substring(1);
+                    }
                     book.ISBN = isbn;
                     book.Title = finalTitle;
                     book.Author = finalAuthor;
@@ -421,7 +428,7 @@ namespace BooksExchange
                             title = book.Title,
                             image = book.image,
                             description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
-                            + "ISBN:" + book.ISBN,
+                            + "ISBN:" + Environment.NewLine + book.ISBN,
                             traded = false,
                             url = "-",
                             rate = rate
