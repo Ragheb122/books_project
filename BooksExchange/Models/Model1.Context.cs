@@ -45,6 +45,7 @@ public partial class book_exchangeEntities : DbContext
     public virtual DbSet<PostsGenera> PostsGeneras { get; set; }
 
     public virtual DbSet<recommendtion> recommendtions { get; set; }
+    public virtual DbSet<recommendtion> top100datas { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
 

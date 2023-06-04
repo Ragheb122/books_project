@@ -33,6 +33,7 @@ import cookie from "react-cookies";
 
 // context
 import UserContext from "./utils/context/UserContext";
+import Top100 from "./pages/top100";
 
 const App = () => {
   const [userData, setUserData] = useState({});
@@ -67,6 +68,7 @@ const App = () => {
           <Routes>
           <Route index path="/findBook" element={<BookDescriptionGenerator />} />
             <Route index path="/about" element={<About />} />
+            <Route index path="/Top100" element={<Top100 />} />
             <Route index path="/" element={<Home />} />
             <Route path="/static_books" element={<StaticBooks />} />
             <Route path="/for_you" element={<ForYou />} />

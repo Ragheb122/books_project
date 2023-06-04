@@ -39,6 +39,7 @@ const navs = [
   { title: "Home", href: "/" },
   { title: "Find a book", href: "/findBook" },
   { title: "Recommended Books", href: "/static_books" },
+  { title: "Most Popular", href: "/Top100" },
   { title: "About", href: "/about" },
 
 

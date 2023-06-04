@@ -16,6 +16,5 @@ for index, row in filtered_books_data.iterrows():
     book_name = row['Book-Title']
     image_url = row['Image-URL-M']
     book_image_array.append((book_name, image_url))
-
+    print(book_image_array)
 # Print the book and image pairs in the array
-print(book_image_array)

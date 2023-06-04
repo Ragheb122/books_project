@@ -19,7 +19,7 @@ namespace BooksExchange
 {
     public static class Helpers
     {
-        
+
         static public async Task<string> GetCode(int length = 6)
         {
             string valid = "1234567890";
@@ -347,9 +347,13 @@ namespace BooksExchange
                 throw;
             }
         }
-        static public async Task<List<object>> recommentionSysAsync(string token)
+        static public async Task<List<object>> recommentionSysAsync(string token, int check)
         {
             string pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\main.py";
+            if (check == 1)
+            {
+                pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\top100.py";
+            }
             string booksCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Books.csv";
             string usersCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Users.csv";
             string ratingsCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Ratings.csv";
@@ -433,10 +437,12 @@ namespace BooksExchange
                             url = "-",
                             rate = rate
                         };
+
                         recommendtion r = new recommendtion()
+             
                         {
-                            description = "Author:"+ Environment.NewLine + book.Author + Environment.NewLine
-                            + "ISBN:" +Environment.NewLine + book.ISBN,
+                            description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
+                            + "ISBN:" + Environment.NewLine + book.ISBN,
                             image = book.image,
                             title = book.Title,
                             url = book.image,
@@ -451,6 +457,96 @@ namespace BooksExchange
                 }
             }
         }
+        static public List<object> top100books()
+        {
+            string pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\top100.py";
+            string booksCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Books.csv";
+            string usersCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Users.csv";
+            string ratingsCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Ratings.csv";
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "python";
+            startInfo.Arguments = $"\"{pythonFilePath}\" \"{booksCsvPath}\" \"{usersCsvPath}\" \"{ratingsCsvPath}\"";
+
+            // Append additional arguments to the command line
+
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+
+            using (Process process = new Process())
+            {
+                process.StartInfo = startInfo;
+                process.Start();
+
+                // Read the output from the Python script
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                string[] lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                List<Book_> books = new List<Book_>();
+                foreach (string line in lines)
+                {
+                    string[] parts = line.Split(',');
+                    if (parts[0] == "")
+                    {
+                        break;
+                    }
+                    Book_ book = new Book_();
+                    char charToRemove1 = '[';
+                    char charToRemove2 = ']';
+                    char charToRemove3 = '\'';
+
+                    string result1 = parts[0].Replace(charToRemove1.ToString(), string.Empty);
+                    string result2 = parts[3].Replace(charToRemove2.ToString(), string.Empty);
+                    string result3 = result2.Replace(charToRemove3.ToString(), string.Empty);
+                    string isbn = result1.Replace(charToRemove3.ToString(), string.Empty);
+                    string title = parts[1].Replace(charToRemove3.ToString(), string.Empty);
+                    string author = parts[2].Replace(charToRemove3.ToString(), string.Empty);
+                    string finalTitle = title;
+                    string finalAuthor = author;
+                    if (title[0] == ' ')
+                    {
+                        finalTitle = title.Substring(1);
+                    }
+                    if (author[0] == ' ')
+                    {
+                        finalAuthor = author.Substring(1);
+                    }
+                    book.ISBN = isbn;
+                    book.Title = finalTitle;
+                    book.Author = finalAuthor;
+                    book.image = result3;
+                    books.Add(book);
+                }
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<object> data = new List<object>();
+                    foreach (Book_ book in books)
+                    {
+                        // Console.WriteLine("book ISBN is:" + book.ISBN + "\n" + "book Title is:" + book.Title + "\n" + "author is:" + book.Author + "\n" + "image url is:" + book.image);
+                        object rate = new { rate = 0, amount = 0 };
+                        object temp = new
+                        {
+                            id = book.ISBN,
+                            title = book.Title,
+                            image = book.image,
+                            description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
+                            + "ISBN:" + Environment.NewLine + book.ISBN,
+                            traded = false,
+                            url = "-",
+                            rate = rate
+                        };
+                        if (!data.Contains(temp))
+                            data.Add(temp);
+                    }
+                    return data;
+                }
+            }
+        }
+        public static List<object> finaldata = top100books();
+
         static public async Task<bool> HaveRecommendtion(int id)
         {
             using (book_exchangeEntities db = new book_exchangeEntities())

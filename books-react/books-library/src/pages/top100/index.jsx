@@ -15,33 +15,19 @@ import API from "../../utils/API";
 // cookies
 import cookie from "react-cookies";
 
-const StaticBooks = () => {
+const Top100 = () => {
   const [products, setProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
-
-  const [categories, setCategories] = useState([]);
-  const [locations, setLocations] = useState([]);
 
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const itemsPerPage = useMemo(() => 6, []);
-  // const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const currentProducts = products.slice(startIndex, endIndex);
-
-  // const handlePageChange = (pageNumber) => {
-  //   setCurrentPage(pageNumber);
-  // };
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setIsLoading(true);
     const token = cookie.load("token");
-    API(`/posts/books?token=${token}`).then(({ data }) => {
+    API(`/posts/top100?token=${token}`).then(({ data }) => {
       if (data?.code == 200) {
         setProducts(
           data?.Data?.map((book) => ({
@@ -83,29 +69,10 @@ const StaticBooks = () => {
     setSearchProducts(filteredData.length ? filteredData : [0]);
   }, [searchQuery, selectedLocation, selectedCategory, products]);
 
-  // get location and categories
-  useEffect(() => {
-    const getData = async () => {
-      API(`/default/cities`).then(({ data }) => {
-        if (data?.code == 200) {
-          setLocations(data?.Data);
-        }
-      });
-
-      API(`/default/categories`).then(({ data }) => {
-        if (data?.code == 200) {
-          setCategories(data?.Data);
-        }
-      });
-    };
-
-    getData();
-  }, []);
-
   return (
     <Layout>
       <div className="container py-5">
-        <h2>Recommended Books</h2>
+        <h2>Most Popular Books</h2>
         {/* حقل البحث */}
         <div className="row justify-content-center">
           <div className="col-md-8">
@@ -118,13 +85,13 @@ const StaticBooks = () => {
                 placeholder="Search for a book in books"
                 aria-label="Search"
               />
-
               <button className="btn btn-primary" type="button">
                 <i className="bi bi-search" />
               </button>
             </div>
           </div>
         </div>
+
         {/* بطاقات المنتجات */}
         {isLoading ?(
           <LoadingBooks/>
@@ -145,4 +112,4 @@ const StaticBooks = () => {
   );
 };
 
-export default StaticBooks;
+export default Top100;
