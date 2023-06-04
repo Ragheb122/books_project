@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Layout
 import Layout from "../../layout";
 
 // components
-import { Pagination } from "react-bootstrap";
 import LoadingBooks from '../../components/LoadingBooks';
 
 import BookCard from "../../components/BookCard";
@@ -15,7 +14,7 @@ import API from "../../utils/API";
 // cookies
 import cookie from "react-cookies";
 
-const StaticBooks = () => {
+const RecommendedBooks = () => {
   const [products, setProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
 
@@ -25,18 +24,6 @@ const StaticBooks = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const itemsPerPage = useMemo(() => 6, []);
-  // const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const currentProducts = products.slice(startIndex, endIndex);
-
-  // const handlePageChange = (pageNumber) => {
-  //   setCurrentPage(pageNumber);
-  // };
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsLoading(true);
@@ -101,12 +88,12 @@ const StaticBooks = () => {
 
     getData();
   }, []);
-
+const message = "Recommendation system is generating books that we suggest for you..."
   return (
     <Layout>
       <div className="container py-5">
         <h2>Recommended Books</h2>
-        {/* حقل البحث */}
+        {/* search*/}
         <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="input-group">
@@ -125,9 +112,9 @@ const StaticBooks = () => {
             </div>
           </div>
         </div>
-        {/* بطاقات المنتجات */}
+        {/* books cards*/}
         {isLoading ?(
-          <LoadingBooks/>
+          <LoadingBooks parameter={message}/>
         ):
         <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 mt-5">
           {(searchProducts[0] == 0
@@ -145,4 +132,4 @@ const StaticBooks = () => {
   );
 };
 
-export default StaticBooks;
+export default RecommendedBooks;

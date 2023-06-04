@@ -67,34 +67,12 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult> Top100(string token)
+        public async Task<ActionResult> MostPopular(string token)
         {
             try
             {
                 return Json(new { code = HttpStatusCode.OK, Data = Helpers.finaldata }, JsonRequestBehavior.AllowGet);
                 //return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetStaticsPosts() }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        [HttpGet]
-        public async Task<ActionResult> BooksRef(string token)
-        {
-            try
-            {
-                int? id = await Helpers.GetUserIDByToken(token);
-                if (id != null && id.Value != 0)
-                {
-                    using (book_exchangeEntities db = new book_exchangeEntities())
-                    {
-                            return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetPostsByRef(id.Value) }, JsonRequestBehavior.AllowGet);
-                    }
-                }
-                else
-                    return Json(new { code = HttpStatusCode.Forbidden }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {

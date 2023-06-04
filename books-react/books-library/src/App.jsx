@@ -15,13 +15,12 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Sign from "./pages/Sign";
 import ForgetPassword from "./pages/ForgetPassword";
-import StaticBooks from "./pages/StaticBooks";
-import ForYou from "./pages/ForYou";
+import RecommendedBooks from "./pages/RecommendedBooks";
 import Profile from "./pages/Profile";
 import Book from "./pages/Book";
 import About from "./pages/About";
 import BookDescriptionGenerator from "./pages/findBook";
-
+import MostPopular from "./pages/mostPopular";
 // components
 import Loading from "./components/Loading";
 
@@ -33,7 +32,6 @@ import cookie from "react-cookies";
 
 // context
 import UserContext from "./utils/context/UserContext";
-import Top100 from "./pages/top100";
 
 const App = () => {
   const [userData, setUserData] = useState({});
@@ -68,10 +66,9 @@ const App = () => {
           <Routes>
           <Route index path="/findBook" element={<BookDescriptionGenerator />} />
             <Route index path="/about" element={<About />} />
-            <Route index path="/Top100" element={<Top100 />} />
+            <Route index path="/MostPopular" element={<MostPopular />} />
             <Route index path="/" element={<Home />} />
-            <Route path="/static_books" element={<StaticBooks />} />
-            <Route path="/for_you" element={<ForYou />} />
+            <Route path="/RecommendedBooks" element={<RecommendedBooks />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/book/:id" element={<Book />} />
             <Route path="*" element={<Navigate replace to="/" />} />

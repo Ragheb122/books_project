@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Layout
 import Layout from "../../layout";
 
 // components
-import { Pagination } from "react-bootstrap";
 import LoadingBooks from '../../components/LoadingBooks';
 
 import BookCard from "../../components/BookCard";
@@ -15,7 +14,7 @@ import API from "../../utils/API";
 // cookies
 import cookie from "react-cookies";
 
-const Top100 = () => {
+const MostPopular = () => {
   const [products, setProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
 
@@ -27,7 +26,7 @@ const Top100 = () => {
   useEffect(() => {
     setIsLoading(true);
     const token = cookie.load("token");
-    API(`/posts/top100?token=${token}`).then(({ data }) => {
+    API(`/posts/MostPopular?token=${token}`).then(({ data }) => {
       if (data?.code == 200) {
         setProducts(
           data?.Data?.map((book) => ({
@@ -73,7 +72,7 @@ const Top100 = () => {
     <Layout>
       <div className="container py-5">
         <h2>Most Popular Books</h2>
-        {/* حقل البحث */}
+        {/* search*/}
         <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="input-group">
@@ -92,7 +91,7 @@ const Top100 = () => {
           </div>
         </div>
 
-        {/* بطاقات المنتجات */}
+        {/*Books cards*/}
         {isLoading ?(
           <LoadingBooks/>
         ):
@@ -112,4 +111,4 @@ const Top100 = () => {
   );
 };
 
-export default Top100;
+export default MostPopular;

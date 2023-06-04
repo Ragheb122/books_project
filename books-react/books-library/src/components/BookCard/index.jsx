@@ -1,16 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Rate from "../Rate";
+import { Link } from "react-router-dom";
 
 // cookies
 import cookie from "react-cookies";
 import API from "../../utils/API";
-import getMsg from "../../utils/getMsg";
 
 import userDataContext from "../../utils/context/UserContext";
 
 const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
-  const navigate = useNavigate();
   const userData = useContext(userDataContext);
 
   const [showPreview, setShowPreview] = useState(false);
@@ -36,10 +33,8 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
             getPosts();
           }
 
-          getMsg(data?.error);
         })
         .catch((err) => {
-          getMsg(err.message);
         });
     } else {
       // start chat\
@@ -125,16 +120,11 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                       ? `${data.description?.slice(0, 50)}...`
                       : data.description}
                   </p>
-                  {/* {staticBooks && <Rate numStars={data.rate} />} */}
                 </div>
               </Link>
             )}
 
             <div className="btns">
-              {/* <div className="price text-success mb-3 fw-bold">
-              {data.price ? `$${data.price}` : "Free !"}
-            </div> */}
-
               {staticBooks ? (
                 ""
               ) : data.traded ? (

@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4396b645-cece-47b6-88cc-1e427b4fd6b8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/top100.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/5d2d05b7-ab9a-4217-982f-83de8c53fa75.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/6ec53d1e-37f1-41eb-b337-6616f1559974.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/8b3cc13f-c541-4502-b669-f10cb8fe981f.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/005a7584-ab76-45bd-b766-b69a5f01a082.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/64cc82bd-d6cf-49f8-aec9-6ce78d4e3f09.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/top50.py" beforeDir="false" afterPath="$PROJECT_DIR$/top50.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/components/LoadingBooks/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/components/LoadingBooks/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/pages/StaticBooks/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/pages/StaticBooks/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/pages/findBook/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/pages/findBook/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // Layout
 import Layout from "../../layout";
 import "./searchBook.css";
-import LoadingChatGPT from '../../components/loadingChatGPT';
+import LoadingBooks from '../../components/LoadingBooks';
 
 
 
@@ -45,6 +45,7 @@ function BookDescriptionGenerator() {
         setDescription('Error: ' + error);
       });
   };
+const message = "Generating response..."
 
   return (
     
@@ -61,7 +62,7 @@ function BookDescriptionGenerator() {
         <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-primary" onClick={generateDescription}>Generate Description</button>
   
         {isLoading ?(
-          <LoadingChatGPT/>
+          <LoadingBooks parameter = {message}/>
         ):
   
         <div id="result">

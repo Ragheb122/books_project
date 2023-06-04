@@ -23,7 +23,6 @@ const Book = () => {
   const [rateBook, setRateBook] = useState(0);
 
   const startChat = () => {
-    // navigate("/chat", { state: bookData });
     window.open(`https://wa.me/${bookData?.user?.mobile}`, "_blank");
   };
 
@@ -87,7 +86,6 @@ const Book = () => {
 
           <div className="col-md-8">
             <h2>{bookData.title}</h2>
-            {/* <p className="mb-1">{bookData.author}</p> */}
             <p className="mb-1">
               Status:{" "}
               <span
