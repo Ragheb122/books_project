@@ -1,10 +1,7 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import {
   Navbar,
   Collapse,
-  Nav,
-  NavItem,
   NavbarBrand,
   DropdownToggle,
   DropdownMenu,
@@ -12,8 +9,7 @@ import {
   Dropdown,
   Button,
 } from "reactstrap";
-import IconButton from "@mui/material/IconButton";
-// import "https://img.freepik.com/free-vector/golden-bird-logo-design_1195-336.jpg?w=2000" from "../../assets/images/logos/monsterlogo.png";
+
 import user1 from "../../assets/images/users/user1.jpg";
 
 import adminDataContext from "../../utils/context/AdminData";
@@ -25,7 +21,6 @@ const Header = ({ showMobmenu }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const [settingsDropdownOpen, setSettingsDropdownOpen] = useState(false);
 
   const Handletoggle = () => {
     setIsOpen(!isOpen);

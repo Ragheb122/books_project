@@ -3,7 +3,6 @@ import { Col, FormGroup, Row } from "react-bootstrap";
 import { Input, Label } from "reactstrap";
 
 import cover_img from "../../assets/images/background/cover_img.jpg";
-import Logo from "../../assets/images/logos/monsterlogo.png";
 
 // styles
 import "./Login.scss";
@@ -47,10 +46,10 @@ const Login = () => {
 
           return window.location.reload();
         }
-        alert("اسم حساب او كلمة مرور غير صحيحه");
+        alert("username or password is not correct");
       })
       .catch(() => {
-        alert("خطأ غير معروف");
+        alert("unknown error");
       });
   };
 

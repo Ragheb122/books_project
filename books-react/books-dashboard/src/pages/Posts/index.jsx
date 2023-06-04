@@ -14,21 +14,17 @@ import MaterialReactTable from "material-react-table";
 import {
   Box,
   Checkbox,
-  IconButton,
   ListItemText,
   MenuItem,
   OutlinedInput,
   Select,
 } from "@mui/material";
 
-// import { data as collectedData } from "./makeData";
 import { Button, ButtonGroup, Col, FormGroup, Row } from "react-bootstrap";
 
 import { getCheckModal } from "../../utils/getModal";
 
 // icons
-import { MdNotInterested } from "react-icons/md";
-import { AiOutlinePlus } from "react-icons/ai";
 import { Form, Modal } from "react-bootstrap";
 import { InputGroup, Label } from "reactstrap";
 
@@ -40,11 +36,6 @@ import cookie from "react-cookies";
 
 // apis
 import API from "../../utils/API";
-import moment from "moment";
-import getMessage from "../../utils/getMessage";
-
-// placeholder data
-import { data as collectedData } from "./makeData";
 
 
 const ITEM_HEIGHT = 48;
@@ -75,9 +66,6 @@ const Posts = () => {
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [rowSelectionIdx, setRowSelectionIdx] = useState({});
 
-  const openModal = (id) => {
-    setShow({ isShow: true, id });
-  };
   const closeModal = () => {
     setShow({ isShow: false, id: 0 });
 
@@ -166,7 +154,7 @@ const Posts = () => {
     const rowsIds = getRowsIds();
 
     if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
+      alert("please choose at least one element");
     }
 
     const deleteCallBack = async () => {
@@ -218,34 +206,6 @@ const Posts = () => {
       cb: deleteCallBack,
     });
   };
-  const disActiveSelection = () => {
-    const rowsIds = getRowsIds();
-
-    if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
-    }
-
-    const deleteCallBack = async () => {
-      const formData = new FormData();
-      const token = cookie.load("token");
-
-      formData.append("token", token);
-      formData.append("id", rowsIds);
-      formData.append("event", "not_active");
-
-      // await API.post(`admin/admins/changeStatus`, formData);
-      getData();
-      setRowSelectionIdx({});
-    };
-
-    getCheckModal({
-      title: "هل انت متاكد من انك تريد تعطيل المداراء المحددين",
-      type: "warning",
-      confirmButtonText: "نعم تعطيل",
-      isConfirmedMsg: "تم التعطيل بنجاح",
-      cb: deleteCallBack,
-    });
-  };
   const saveHandelar = async (data) => {
     const permissions = personName
       ?.map((perm) => selectAccess?.find((access) => access?.name === perm)?.id)
@@ -278,11 +238,6 @@ const Posts = () => {
 
   useEffect(() => {
     getData();
-  }, []);
-
-  // get permtions
-  useEffect(() => {
-    const token = cookie.load("token");
   }, []);
 
   // get user data
@@ -324,8 +279,6 @@ const Posts = () => {
               <i className="bi bi-check2 fs-5 flex-center" />
             </Button>
 
-            {}
-
             <Button
               onClick={deleteRows}
               disabled={!isBtnActive}
@@ -336,8 +289,6 @@ const Posts = () => {
               <i className="bi bi-trash3" />
             </Button>
           </ButtonGroup>
-
-          {}
         </div>
       )}
     >

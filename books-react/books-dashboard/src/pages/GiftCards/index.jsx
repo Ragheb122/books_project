@@ -14,7 +14,6 @@ import MaterialReactTable from "material-react-table";
 import {
   Box,
   Checkbox,
-  IconButton,
   ListItemText,
   MenuItem,
   OutlinedInput,
@@ -27,8 +26,6 @@ import { Button, ButtonGroup, Col, FormGroup, Row } from "react-bootstrap";
 import { getCheckModal } from "../../utils/getModal";
 
 // icons
-import { MdNotInterested } from "react-icons/md";
-import { AiOutlinePlus } from "react-icons/ai";
 import { Form, Modal } from "react-bootstrap";
 import { InputGroup, Label } from "reactstrap";
 
@@ -41,24 +38,7 @@ import cookie from "react-cookies";
 // apis
 import API from "../../utils/API";
 import moment from "moment";
-import getMessage from "../../utils/getMessage";
 
-// placeholder data
-import { data as collectedData } from "./makeData";
-
-const selectAccess = [
-  "المستخدمون",
-  "السائقين",
-  "الطلبات",
-  "انواع المركبات",
-  "الباقات",
-  "المدن",
-  "اسعار المناطق",
-  "الصفحات",
-  "الاشعارات",
-  "الاعدادات",
-  "المدراء",
-];
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -88,9 +68,6 @@ const GiftCards = () => {
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [rowSelectionIdx, setRowSelectionIdx] = useState({});
 
-  const openModal = (id) => {
-    setShow({ isShow: true, id });
-  };
   const closeModal = () => {
     setShow({ isShow: false, id: 0 });
 
@@ -173,34 +150,12 @@ const GiftCards = () => {
 
     return rowSelectionIds;
   }, [data, rowSelectionIdx]);
-  const deleteRows = () => {
-    const rowsIds = getRowsIds();
 
-    if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
-    }
-
-    const deleteCallBack = async () => {
-      const token = cookie.load("token");
-
-      // await API(`/admin/destroyadmin?token=${token}&id=${rowsIds}`);
-      getData();
-      setRowSelectionIdx({});
-    };
-
-    getCheckModal({
-      title: "هل انت متاكد من انك تريد حذف المدراء المحدده",
-      type: "warning",
-      confirmButtonText: "نعم حذف",
-      isConfirmedMsg: "تم الحذف بنجاح",
-      cb: deleteCallBack,
-    });
-  };
   const activeSelection = () => {
     const rowsIds = getRowsIds();
 
     if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
+      alert("please choose at least one element");
     }
 
     const deleteCallBack = async () => {
@@ -223,34 +178,6 @@ const GiftCards = () => {
       cb: deleteCallBack,
     });
   };
-  const disActiveSelection = () => {
-    const rowsIds = getRowsIds();
-
-    if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
-    }
-
-    const deleteCallBack = async () => {
-      const formData = new FormData();
-      const token = cookie.load("token");
-
-      formData.append("token", token);
-      formData.append("id", rowsIds);
-      formData.append("event", "not_active");
-
-      // await API.post(`admin/admins/changeStatus`, formData);
-      getData();
-      setRowSelectionIdx({});
-    };
-
-    getCheckModal({
-      title: "هل انت متاكد من انك تريد تعطيل المداراء المحددين",
-      type: "warning",
-      confirmButtonText: "نعم تعطيل",
-      isConfirmedMsg: "تم التعطيل بنجاح",
-      cb: deleteCallBack,
-    });
-  };
   const saveHandelar = async (data) => {
     const permissions = personName
       ?.map((perm) => selectAccess?.find((access) => access?.name === perm)?.id)
@@ -264,28 +191,6 @@ const GiftCards = () => {
     Object.keys(data)?.forEach((key) => {
       data[key] && formData.append(key, data[key]);
     });
-
-    // await API.post(show?.id ? `/admin/updateadmin` : "/admin/admins", formData)
-    //   .then(({ data }) => {
-    //     if (data.code != 200)
-    //       return getMessage("error", "يرجي ملي جميع الحقول");
-
-    //     getData();
-    //     closeModal();
-    //     reset({
-    //       name: "",
-    //       email: "",
-    //       password: "",
-    //       confirm_password: "",
-    //       mobile: "",
-    //       country_id: "",
-    //       permissions: "",
-    //     });
-    //     setPersonName([]);
-    //   })
-    //   .catch(() => {
-    //     getMessage("error", "يرجي ملي جميع الحقول");
-    //   });
   };
   const handleChange = ({ target }) => {
     const { value } = target;
@@ -307,28 +212,6 @@ const GiftCards = () => {
     getData();
   }, []);
 
-  // get permtions
-  useEffect(() => {
-    const token = cookie.load("token");
-
-    // API(`admin/admins/create`).then(({ data }) => {
-    //   setSelectAccess(
-    //     data?.Data?.map((permtion) => ({
-    //       id: permtion?.id,
-    //       name: permtion?.name,
-    //     }))
-    //   );
-    // });
-
-    // API(`admin/countries?token=${token}`).then(({ data }) => {
-    //   setCountrys(
-    //     data?.data?.map((country) => ({
-    //       id: country.id,
-    //       name: country.name,
-    //     }))
-    //   );
-    // });
-  }, []);
 
   // get user data
   useEffect(() => {
@@ -368,36 +251,7 @@ const GiftCards = () => {
               <span className="me-1">Active</span>
               <i className="bi bi-check2 fs-5 flex-center" />
             </Button>
-
-            {/* <Button
-              onClick={disActiveSelection}
-              disabled={!isBtnActive}
-              variant="warning"
-              className="flex-center text-white"
-            >
-              <span className="me-1">Not Active</span>
-              <MdNotInterested size={20} />
-            </Button> */}
-
-            {/* <Button
-              onClick={deleteRows}
-              disabled={!isBtnActive}
-              variant="danger"
-              className="flex-center text-white"
-            >
-              <span className="me-1">Delete</span>
-              <i className="bi bi-trash3" />
-            </Button> */}
           </ButtonGroup>
-
-          {/* <Button
-            onClick={() => openModal(0)}
-            variant="primary"
-            className="flex-center text-white"
-          >
-            <span className="me-1">Add</span>
-            <AiOutlinePlus size={20} />
-          </Button> */}
         </div>
       )}
     >

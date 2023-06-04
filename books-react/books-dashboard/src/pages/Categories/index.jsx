@@ -13,12 +13,7 @@ import MaterialReactTable from "material-react-table";
 //Material-UI Imports
 import {
   Box,
-  Checkbox,
   IconButton,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
 } from "@mui/material";
 
 // import { data as collectedData } from "./makeData";
@@ -27,10 +22,9 @@ import { Button, ButtonGroup, Col, FormGroup, Row } from "react-bootstrap";
 import { getCheckModal } from "../../utils/getModal";
 
 // icons
-import { MdNotInterested } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Form, Modal } from "react-bootstrap";
-import { InputGroup, Label } from "reactstrap";
+import { Label } from "reactstrap";
 
 // forms
 import { useForm } from "react-hook-form";
@@ -40,7 +34,6 @@ import cookie from "react-cookies";
 
 // apis
 import API from "../../utils/API";
-import moment from "moment";
 import getMessage from "../../utils/getMessage";
 
 // placeholder data
@@ -52,8 +45,6 @@ const Categories = () => {
   const [selectAccess, setSelectAccess] = useState([]);
   const [personName, setPersonName] = useState([]);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [show, setShow] = useState({ isShow: false, id: 0 });
   const [data, setData] = useState([]);
@@ -135,7 +126,7 @@ const Categories = () => {
     const rowsIds = getRowsIds();
 
     if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
+      alert("please choose at least one element");
     }
 
     const deleteCallBack = async () => {
@@ -159,62 +150,6 @@ const Categories = () => {
       cb: deleteCallBack,
     });
   };
-  const activeSelection = () => {
-    const rowsIds = getRowsIds();
-
-    if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
-    }
-
-    const deleteCallBack = async () => {
-      const formData = new FormData();
-      const token = cookie.load("token");
-
-      formData.append("token", token);
-      formData.append("id", rowsIds);
-      formData.append("event", "active");
-
-      // await API.post(`admin/admins/changeStatus`, formData);
-      getData();
-      setRowSelectionIdx({});
-    };
-
-    getCheckModal({
-      title: "هل انت متاكد من انك تريد تفعيل المداراء المحددين",
-      type: "warning",
-      confirmButtonText: "نعم تفعيل",
-      isConfirmedMsg: "تم التفعيل بنجاح",
-      cb: deleteCallBack,
-    });
-  };
-  const disActiveSelection = () => {
-    const rowsIds = getRowsIds();
-
-    if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
-    }
-
-    const deleteCallBack = async () => {
-      const formData = new FormData();
-      const token = cookie.load("token");
-
-      formData.append("token", token);
-      formData.append("id", rowsIds);
-      formData.append("event", "not_active");
-
-      // await API.post(`admin/admins/changeStatus`, formData);
-      getData();
-      setRowSelectionIdx({});
-    };
-
-    getCheckModal({
-      title: "هل انت متاكد من انك تريد تعطيل المداراء المحددين",
-      type: "warning",
-      confirmButtonText: "نعم تعطيل",
-      isConfirmedMsg: "تم التعطيل بنجاح",
-      cb: deleteCallBack,
-    });
-  };
   const saveHandelar = async (data) => {
     const formData = new FormData();
     const token = cookie.load("token");
@@ -227,7 +162,7 @@ const Categories = () => {
     await API.post(`admin/Category`, formData)
       .then(({ data }) => {
         if (data.code != 200)
-          return getMessage("error", "يرجي ملي جميع الحقول");
+          return getMessage("error", "please choose at least one element");
 
         getData();
         closeModal();
@@ -237,13 +172,8 @@ const Categories = () => {
         setPersonName([]);
       })
       .catch(() => {
-        getMessage("error", "يرجي ملي جميع الحقول");
+        getMessage("error", "please choose at least one element");
       });
-  };
-  const handleChange = ({ target }) => {
-    const { value } = target;
-
-    setPersonName(typeof value === "string" ? value.split(",") : value);
   };
 
   useEffect(() => {

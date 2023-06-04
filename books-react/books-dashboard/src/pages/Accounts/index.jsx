@@ -34,23 +34,8 @@ import cookie from "react-cookies";
 
 // apis
 import API from "../../utils/API";
-import moment from "moment";
 import getMessage from "../../utils/getMessage";
 
-// placeholder data
-import { data as collectedData } from "./makeData";
-
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const Accounts = () => {
   const tableInstanceRef = useRef();
@@ -187,7 +172,6 @@ const Accounts = () => {
 
       formData.append("token", token);
       formData.append("id", rowsIds?.join(","));
-
       await API.post(`/admin/DeleteUser`, formData);
       getData();
       setRowSelectionIdx({});
@@ -224,34 +208,7 @@ const Accounts = () => {
       cb: deleteCallBack,
     });
   };
-  const disActiveSelection = () => {
-    const rowsIds = getRowsIds();
 
-    if (!rowsIds?.length) {
-      alert("لم تحدد اي عنصر");
-    }
-
-    const deleteCallBack = async () => {
-      const formData = new FormData();
-      const token = cookie.load("token");
-
-      formData.append("token", token);
-      formData.append("id", rowsIds);
-      formData.append("event", "not_active");
-
-      // await API.post(`admin/admins/changeStatus`, formData);
-      getData();
-      setRowSelectionIdx({});
-    };
-
-    getCheckModal({
-      title: "هل انت متاكد من انك تريد تعطيل المداراء المحددين",
-      type: "warning",
-      confirmButtonText: "نعم تعطيل",
-      isConfirmedMsg: "تم التعطيل بنجاح",
-      cb: deleteCallBack,
-    });
-  };
   const saveHandelar = async (allData) => {
     const userToken = data?.find((user) => user?.id == show?.id)?.token;
     const adminToken = cookie.load("token");
@@ -286,13 +243,8 @@ const Accounts = () => {
         setPersonName([]);
       })
       .catch(() => {
-        getMessage("error", "يرجي ملي جميع الحقول");
+        getMessage("error", "please fill in the fields");
       });
-  };
-  const handleChange = ({ target }) => {
-    const { value } = target;
-
-    setPersonName(typeof value === "string" ? value.split(",") : value);
   };
 
   useEffect(() => {
@@ -309,10 +261,6 @@ const Accounts = () => {
     getData();
   }, []);
 
-  // get permtions
-  useEffect(() => {
-    const token = cookie.load("token");
-  }, []);
 
   // get user data
   useEffect(() => {
@@ -504,7 +452,7 @@ const Accounts = () => {
           </Button>
 
           <Button variant="danger" onClick={closeModal}>
-            Cansel
+            Cancel
           </Button>
         </Modal.Footer>
       </Modal>
