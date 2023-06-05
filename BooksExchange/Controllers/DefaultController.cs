@@ -13,6 +13,7 @@ namespace BooksExchange.Controllers
 {
     public class DefaultController : Controller
     {
+        // uploading image.
         public async Task<string> UploadImage(HttpPostedFileBase img)
         {
             try
@@ -33,6 +34,7 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
+        // not relevant.
         public string GetPublicIP()
         {
             try

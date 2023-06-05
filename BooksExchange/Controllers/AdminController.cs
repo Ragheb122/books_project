@@ -14,6 +14,7 @@ namespace BooksExchange.Controllers
     public class AdminController : Controller
     {
         [HttpGet]
+        // get all users to show in admin's panel.
        public async Task<ActionResult> Users(string token)
         {
             string[] Data = { token };
@@ -25,6 +26,7 @@ namespace BooksExchange.Controllers
             return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetUsers(token) }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
+        // get all requests to redeem gift card in admin's panel.
         public async Task<ActionResult> RedeemRequests(string token)
         {
             string[] Data = { token };
@@ -36,6 +38,7 @@ namespace BooksExchange.Controllers
             return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetRedeemRequests() }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        // accept a redeem request from admin's panel.
         public async Task<ActionResult> AcceptReedemRequest(string token, string id)
         {
             try
@@ -80,6 +83,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
+        // delete a user in admin's panel.
         public async Task<ActionResult> DeleteUser(string token, string id)
         {
             try
@@ -120,6 +124,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
+        // adding category throgh the admin's panel.
         public async Task<ActionResult> Category(string token, string name, string id, int update = 0)
         {
             try
@@ -160,6 +165,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpGet]
+        // get the posts through admin's panel.
         public async Task<ActionResult> Posts(string token)
         {
             try
@@ -178,6 +184,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
+        // check login and return logged in user's data.
         public async Task<ActionResult> Login(string email, string password)
         {
             try
@@ -198,6 +205,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
+        // update user to admin.
         public async Task<ActionResult> MakeUserAdmin(string token, string id)
         {
             try

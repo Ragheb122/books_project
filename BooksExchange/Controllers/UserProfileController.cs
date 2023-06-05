@@ -13,6 +13,7 @@ namespace BooksExchange.Controllers
 {
     public class UserProfileController : Controller
     {
+        // upload profile's image.
         public async Task<string> UploadImage(HttpPostedFileBase img)
         {
             try

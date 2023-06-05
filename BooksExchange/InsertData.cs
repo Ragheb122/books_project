@@ -10,6 +10,7 @@ namespace BooksExchange
 {
     public class InsertData
     {
+        // returns true if the user's data inserted successfully to the database, and false otherwise.
         static public async Task<bool> NewUser(string name, string email, string mobile, string password, int city, string img, int[] books)
         {
             try
@@ -56,6 +57,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // returns true if successfully inserted the new book to the database.
         static public async Task<bool> NewPost(string title, string description, int id, string img, int[] genera)
         {
             try
@@ -101,6 +103,7 @@ namespace BooksExchange
                 throw;
             }
         }
+
         static public async Task<bool> MakeRedeemRequest(string token, int amount)
         {
             try
@@ -165,6 +168,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // inserting verify code to the database.
         static public async Task<string> CreateVerifyCode(string email)
         {
             try
@@ -200,6 +204,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // inserting new category to the database.
         static public async Task<bool> NewCategory(string name)
         {
             try
@@ -226,6 +231,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // inserting user rate to the database.
         static public async Task<bool> NewUserRate(int id, int rate, string token)
         {
             try
@@ -262,6 +268,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // not relevant
         static public async Task<bool> NewBookRate(int id, string token, int rate)
         {
             using (book_exchangeEntities db = new book_exchangeEntities())

@@ -15,6 +15,7 @@ namespace BooksExchange.Controllers
 {
     public class PostsController : Controller
     {
+        // upload book's image.
         public async Task<string> UploadImage(HttpPostedFileBase img)
         {
             try
@@ -177,6 +178,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
+        // not relevant
         public async Task<ActionResult> RateBook(int? id, string token, int rate = 0)
         {
             string[] Data = { token };

@@ -10,6 +10,7 @@ namespace BooksExchange
 {
     public class UpdateData
     {
+        // mark a book as traded.
         static public async Task<bool> markAsRead(int id)
         {
             try
@@ -95,6 +96,7 @@ namespace BooksExchange
                     return message;
             }
         }
+        // update user's data.
         static public async Task<bool> UpdateUser(string token, string name, string email, string mobile, string password, string image)
         {
             try
@@ -219,6 +221,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // adding category.
         static public async Task<bool> UpdateCategory(string ids, string name)
         {
             try
@@ -259,6 +262,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // update a user to admin.
         static public async Task<bool> MakeAdmin(string ids, int id_)
         {
             try
