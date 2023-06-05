@@ -8,6 +8,7 @@ using BooksExchange.Models;
 
 namespace BooksExchange
 {
+    // for admin's panel
     public class DeleteData
     {
         static public async Task<bool> removePost(string ids, string token)

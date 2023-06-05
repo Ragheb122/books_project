@@ -19,7 +19,7 @@ namespace BooksExchange
 {
     public static class Helpers
     {
-
+        
         static public async Task<string> GetCode(int length = 6)
         {
             string valid = "1234567890";
@@ -46,7 +46,7 @@ namespace BooksExchange
                     return s;
             }
         }
-
+        // generating a random code for users who forgot their password
         static public async Task<string> GetRandomString(int length = 64)
         {
             string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -73,6 +73,7 @@ namespace BooksExchange
                     return s;
             }
         }
+        // hashing passwords
         public static string GetMD5Hash(string value)
         {
             try
@@ -91,6 +92,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // checking if the given data contains null data
         static public bool NullOrEmpty(string[] Data)
         {
             try
@@ -113,6 +115,7 @@ namespace BooksExchange
                 return true;
             }
         }
+        // checking if the given email is in the database.
         static public async Task<bool> EmailExist(string email)
         {
             try
@@ -131,6 +134,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // checking if the phone number is in the database.
         static public async Task<bool> MobileExist(string mobile)
         {
             try
@@ -149,6 +153,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // given user's id, return user's token.
         static public async Task<string> GetUserTokenByID(int id)
         {
             using (book_exchangeEntities db = new book_exchangeEntities())
@@ -160,6 +165,7 @@ namespace BooksExchange
                     return u.token;
             }
         }
+        // given user's token, return user's id.
         static public async Task<int> GetUserIDByToken(string token)
         {
             try
@@ -179,6 +185,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // not relevant
         static public async Task<int> CheckCity(string name)
         {
             try
@@ -208,7 +215,7 @@ namespace BooksExchange
                 throw;
             }
         }
-
+        // given token, check if the relevant user exists in the databse.
         static public async Task<bool> UserExist(string token)
         {
             try
@@ -227,6 +234,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // given user's token and post id, return true if the post exist and false otherwise.
         static public async Task<bool> PostOwner(string token, int postID)
         {
             try
@@ -252,7 +260,7 @@ namespace BooksExchange
                 throw;
             }
         }
-
+        // check if user traded enough books to redeem a gift card.
         static public async Task<bool> haveEnoghBooksToRedeem(string token, int requested)
         {
             try
@@ -300,6 +308,7 @@ namespace BooksExchange
                 }
             }
         }
+        // given user's token, check if the user is admin.
         static public async Task<bool> IsAdmin(string token)
         {
             try
@@ -319,6 +328,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // send verification code to user's mail.
         static public async Task<bool> SendEmail(string email, string code)
         {
             try
@@ -347,6 +357,8 @@ namespace BooksExchange
                 throw;
             }
         }
+        // recommend list of books to user based on his choices of favorite books.
+        // got the template of the code from ChatGPT.
         static public async Task<List<object>> recommentionSysAsync(string token, int check)
         {
             string pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\main.py";
@@ -457,6 +469,7 @@ namespace BooksExchange
                 }
             }
         }
+        // return list of most popular books.
         static public List<object> top100books()
         {
             string pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\top100.py";
@@ -545,8 +558,9 @@ namespace BooksExchange
                 }
             }
         }
+        // save the most popular books in a static list.
         public static List<object> finaldata = top100books();
-
+        // check if a user have recommendation.
         static public async Task<bool> HaveRecommendtion(int id)
         {
             using (book_exchangeEntities db = new book_exchangeEntities())

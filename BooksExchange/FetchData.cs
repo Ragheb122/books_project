@@ -145,6 +145,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // not relevant
         static public async Task<List<object>> GetStaticsPosts()
         {
             try
@@ -509,6 +510,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // not relevant
         static public async Task<object> bookRate(int id)
         {
             try
@@ -547,7 +549,7 @@ namespace BooksExchange
                 throw;
             }
         }
-        
+        // not relevant
         static public async Task<List<object>> TopBooks()
         {
             try
@@ -581,6 +583,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // return a list of strings of the names of the books that user selected as favourite at register
         public static async Task<string[]> UserFavBooks(string token)
         {
             try
@@ -609,6 +612,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // get the recommended data without loading the python file
         public static async Task<List<object>> GetRecommendedData(int id)
         {
             try
