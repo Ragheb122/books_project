@@ -38,7 +38,7 @@ def generate_description():
     # Generating chat response
     response = openai.Completion.create(
         engine='text-davinci-003',
-        prompt=f'Give me a name of the most relevant book from this array: {arr} according to this description: {user_input}.in addition write this link http://localhost:3001/book/34',
+        prompt=f'the following array has tuples of books names with thier ids,return the name of most relevant book from this array: {arr} according to this description: {user_input},\n in addition write this link http://localhost:3000/book/id where id is the books id, return only the name and link in this syntax:"the name of the book is: name, the link of the book in out site is: link"',
         max_tokens=200,
         temperature=0.7,
         n=1,
