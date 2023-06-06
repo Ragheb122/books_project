@@ -70,6 +70,7 @@
     <Property Name="url" Type="nvarchar(max)" Nullable="false" />
     <Property Name="image" Type="nvarchar(max)" Nullable="false" />
     <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="is_found" Type="bit" />
   </EntityType>
   <EntityType Name="Reviews">
     <Key>

@@ -152,6 +152,7 @@
     <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="user_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="recommendtion" ToRole="User" />
+    <Property Name="is_found" Type="Boolean" Nullable="true" />
   </EntityType>
   <EntityType Name="Review">
     <Key>

@@ -22,6 +22,8 @@ const RecommendedBooks = () => {
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedFound, setSelectedFound] = useState(false);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -38,6 +40,7 @@ const RecommendedBooks = () => {
             image: book?.image,
             traded: book?.traded,
             rate: book?.rate?.rate,
+            is_found: book?.is_found,
             user: {
               id: book?.userID,
               img: book?.userImage,
@@ -62,8 +65,9 @@ const RecommendedBooks = () => {
           ?.startsWith(selectedLocation?.toLowerCase());
       const matchSelectedCategory =
         !selectedCategory || book?.catgories?.includes(selectedCategory);
-
-      return matchSearchQuery && matchSelectedLocation && matchSelectedCategory;
+      const matchSelectedFound = 
+        !selectedFound || book?.is_found == true;
+      return matchSearchQuery && matchSelectedFound;
     });
 
     setSearchProducts(filteredData.length ? filteredData : [0]);
@@ -86,32 +90,6 @@ const RecommendedBooks = () => {
     };
 
     getData();
-  }, []);
-// get posts
-useEffect(() => {
-    API(`/posts`).then(({ postsData }) => {
-      if (postsData?.code == 200) {
-        setPosts(
-          postsData?.Data?.map((book, idx) => ({
-            id: book.id,
-            name: book?.title,
-            location: book.location,
-            description: book?.description,
-            image: book?.image,
-            traded: book?.traded,
-            catgories: book?.cateories?.map((categ) => {
-              return categ?.name;
-            }),
-            user: {
-              id: book?.userID,
-              img: book?.userImage,
-              userName: book?.userName,
-              mobile: book?.mobile,
-            },
-          }))
-        );
-      }
-    });
   }, []);
   //
 const message = "Recommendation system is generating books that we suggest for you..."

@@ -70,6 +70,7 @@
     <EntitySetMapping Name="recommendtions">
       <EntityTypeMapping TypeName="book_exchangeModel.recommendtion">
         <MappingFragment StoreEntitySet="recommendtion">
+          <ScalarProperty Name="is_found" ColumnName="is_found" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="image" ColumnName="image" />
           <ScalarProperty Name="url" ColumnName="url" />

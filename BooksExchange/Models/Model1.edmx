@@ -75,6 +75,7 @@
           <Property Name="url" Type="nvarchar(max)" Nullable="false" />
           <Property Name="image" Type="nvarchar(max)" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="is_found" Type="bit" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -521,6 +522,7 @@
           <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="recommendtion" ToRole="User" />
+          <Property Name="is_found" Type="Boolean" Nullable="true" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -832,6 +834,7 @@
           <EntitySetMapping Name="recommendtions">
             <EntityTypeMapping TypeName="book_exchangeModel.recommendtion">
               <MappingFragment StoreEntitySet="recommendtion">
+                <ScalarProperty Name="is_found" ColumnName="is_found" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="url" ColumnName="url" />

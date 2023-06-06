@@ -106,6 +106,15 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                       ? `${data.description?.slice(0, 50)}...`
                       : data.description}
                   </p>
+                  <p>
+                    {data.is_found?(
+                      <div>
+                        found
+                      </div>
+                    ):(<div>
+                      not found
+                    </div>)}
+                  </p>
                   {/* {staticBooks && <Rate numStars={data.rate} />} */}
                 </div>
               </div>

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\computer science\4th\project\2\books_project-main\books_project-main\BooksExchange\Models\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\BooksExchange\Models\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
