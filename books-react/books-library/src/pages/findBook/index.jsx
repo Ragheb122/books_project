@@ -46,7 +46,10 @@ function BookDescriptionGenerator() {
       });
   };
 const message = "Generating response..."
-
+const linkStartIndex = description.indexOf('http://');
+const first_message = description.substring(0, linkStartIndex) + ":";
+const lastCharacterIndex = description.length - 1;
+const link = description.substring(linkStartIndex, lastCharacterIndex);
   return (
     
     <Layout>
@@ -66,7 +69,8 @@ const message = "Generating response..."
         ):
   
         <div id="result">
-          <p>{description}</p>
+          <p>{first_message}</p>
+          <p><a href={link}>{link}</a></p>
         </div>
 }
       </div>

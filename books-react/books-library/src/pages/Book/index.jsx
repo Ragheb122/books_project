@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 // components
 import { Image, Button } from "react-bootstrap";
 import Rate from "../../components/Rate";
+import { Link } from "react-router-dom";
 
 // router hook
 import { useNavigate, useParams } from "react-router-dom";
@@ -50,17 +51,14 @@ const Book = () => {
           setBookData({
             id: data?.Data?.id,
             title: data?.Data?.title,
-            image: data?.Data?.userImage,
+            image: data?.Data?.image,
             status: data?.Data?.traded ? "Trade" : "Available",
             description: data?.Data?.description,
             url: data?.Data?.url,
             rate: data?.Data?.rate,
-            user: {
-              id: data?.Data?.userID,
-              img: data?.Data?.userImage,
-              userName: data?.Data?.username,
-              mobile: data?.Data?.mobile,
-            },
+            category: data?.Data?.categories,
+            userID: data?.Data?.userID,
+            userName: data?.Data?.userName
           });
         } else {
           navigate("/home");
@@ -77,7 +75,7 @@ const Book = () => {
         <div className="row">
           <div className="col-md-4 text-center">
             <Image
-              style={{ width: 300 }}
+              style={{ width: 180 }}
               src={bookData.image}
               alt="Book"
               fluid
@@ -116,6 +114,20 @@ const Book = () => {
 
               <span className="d-block">{bookData.description}</span>
             </p>
+                        <p>
+              <span>Category:</span>
+
+              <span className="d-block">{bookData.category}</span>
+            </p>
+              <p className="text-muted">
+              <span>Owner: </span>
+                    <Link
+                      to={`/profile/${bookData?.userID}`}
+                      className="text-decoration-none"
+                    >
+                      <span>{bookData?.userName}</span>
+                    </Link>
+                </p>
 
             {bookData?.url ? (
               <button

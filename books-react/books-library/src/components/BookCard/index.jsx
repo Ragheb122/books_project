@@ -43,6 +43,7 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
   };
 
   return (
+    
     <div>
       <div className="card h-100 text-center border">
         <div className="cu-pointer text-decoration-none d-flex justify-content-between">

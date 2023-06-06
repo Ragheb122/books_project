@@ -157,6 +157,7 @@ const Home = () => {
           ))}
         </div>
       </div>
+
     </Layout>
   );
 };
