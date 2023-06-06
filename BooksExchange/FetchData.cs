@@ -6,6 +6,7 @@ using System.Data.Entity;
 using BooksExchange.Models;
 using System.Threading.Tasks;
 using System.CodeDom.Compiler;
+using System.Xml.Linq;
 
 namespace BooksExchange
 {
@@ -226,6 +227,7 @@ namespace BooksExchange
                                     obj.Add(temp);
                             }
                         }
+                        string categoryName = (string)obj[0].GetType().GetProperty("name").GetValue(obj[0], null);
                         object data = new
                         {
                             id = post.id,
@@ -242,7 +244,7 @@ namespace BooksExchange
                             locationID = post.User.city,
                             locattion = post.User.City1.name,
                             rate = await bookRate(post.id),
-                            categories = obj
+                            categories = categoryName
                         };
                         return data;
                     }
@@ -621,13 +623,25 @@ namespace BooksExchange
                 {
                     List<recommendtion> r = await db.recommendtions.Where(o => o.user_id == id).ToListAsync();
                     List<object> results = new List<object>();
+                    List<string> booksNames = new List<string>();
+                    List<object> posts = await FetchData.GetPosts();
+                    List<string> poststitlesList = posts.Select(obj => obj.GetType().GetProperty("title").GetValue(obj, null).ToString()).ToList();
                     foreach (recommendtion item in r)
                     {
                         if (item != null)
                         {
+                            bool found = false;
+                            foreach (string t in poststitlesList)
+                            {
+                                if (t == item.title)
+                                {
+                                    found = true;
+                                }
+                            }
                             object rate = new { rate = 0, amount = 0 };
                             object temp = new
                             {
+                                is_found = found,
                                 id = "#",
                                 title = item.title,
                                 image = item.image,

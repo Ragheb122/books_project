@@ -434,13 +434,26 @@ namespace BooksExchange
                 using (book_exchangeEntities db = new book_exchangeEntities())
                 {
                     List<object> data = new List<object>();
+                    List<string> booksNames = new List<string>();
+                    List<object> posts = await FetchData.GetPosts();
+                    List<string> poststitlesList = posts.Select(obj => obj.GetType().GetProperty("title").GetValue(obj,null).ToString()).ToList();
                     foreach (Book_ book in books)
                     {
                         // Console.WriteLine("book ISBN is:" + book.ISBN + "\n" + "book Title is:" + book.Title + "\n" + "author is:" + book.Author + "\n" + "image url is:" + book.image);
                         object rate = new { rate = 0, amount = 0 };
+                        bool found = false;
+                        foreach (string t in poststitlesList)
+                        {
+                            if (t == book.Title)
+                            {
+                                found = true;
+                            }
+                        }
                         object temp = new
                         {
+
                             id = book.ISBN,
+                            isFound = found,
                             title = book.Title,
                             image = book.image,
                             description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
@@ -453,6 +466,7 @@ namespace BooksExchange
                         recommendtion r = new recommendtion()
              
                         {
+                            is_found = found,
                             description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
                             + "ISBN:" + Environment.NewLine + book.ISBN,
                             image = book.image,
@@ -461,7 +475,9 @@ namespace BooksExchange
                             user_id = await GetUserIDByToken(token)
                         };
                         db.recommendtions.Add(r);
+                        string newName = (string)temp.GetType().GetProperty("title").GetValue(temp, null);
                         if (!data.Contains(temp))
+                            booksNames.Add(newName);
                             data.Add(temp);
                     }
                     await db.SaveChangesAsync();

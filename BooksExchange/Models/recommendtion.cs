@@ -30,6 +30,8 @@ public partial class recommendtion
 
     public int user_id { get; set; }
 
+    public Nullable<bool> is_found { get; set; }
+
 
 
     public virtual User User { get; set; }
