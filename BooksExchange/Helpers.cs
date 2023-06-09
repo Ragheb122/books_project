@@ -442,16 +442,22 @@ namespace BooksExchange
                         // Console.WriteLine("book ISBN is:" + book.ISBN + "\n" + "book Title is:" + book.Title + "\n" + "author is:" + book.Author + "\n" + "image url is:" + book.image);
                         object rate = new { rate = 0, amount = 0 };
                         bool found = false;
-                        foreach (string t in poststitlesList)
+                        int relevantPostID = 0;
+                        foreach (object t in posts)
                         {
-                            if (t == book.Title)
+                            // t1 is recommended Book's title
+                            string t1 = (string)t.GetType().GetProperty("title").GetValue(t, null).ToString();
+                            // t1 is recommended Book's relevant post ID
+                            int t_PostID = (int)t.GetType().GetProperty("id").GetValue(t, null);
+                            if (t1 == book.Title)
                             {
                                 found = true;
+                                relevantPostID = t_PostID;
                             }
                         }
                         object temp = new
                         {
-
+                            relevantPost = relevantPostID,
                             id = book.ISBN,
                             isFound = found,
                             title = book.Title,
@@ -464,8 +470,8 @@ namespace BooksExchange
                         };
 
                         recommendtion r = new recommendtion()
-             
                         {
+                            relevantPost = relevantPostID,
                             is_found = found,
                             description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
                             + "ISBN:" + Environment.NewLine + book.ISBN,

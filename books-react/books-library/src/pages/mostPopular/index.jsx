@@ -71,7 +71,7 @@ const MostPopular = () => {
   return (
     <Layout>
       <div className="container py-5">
-        <h2>Most Popular Books</h2>
+        <h2 className="sentence">Most Popular Books</h2>
         {/* search*/}
         <div className="row justify-content-center">
           <div className="col-md-8">

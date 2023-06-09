@@ -46,7 +46,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid BG" style={{ backgroundImage: `url(${"https://images6.alphacoders.com/330/330109.jpg"})`}}>
       <div className="py-3 px-2 logo ms-auto w-fit">
         <Logo clickble size={80} />
       </div>
@@ -55,7 +55,9 @@ const Login = () => {
         <h3 style={{ textAlign: "center" }}>Login</h3>
 
 
-          <div className="bg-white p-4 shadow-sm border rounded-4 py-4">
+          <div className="bg-white p-4 shadow-sm border rounded-4 py-4" style={
+            {backgroundImage: `url(${"https://images.unsplash.com/photo-1615800098779-1be32e60cca3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80"})`}
+          }>
             <Form onSubmit={submitHandler}>
               <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
@@ -96,11 +98,11 @@ const Login = () => {
 
               <div className="links d-flex justify-content-start gap-2">
                 <Link to={`/sign`}>
-                  <p className="text-end">Register a new account</p>
+                  <p className="text-start">Register a new account</p>
                 </Link>
                 <span>or</span>
                 <Link to={`/forget-password`}>
-                  <p className="text-end">Forgot your password ?</p>
+                  <p className="text-start">Forgot your password?</p>
                 </Link>
               </div>
 

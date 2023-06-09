@@ -106,15 +106,6 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                       ? `${data.description?.slice(0, 50)}...`
                       : data.description}
                   </p>
-                  <p>
-                    {data.is_found?(
-                      <div>
-                        found
-                      </div>
-                    ):(<div>
-                      not found
-                    </div>)}
-                  </p>
                   {/* {staticBooks && <Rate numStars={data.rate} />} */}
                 </div>
               </div>
@@ -178,8 +169,10 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                 )}
 
                 <span>
-                  {staticBooks
-                    ? "Open link"
+                  {staticBooks && data.is_found?
+                     "Go To relevant post"
+                    :staticBooks?
+                    "open link"
                     : myBooks
                     ? "Mark as given"
                     : "Start chat"}

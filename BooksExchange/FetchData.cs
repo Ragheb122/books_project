@@ -7,6 +7,7 @@ using BooksExchange.Models;
 using System.Threading.Tasks;
 using System.CodeDom.Compiler;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace BooksExchange
 {
@@ -631,23 +632,32 @@ namespace BooksExchange
                         if (item != null)
                         {
                             bool found = false;
-                            foreach (string t in poststitlesList)
+                            int relevantPostID = 0;
+                            string relevantUrl = "https://www.amazon.com/books-used-books-textbooks/b?ie=UTF8&node=283155";
+                        foreach (object t in posts)
+                        {
+                            // t1 is recommended Book's title
+                            string t1 = (string)t.GetType().GetProperty("title").GetValue(t, null).ToString();
+                            // t1 is recommended Book's relevant post ID
+                            int t_PostID = (int)t.GetType().GetProperty("id").GetValue(t, null);
+                            if (t1 == item.title)
                             {
-                                if (t == item.title)
-                                {
-                                    found = true;
-                                }
+                                found = true;
+                                relevantPostID = t_PostID;
+                                    relevantUrl = "http://localhost:3000/book/" + relevantPostID;
                             }
+                        }
                             object rate = new { rate = 0, amount = 0 };
                             object temp = new
                             {
                                 is_found = found,
+                                relevantPost = relevantPostID,
                                 id = "#",
                                 title = item.title,
                                 image = item.image,
                                 description = item.description,
                                 traded = false,
-                                url = "https://www.amazon.com/books-used-books-textbooks/b?ie=UTF8&node=283155",
+                                url = relevantUrl,
                                 rate = rate
                             };
                             if (!results.Contains(temp))

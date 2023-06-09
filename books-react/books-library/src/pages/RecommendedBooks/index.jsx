@@ -16,13 +16,9 @@ import cookie from "react-cookies";
 
 const RecommendedBooks = () => {
   const [products, setProducts] = useState([]);
-  const [posts, setPosts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedFound, setSelectedFound] = useState(false);
+  const [isFoundFilter, setIsFoundFilter] = useState(false);
+
 
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +37,7 @@ const RecommendedBooks = () => {
             traded: book?.traded,
             rate: book?.rate?.rate,
             is_found: book?.is_found,
+            relevantPost: book?.relevantPost,
             user: {
               id: book?.userID,
               img: book?.userImage,
@@ -58,50 +55,27 @@ const RecommendedBooks = () => {
       const matchSearchQuery =
         !searchQuery ||
         book?.name?.toLowerCase()?.startsWith(searchQuery?.toLowerCase());
-      const matchSelectedLocation =
-        !selectedLocation ||
-        book?.location
-          ?.toLowerCase()
-          ?.startsWith(selectedLocation?.toLowerCase());
-      const matchSelectedCategory =
-        !selectedCategory || book?.catgories?.includes(selectedCategory);
-      const matchSelectedFound = 
-        !selectedFound || book?.is_found == true;
-      return matchSearchQuery && matchSelectedFound;
+        const matchSelectedFound = !isFoundFilter || book?.is_found;
+        return matchSearchQuery && matchSelectedFound;
     });
 
     setSearchProducts(filteredData.length ? filteredData : [0]);
-  }, [searchQuery, selectedLocation, selectedCategory, products]);
+  }, [searchQuery, products]);
 
-  // get location and categories
-  useEffect(() => {
-    const getData = async () => {
-      API(`/default/cities`).then(({ data }) => {
-        if (data?.code == 200) {
-          setLocations(data?.Data);
-        }
-      });
-
-      API(`/default/categories`).then(({ data }) => {
-        if (data?.code == 200) {
-          setCategories(data?.Data);
-        }
-      });
-    };
-
-    getData();
-  }, []);
-  //
 const message = "Recommendation system is generating books that we suggest for you..."
   return (
     <Layout>
       <div className="container py-5">
-        <h2>Recommended Books</h2>
+        <h2 className="sentence">Recommended Books</h2>
         {/* search*/}
         <div className="row justify-content-center">
           <div className="col-md-8">
             <div className="input-group">
               <input
+              style={
+                {borderTopLeftRadius:10,
+                borderBottomLeftRadius:10}
+              }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 type="text"
@@ -109,10 +83,28 @@ const message = "Recommendation system is generating books that we suggest for y
                 placeholder="Search for a book in books"
                 aria-label="Search"
               />
-
-              <button className="btn btn-primary" type="button">
+              <button className="btn btn-success" type="button"
+              style={
+                {borderTopRightRadius:10,
+                borderBottomRightRadius:10}}>
                 <i className="bi bi-search" />
+                
               </button>
+              <div className="row justify-content-center"
+              style={
+                {marginLeft:10}
+              }>
+              <button
+                className="btn btn-outline-success"
+                type="button"
+                onClick={() => setIsFoundFilter(!isFoundFilter)}
+              >
+                <i class="bi bi-filter"></i>
+                {isFoundFilter ? "Show All" : "Filter Found"}
+              </button>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -126,7 +118,8 @@ const message = "Recommendation system is generating books that we suggest for y
             : searchProducts?.length
             ? searchProducts
             : products
-          ).map((product, idx) => (
+          ).filter((product) => (!isFoundFilter || product.is_found))
+          .map((product, idx) => (
             <BookCard staticBooks key={idx} data={product} />
           ))}
         </div>

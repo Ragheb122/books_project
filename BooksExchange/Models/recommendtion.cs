@@ -32,7 +32,7 @@ public partial class recommendtion
 
     public Nullable<bool> is_found { get; set; }
 
-
+    public int relevantPost { get; set; }
 
     public virtual User User { get; set; }
 

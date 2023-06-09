@@ -53,26 +53,27 @@ const link = description.substring(linkStartIndex, lastCharacterIndex);
   return (
     
     <Layout>
-    <div className="center-align">
-        <label htmlFor="book-input">Enter a book description or keywords:</label>
-        <input
-          type="text"
-          id="book-input"
-          value={userInput}
-          onChange={event => setUserInput(event.target.value)}
-        />
-  
-        <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-primary" onClick={generateDescription}>Generate Description</button>
-  
-        {isLoading ?(
-          <LoadingBooks parameter = {message}/>
-        ):
-  
-        <div id="result">
-          <p>{first_message}</p>
-          <p><a href={link}>{link}</a></p>
-        </div>
-}
+      <div className='BG' style={{ backgroundImage: `url(${"https://images6.alphacoders.com/330/330109.jpg"})`}}>
+        <div className="center-align BG" >
+            <label className='sentence' htmlFor="book-input" style={{marginBottom:30}}>Enter a book description or keywords:</label>
+            <input
+              type="text"
+              id="book-input"
+              value={userInput}
+              onChange={event => setUserInput(event.target.value)}
+            />
+      
+            <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-primary" onClick={generateDescription}>Generate Description</button>
+      
+            {isLoading ?(
+              <LoadingBooks parameter = {message}/>
+            ):
+            <div id="result">
+              <p>{first_message}</p>
+              <p><a href={link}>{link}</a></p>
+            </div>
+    }
+          </div>
       </div>
     </Layout>
   );

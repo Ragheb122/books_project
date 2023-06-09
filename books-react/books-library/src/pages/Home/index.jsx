@@ -11,25 +11,14 @@ import API from "../../utils/API";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
-
+  const [isTradedFilter, setIsTradedFilter] = useState(false);
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
 
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  // const [currentPage, setCurrentPage] = useState(1);
 
-  // const itemsPerPage = useMemo(() => 6, []);
-  // const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const currentProducts = products.slice(startIndex, endIndex);
-
-  // const handlePageChange = (pageNumber) => {
-  //   setCurrentPage(pageNumber);
-  // };
 
   useEffect(() => {
     API(`/posts`).then(({ data }) => {
@@ -69,12 +58,13 @@ const Home = () => {
           ?.startsWith(selectedLocation?.toLowerCase());
       const matchSelectedCategory =
         !selectedCategory || book?.catgories?.includes(selectedCategory);
+      const matchTradedFound = !isTradedFilter || !book?.traded;
 
-      return matchSearchQuery && matchSelectedLocation && matchSelectedCategory;
+      return matchSearchQuery && matchSelectedLocation && matchSelectedCategory && matchTradedFound;
     });
 
     setSearchProducts(filteredData.length ? filteredData : [0]);
-  }, [searchQuery, selectedLocation, selectedCategory, products]);
+  }, [searchQuery, selectedLocation, selectedCategory, isTradedFilter, products]);
 
   // get location and categories
   useEffect(() => {
@@ -97,8 +87,16 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className="container py-5">
-        <h2>Here you can see users posts</h2>
+      <div style={{ backgroundImage: `url(${"https://images6.alphacoders.com/330/330109.jpg"})`
+    , backgroundSize: 'cover'
+    , backgroundPosition: 'center'
+    , backgroundRepeat: 'no-repeat'
+    , height: '180vh'
+    }
+      
+      }>
+      <div className="container py-5" >
+        <h2 className="sentence">Posts</h2>
         {/*search*/}
         <div className="row justify-content-center">
           <div className="col-md-8">
@@ -108,7 +106,7 @@ const Home = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 type="text"
                 className="form-control"
-                placeholder="Search for a book in books"
+                placeholder="Search book"
                 aria-label="Search"
               />
 
@@ -137,10 +135,20 @@ const Home = () => {
                   </option>
                 ))}
               </select>
-
-              <button className="btn btn-primary" type="button">
-                <i className="bi bi-search" />
+              <div className="row justify-content-center"
+              style={
+                {marginLeft:10}
+              }>
+              <button
+                className="btn btn-outline-success"
+                type="button"
+              onClick={() => setIsTradedFilter(!isTradedFilter)}
+              >
+                <i class="bi bi-filter"></i>
+                {isTradedFilter ? "Show All" : "Show Available Books"}
               </button>
+              </div>
+
             </div>
           </div>
         </div>
@@ -152,10 +160,12 @@ const Home = () => {
             : searchProducts?.length
             ? searchProducts
             : products
-          ).map((product, idx) => (
+          ).filter((product) => (!isTradedFilter || !product.traded))
+          .map((product, idx) => (
             <BookCard key={idx} data={product} />
           ))}
         </div>
+      </div>
       </div>
 
     </Layout>

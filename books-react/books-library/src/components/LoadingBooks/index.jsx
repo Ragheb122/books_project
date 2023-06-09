@@ -4,8 +4,9 @@ const LoadingBooks = (message) => {
   const { parameter } = message;
   return (
     <div className="loader-container">
-      <p className="loading-message">{parameter}</p>
       <div className="loader"></div>
+      <p className="loading-message">{parameter}</p>
+
     </div>
   );
 };
