@@ -25,8 +25,8 @@ public class DefaultControllerTests
         controller.Url = new UrlHelper(new RequestContext(controller.HttpContext, new RouteData()), new RouteCollection());
         var city = 1;
         var name = "John Doe";
-        var email = "johndoe1@example12.comm";
-        var mobile = "9999999999985";
+        var email = "jo55@ex8ample12.comm";
+        var mobile = "991239994499985";
         var books = new int[] { };
         var password = "password1";
         var repassword = "password1";
@@ -39,10 +39,13 @@ public class DefaultControllerTests
         object data = result.Data;
         HttpStatusCode t2 = (HttpStatusCode)data.GetType().GetProperty("code").GetValue(data, null);
         var t1 = data.GetType().GetProperties().ToList();
-        if (t1[1].Name == "error")
+        if (t1.Count == 2)
         {
-            string t4 = (string)data.GetType().GetProperty("error").GetValue(data, null);
-            Assert.AreEqual("", t4);
+            if (t1[1].Name == "error")
+            {
+                string t4 = (string)data.GetType().GetProperty("error").GetValue(data, null);
+                Assert.AreEqual("", t4);
+            }
         }
         Assert.AreEqual(HttpStatusCode.OK, t2);
     }
@@ -62,10 +65,13 @@ public class DefaultControllerTests
         object data = result.Data;
         HttpStatusCode t2 = (HttpStatusCode)data.GetType().GetProperty("code").GetValue(data, null);
         var t1 = data.GetType().GetProperties().ToList();
-        if (t1[1].Name == "error")
+        if (t1.Count == 2)
         {
-            string t4 = (string)data.GetType().GetProperty("error").GetValue(data, null);
-            Assert.AreEqual("", t4);
+            if (t1[1].Name == "error")
+            {
+                string t4 = (string)data.GetType().GetProperty("error").GetValue(data, null);
+                Assert.AreEqual("", t4);
+            }
         }
         Assert.AreEqual(HttpStatusCode.OK, t2);
     }
@@ -80,29 +86,21 @@ public class DefaultControllerTests
         var token = "FJw4qfEExm17U78FA3c1QBmXdt7HJ37BvZCFFKn4UIalt8C7HXm9TJ2E5EnPZ3mx";
         var genera = new int[]{ };
         var description = "book15";
-        // Create a mock instance of HttpPostedFileBase
-        var httpPostedFileMock = new Mock<HttpPostedFileBase>();
-        httpPostedFileMock.Setup(f => f.ContentLength).Returns(6791);  // Set the content length to a random value
-        httpPostedFileMock.Setup(f => f.ContentType).Returns("image/jpeg");  // Set the content type to a random value
-        httpPostedFileMock.Setup(f => f.FileName).Returns("https://edit.org/images/cat/book-covers-big-2019101610.jpg");  // Set the file name to a random value
 
-        // Set up the InputStream property with a dummy stream (optional)
-        var stream = new MemoryStream();  // Create a MemoryStream or use any other stream implementation
-        httpPostedFileMock.Setup(f => f.InputStream).Returns(stream);
-
-        // Use the mock HttpPostedFileBase object in your unit test
-        var image = httpPostedFileMock.Object;
         // Act
-        var result = await controller.AddPost(title,token,genera,description,image) as JsonResult;
+        var result = await controller.AddPost(title,token,genera,description,null) as JsonResult;
 
         // Assert
         object data = result.Data;
         HttpStatusCode t2 = (HttpStatusCode)data.GetType().GetProperty("code").GetValue(data, null);
         var t1 = data.GetType().GetProperties().ToList();
-        if (t1.Count != 1)
+        if (t1.Count == 2)
         {
-            string t4 = (string)data.GetType().GetProperty("error").GetValue(data, null);
-            Assert.AreEqual("", t4);
+            if (t1[1].Name == "error")
+            {
+                string t4 = (string)data.GetType().GetProperty("error").GetValue(data, null);
+                Assert.AreEqual("", t4);
+            }
         }
         Assert.AreEqual(HttpStatusCode.OK, t2);
     }

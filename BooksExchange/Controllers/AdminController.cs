@@ -135,13 +135,6 @@ namespace BooksExchange.Controllers
                     else
                         return Json(new { code = HttpStatusCode.InternalServerError, error = "there's a category with the same name!" });
                 }
-                else if(update == 1)
-                {
-                    if(await UpdateData.UpdateCategory(id, name))
-                        return Json(new { code = HttpStatusCode.OK });
-                    else
-                        return Json(new { code = HttpStatusCode.InternalServerError, error = "there's a category with the same name!" });
-                }
                 else if(update == 2)
                 {
                     if(await DeleteData.RemoveCategory(id))

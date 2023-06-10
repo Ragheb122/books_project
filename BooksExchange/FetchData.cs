@@ -599,7 +599,6 @@ namespace BooksExchange
                         {
                             results[count] = item.Post.title;
                             count++;
-
                         }
                     }
                     return results;

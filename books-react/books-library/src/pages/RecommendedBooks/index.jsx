@@ -100,7 +100,7 @@ const message = "Recommendation system is generating books that we suggest for y
                 onClick={() => setIsFoundFilter(!isFoundFilter)}
               >
                 <i class="bi bi-filter"></i>
-                {isFoundFilter ? "Show All" : "Filter Found"}
+                {isFoundFilter ? "Show All" : "Available in posts"}
               </button>
               </div>
 

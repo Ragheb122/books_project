@@ -354,7 +354,8 @@ namespace BooksExchange
                 throw;
             }
         }
-        // recommend list of books to user based on his choices of favorite books.
+        //
+        // mend list of books to user based on his choices of favorite books.
         // got the template of the code from ChatGPT.
         static public async Task<List<object>> recommentionSysAsync(string token, int check)
         {
