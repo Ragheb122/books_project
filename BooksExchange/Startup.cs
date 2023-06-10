@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Owin;
+﻿using Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Cors;
-using System.Web.Services.Description;
-using Microsoft.AspNet.SignalR;
 
 [assembly: OwinStartup(typeof(BooksExchange.Startup))]
 namespace BooksExchange

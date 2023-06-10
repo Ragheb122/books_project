@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using BooksExchange.Models;
-using System.Data.Entity;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using Newtonsoft.Json.Linq;
 
 namespace BooksExchange.Controllers
 {

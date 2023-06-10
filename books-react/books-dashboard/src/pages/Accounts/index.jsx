@@ -11,12 +11,8 @@ import FullLayout from "../../layouts/FullLayout";
 import MaterialReactTable from "material-react-table";
 
 //Material-UI Imports
-import {
-  Box,
-  IconButton,
-} from "@mui/material";
+import {Box} from "@mui/material";
 
-// import { data as collectedData } from "./makeData";
 import { Button, ButtonGroup, Col, FormGroup, Row } from "react-bootstrap";
 
 import { getCheckModal } from "../../utils/getModal";
@@ -126,18 +122,6 @@ const Accounts = () => {
             <span className="text-white">
               {row.original?.admin ? "Yes" : "No"}
             </span>
-          </Box>
-        ),
-      },
-      
-      {
-        id: "actions",
-        header: "Actions",
-        Cell: ({ row }) => (
-          <Box className="text-start">
-            <IconButton onClick={() => openModal(row.original.id)}>
-              <i className="bi bi-pencil-square fs-5"></i>
-            </IconButton>
           </Box>
         ),
       },
@@ -332,7 +316,7 @@ const Accounts = () => {
           columns={columns}
           data={data}
           state={{ rowSelection: rowSelectionIdx }}
-          initialState={{ showColumnFilters: true }}
+          initialState={{ showColumnFilters: false }}
           enableFullScreenToggle={false}
           enableDensityToggle={false}
           enableColumnActions={false}

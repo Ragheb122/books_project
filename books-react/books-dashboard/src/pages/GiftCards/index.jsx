@@ -20,7 +20,6 @@ import {
   Select,
 } from "@mui/material";
 
-// import { data as collectedData } from "./makeData";
 import { Button, ButtonGroup, Col, FormGroup, Row } from "react-bootstrap";
 
 import { getCheckModal } from "../../utils/getModal";

@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Web;
 using BooksExchange.Models;
 using System.Text;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using System.IO;
 using System.Net;
-using Newtonsoft.Json.Linq;
 using System.Net.Mail;
-using System.EnterpriseServices.Internal;
 using System.Diagnostics;
-using System.Web.Services.Description;
 
 namespace BooksExchange
 {
@@ -272,7 +267,9 @@ namespace BooksExchange
                     {
                         int count = await db.Posts.Where(o => o.user_id == id.Value && o.traded == true && o.redeemed == false).CountAsync();
                         if (count >= requested)
+                        {
                             return true;
+                        }
                         else
                             return false;
                     }

@@ -63,7 +63,7 @@ const link = description.substring(linkStartIndex, lastCharacterIndex);
               onChange={event => setUserInput(event.target.value)}
             />
       
-            <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-primary" onClick={generateDescription}>Generate Description</button>
+            <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-outline-primary" onClick={generateDescription}>Generate Description</button>
       
             {isLoading ?(
               <LoadingBooks parameter = {message}/>

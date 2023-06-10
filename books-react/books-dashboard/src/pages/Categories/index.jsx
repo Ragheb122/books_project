@@ -16,7 +16,6 @@ import {
   IconButton,
 } from "@mui/material";
 
-// import { data as collectedData } from "./makeData";
 import { Button, ButtonGroup, Col, FormGroup, Row } from "react-bootstrap";
 
 import { getCheckModal } from "../../utils/getModal";
@@ -92,17 +91,6 @@ const Categories = () => {
         Cell: ({ row }) => (
           <Box className="text-start">
             <span>{row.original?.name}</span>
-          </Box>
-        ),
-      },
-      {
-        id: "actions",
-        header: "Actions",
-        Cell: ({ row }) => (
-          <Box className="text-start">
-            <IconButton onClick={() => openModal(row.original.id)}>
-              <i className="bi bi-pencil-square fs-5"></i>
-            </IconButton>
           </Box>
         ),
       },
