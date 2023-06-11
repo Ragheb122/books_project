@@ -15,33 +15,7 @@ namespace BooksExchange
     public static class Helpers
     {
         
-        static public async Task<string> GetCode(int length = 6)
-        {
-            string valid = "1234567890";
-            string s = "";
-            using (RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider())
-            {
-                while (s.Length != length)
-                {
-                    byte[] oneByte = new byte[1];
-                    provider.GetBytes(oneByte);
-                    char character = (char)oneByte[0];
-                    if (valid.Contains(character))
-                    {
-                        s += character;
-                    }
-                }
-            }
-            using (book_exchangeEntities db = new book_exchangeEntities())
-            {
-                VerifyCode UserCode = await db.VerifyCodes.FirstOrDefaultAsync(o => o.code == s);
-                if (UserCode != null)
-                    return await GetRandomString(64);
-                else
-                    return s;
-            }
-        }
-        // generating a random code for users who forgot their password
+        // generating a random code for users token
         static public async Task<string> GetRandomString(int length = 64)
         {
             string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -180,28 +154,17 @@ namespace BooksExchange
                 throw;
             }
         }
-        // not relevant
-        static public async Task<int> CheckCity(string name)
+        static public async Task<string> GetTokenIDByEmail(string email)
         {
             try
             {
                 using (book_exchangeEntities db = new book_exchangeEntities())
                 {
-                    City city = await db.Cities.FirstOrDefaultAsync(o => o.name == name);
-                    if (city != null)
-                        return city.id;
+                    User u = await db.Users.FirstOrDefaultAsync(o => o.email == email);
+                    if (u == null)
+                        return "";
                     else
-                    {
-                        City newCity = new City()
-                        {
-                            name = name,
-                            created_at = DateTime.Now
-                        };
-                        db.Cities.Add(newCity);
-                        if (await db.SaveChangesAsync() > 0)
-                            return newCity.id;
-                    }
-                    return 0;
+                        return u.token;
                 }
             }
             catch (Exception)
@@ -210,6 +173,7 @@ namespace BooksExchange
                 throw;
             }
         }
+
         // given token, check if the relevant user exists in the databse.
         static public async Task<bool> UserExist(string token)
         {
@@ -284,27 +248,6 @@ namespace BooksExchange
                 throw;
             }
         }
-        static public async Task<bool> CheckVerifyCode(string email, string code, string password)
-        {
-            using (book_exchangeEntities db = new book_exchangeEntities())
-            {
-                VerifyCode verify = await db.VerifyCodes.Where(o => o.User.email == email && o.code == code).FirstOrDefaultAsync();
-                if (verify == null)
-                    return false;
-                else
-                {
-                    int id = verify.user_id;
-                    User user = await db.Users.FindAsync(id);
-                    user.password = GetMD5Hash(password);
-                    db.Entry(verify).State = EntityState.Deleted;
-                    db.Entry(user).State = EntityState.Modified;
-                    if (await db.SaveChangesAsync() > 0)
-                        return true;
-                    else
-                        return false;
-                }
-            }
-        }
         // given user's token, check if the user is admin.
         static public async Task<bool> IsAdmin(string token)
         {
@@ -318,35 +261,6 @@ namespace BooksExchange
                             return true;
                     return false;
                 }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        // send verification code to user's mail.
-        static public async Task<bool> SendEmail(string email, string code)
-        {
-            try
-            {
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
-                message.From = new MailAddress("Yourbook084@gmail.com");
-                message.To.Add(new MailAddress(email));
-                message.Subject = "Password reset code";
-                message.IsBodyHtml = true; //to make message body as html  
-                message.Body = "your password reset code is : " + code;
-                message.Priority = MailPriority.Normal;
-                smtp.Port = 587;
-                smtp.Host = "smtp.gmail.com";//"mail.smart-mail.net"; //for gmail host  
-                smtp.EnableSsl = false;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("Yourbook084@gmail.com", "mmm123.m");
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.EnableSsl = true;
-                smtp.Send(message);
-                return true;
             }
             catch (Exception)
             {
@@ -593,6 +507,7 @@ namespace BooksExchange
             }
         }
     }
+
     class Book_
     {
         public string ISBN { get; set; }

@@ -128,80 +128,6 @@ namespace BooksExchange
                 throw;
             }
         }
-        static public async Task<bool> UserPreferences(string token, int[] id)
-        {
-            try
-            {
-                int userId = await Helpers.GetUserIDByToken(token);
-                using (book_exchangeEntities db = new book_exchangeEntities())
-                {
-                    for(int i = 0; i < id.Length; i++)
-                    {
-                        int genId = id[i];
-                        UserPreference Check = await db.UserPreferences.Where(o => o.user_id == userId && o.generas_id == genId).FirstOrDefaultAsync();
-                        if(Check == null)
-                        {
-                            UserPreference pref = new UserPreference()
-                            {
-                                generas_id = genId,
-                                user_id = userId
-                            };
-                            db.UserPreferences.Add(pref);
-                        }
-                        else
-                        {
-                            Check.count++;
-                            db.Entry(Check).State = EntityState.Modified;
-                        }
-                    }
-                    if (await db.SaveChangesAsync() > 0)
-                        return true;
-                    else
-                        return false;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        // inserting verify code to the database.
-        static public async Task<string> CreateVerifyCode(string email)
-        {
-            try
-            {
-                using (book_exchangeEntities db = new book_exchangeEntities())
-                {
-                    User user = await db.Users.Where(o => o.email == email).FirstOrDefaultAsync();
-                    if (user == null)
-                        return "user not registered yet";
-                    else
-                    {
-                        VerifyCode verify = await db.VerifyCodes.Where(o => o.user_id == user.id).FirstOrDefaultAsync();
-                        if (verify != null)
-                            return "code sent, please check your email!";
-                        string code_ = await Helpers.GetCode();
-                        VerifyCode code = new VerifyCode()
-                        {
-                            created_at = DateTime.Now,
-                            user_id = user.id,
-                            code = code_
-                        };
-                        db.VerifyCodes.Add(code);
-                        await Helpers.SendEmail(email, code_);
-                        if(await db.SaveChangesAsync() > 0)
-                            return "please check your email!";
-                        return "something went wrong please try again!";
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         // inserting new category to the database.
         static public async Task<bool> NewCategory(string name)
         {
@@ -264,34 +190,6 @@ namespace BooksExchange
             {
 
                 throw;
-            }
-        }
-        // not relevant
-        static public async Task<bool> NewBookRate(int id, string token, int rate)
-        {
-            using (book_exchangeEntities db = new book_exchangeEntities())
-            {
-                int userID = await Helpers.GetUserIDByToken(token);
-                BooksRate book = await db.BooksRates.Where(o => o.book_id == id && o.user_id == userID).FirstOrDefaultAsync();
-                if(book != null)
-                {
-                    book.rate = rate;
-                    db.Entry(book).State = EntityState.Modified;
-                }
-                else
-                {
-                    BooksRate rate_ = new BooksRate()
-                    {
-                        book_id = id,
-                        rate = rate,
-                        user_id = userID
-                    };
-                    db.BooksRates.Add(rate_);
-                }
-                if (await db.SaveChangesAsync() > 0)
-                    return true;
-                else
-                    return false;
             }
         }
     }

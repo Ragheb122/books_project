@@ -11,7 +11,7 @@ namespace BooksExchange.Controllers
 {
     public class DefaultController : Controller
     {
-        // uploading image.
+        // uploading image for a user.
         public async Task<string> UploadImage(HttpPostedFileBase img)
         {
             try
@@ -79,7 +79,7 @@ namespace BooksExchange.Controllers
             {
                 string[] Data = { email, password };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required!" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 object Info = await FetchData.CheckLogin(email, password);
                 if (Info == null)
                     return Json(new { code = HttpStatusCode.Forbidden });

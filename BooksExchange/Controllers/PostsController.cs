@@ -45,7 +45,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult> Books(string token)
+        public async Task<ActionResult> RecommendedBooks(string token)
         {
             try
             {
@@ -61,7 +61,8 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult> MostPopular(string token)
+        // returns most popular books
+        public async Task<ActionResult> MostPopular()
         {
             try
             {
@@ -80,12 +81,12 @@ namespace BooksExchange.Controllers
             {
                 string[] Data = { token, id.ToString() };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 if (!await Helpers.UserExist(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if (!await Helpers.PostOwner(token, id.Value))
                     return Json(new { code = HttpStatusCode.Forbidden });
-                if (await UpdateData.markAsRead(id.Value))
+                if (await UpdateData.Traded(id.Value))
                     return Json(new { code = HttpStatusCode.OK });
                 else
                     return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });

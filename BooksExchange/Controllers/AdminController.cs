@@ -25,7 +25,7 @@ namespace BooksExchange.Controllers
         {
             string[] Data = { token };
             if (Helpers.NullOrEmpty(Data))
-                return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" }, JsonRequestBehavior.AllowGet);
+                return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" }, JsonRequestBehavior.AllowGet);
             if (!await Helpers.IsAdmin(token))
                 return Json(new { code = HttpStatusCode.Forbidden }, JsonRequestBehavior.AllowGet);
 
@@ -39,7 +39,7 @@ namespace BooksExchange.Controllers
             {
                 string[] Data = { token, id };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 if (!await Helpers.IsAdmin(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if (await UpdateData.RedeemRequest(id, token))
@@ -53,6 +53,7 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
+        // update post status
         [HttpPost]
         public async Task<ActionResult> PostStatus(string token, string id, int status = 0)
         {
@@ -62,7 +63,7 @@ namespace BooksExchange.Controllers
                     return Json(new { code = HttpStatusCode.BadRequest, error = "entry aren't valid" });
                 string[] Data = { token, id };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 if (!await Helpers.IsAdmin(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if (await UpdateData.UpdatePostStatus(id, status, token = "ads"))
@@ -84,7 +85,7 @@ namespace BooksExchange.Controllers
             {
                 string[] Data = { token, id };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 if (!await Helpers.IsAdmin(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if (await DeleteData.RemoveUser(id))
@@ -98,34 +99,15 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
-        [HttpGet]
-        public async Task<ActionResult> SentGiftCards(string token)
-        {
-            try
-            {
-                string[] Data = { token };
-                if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" }, JsonRequestBehavior.AllowGet);
-                if (!await Helpers.IsAdmin(token))
-                    return Json(new { code = HttpStatusCode.Forbidden }, JsonRequestBehavior.AllowGet);
-
-                    return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetSentGifts() }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         [HttpPost]
-        // adding category throgh the admin's panel.
+        // add or delete category from the admin's panel.
         public async Task<ActionResult> Category(string token, string name, string id, int update = 0)
         {
             try
             {
                 string[] Data = { token, name, id };
                 if (Helpers.NullOrEmpty(Data) && update < 2)
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 if (!await Helpers.IsAdmin(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if(update == 0)
@@ -152,14 +134,14 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpGet]
-        // get the posts through admin's panel.
+        // get not approved posts in admin's panel.
         public async Task<ActionResult> Posts(string token)
         {
             try
             {
                 string[] Data = { token };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" }, JsonRequestBehavior.AllowGet);
                 if (!await Helpers.IsAdmin(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetAllPosts() }, JsonRequestBehavior.AllowGet);
@@ -178,11 +160,11 @@ namespace BooksExchange.Controllers
             {
                 string[] Data = { email, password };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required!" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 object Info = await FetchData.CheckLogin(email, password);
-                if (Info == null)
+                if (Info == null || !await Helpers.IsAdmin(await Helpers.GetTokenIDByEmail(email)))
                     return Json(new { code = HttpStatusCode.Forbidden });
-                else
+                else 
                     return Json(new { code = HttpStatusCode.OK, Data = Info });
             }
             catch (Exception)
@@ -199,7 +181,7 @@ namespace BooksExchange.Controllers
             {
                 string[] Data = { token, id };
                 if (Helpers.NullOrEmpty(Data) || id == null)
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 if (!await Helpers.IsAdmin(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if (await UpdateData.MakeAdmin(id, await Helpers.GetUserIDByToken(token)))

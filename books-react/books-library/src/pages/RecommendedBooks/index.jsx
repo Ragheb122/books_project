@@ -25,7 +25,7 @@ const RecommendedBooks = () => {
   useEffect(() => {
     setIsLoading(true);
     const token = cookie.load("token");
-    API(`/posts/books?token=${token}`).then(({ data }) => {
+    API(`/posts/RecommendedBooks?token=${token}`).then(({ data }) => {
       if (data?.code == 200) {
         setProducts(
           data?.Data?.map((book) => ({

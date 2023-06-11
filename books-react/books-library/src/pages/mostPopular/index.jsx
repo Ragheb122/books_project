@@ -11,22 +11,16 @@ import BookCard from "../../components/BookCard";
 // apis
 import API from "../../utils/API";
 
-// cookies
-import cookie from "react-cookies";
-
 const MostPopular = () => {
   const [products, setProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
 
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    const token = cookie.load("token");
-    API(`/posts/MostPopular?token=${token}`).then(({ data }) => {
+    API(`/posts/MostPopular`).then(({ data }) => {
       if (data?.code == 200) {
         setProducts(
           data?.Data?.map((book) => ({
@@ -54,19 +48,12 @@ const MostPopular = () => {
       const matchSearchQuery =
         !searchQuery ||
         book?.name?.toLowerCase()?.startsWith(searchQuery?.toLowerCase());
-      const matchSelectedLocation =
-        !selectedLocation ||
-        book?.location
-          ?.toLowerCase()
-          ?.startsWith(selectedLocation?.toLowerCase());
-      const matchSelectedCategory =
-        !selectedCategory || book?.catgories?.includes(selectedCategory);
 
-      return matchSearchQuery && matchSelectedLocation && matchSelectedCategory;
+      return matchSearchQuery;
     });
 
     setSearchProducts(filteredData.length ? filteredData : [0]);
-  }, [searchQuery, selectedLocation, selectedCategory, products]);
+  }, [searchQuery, products]);
 
   return (
     <Layout>

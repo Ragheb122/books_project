@@ -178,7 +178,7 @@ namespace BooksExchange
                 throw;
             }
         }
-        static public async Task<object> GivenAndTakenBooksCount(bool vistor, int? id, string token)
+        static public async Task<object> GivenBooksCount(bool vistor, int? id, string token)
         {
             if (vistor == false)
                 id = await Helpers.GetUserIDByToken(token);
@@ -314,6 +314,7 @@ namespace BooksExchange
                 throw;
             }
         }
+        // return all users except me.
         static public async Task<List<object>> GetUsers(string token)
         {
             try
@@ -369,39 +370,6 @@ namespace BooksExchange
                                username = item.User.name,
                                amount = item.requested,
                                status = item.sent
-                            };
-                            if (!Data.Contains(temp))
-                                Data.Add(temp);
-                        }
-                    }
-                    return Data;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        static public async Task<List<object>> GetSentGifts()
-        {
-            try
-            {
-                using (book_exchangeEntities db = new book_exchangeEntities())
-                {
-                    List<GiftRequest> gift = await db.GiftRequests.Where(o=>o.sent == true).OrderByDescending(p=>p.updated_at).ToListAsync();
-                    List<object> Data = new List<object>();
-                    foreach (GiftRequest item in gift)
-                    {
-                        if (item != null)
-                        {
-                            object temp = new
-                            {
-                                id = item.id,
-                                username = item.User.name,
-                                amount = item.requested,
-                                sentAt = item.updated_at,
-                                status = item.sent
                             };
                             if (!Data.Contains(temp))
                                 Data.Add(temp);

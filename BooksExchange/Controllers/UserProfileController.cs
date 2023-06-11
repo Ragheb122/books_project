@@ -37,7 +37,7 @@ namespace BooksExchange.Controllers
             {
                 if (!await Helpers.UserExist(token))
                     return Json(new { code = HttpStatusCode.Forbidden }, JsonRequestBehavior.AllowGet);
-                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GivenAndTakenBooksCount(vistor, id.Value, token) }, JsonRequestBehavior.AllowGet);
+                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GivenBooksCount(vistor, id.Value, token) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
@@ -52,7 +52,7 @@ namespace BooksExchange.Controllers
             {
                 string[] Data = { token, amount.ToString() };
                 if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
                 if (!await Helpers.UserExist(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if (!await Helpers.haveEnoghBooksToRedeem(token, amount.Value))
@@ -97,7 +97,7 @@ namespace BooksExchange.Controllers
         {
             string[] Data = { token, id.ToString() };
             if (Helpers.NullOrEmpty(Data))
-                return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
+                return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
             if (!await Helpers.UserExist(token))
                 return Json(new { code = HttpStatusCode.Forbidden });
             if(rate <= 0 || rate > 5)
