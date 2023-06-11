@@ -32,31 +32,6 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
-        // not relevant.
-        public string GetPublicIP()
-        {
-            try
-            {
-                String address = "";
-                WebRequest request = WebRequest.Create("http://checkip.dyndns.org/");
-                using (WebResponse response = request.GetResponse())
-                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
-                {
-                    address = stream.ReadToEnd();
-                }
-
-                int first = address.IndexOf("Address: ") + 9;
-                int last = address.LastIndexOf("</body>");
-                address = address.Substring(first, last - first);
-
-                return address;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         [HttpPost]
         public async Task<ActionResult> Register(int? id, int city,string name, string email, string mobile, int[] books, string password = "", string repassword = "", HttpPostedFileBase image = null)
         {
@@ -117,26 +92,6 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
-        [HttpPost]
-        public async Task<ActionResult> SetPreferences(string token, int[] id)
-        {
-            try
-            {
-                if (id.Count() <= 0)
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "please select at least one genera!" });
-                if (!await Helpers.UserExist(token))
-                    return Json(new { code = HttpStatusCode.Forbidden });
-                if (await InsertData.UserPreferences(token, id))
-                    return Json(new { code = HttpStatusCode.OK });
-
-                return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         [HttpGet]
         public async Task<ActionResult> UserInfoById(int? id, bool profile = false, string token = "")
         {
@@ -158,26 +113,6 @@ namespace BooksExchange.Controllers
 
                 throw;
             }
-        }
-        [HttpGet]
-        public async Task<ActionResult> SendCode(string email)
-        {
-            if (string.IsNullOrEmpty(email.Trim()))
-                return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required!" }, JsonRequestBehavior.AllowGet);
-            return Json(new { code = HttpStatusCode.OK, message = await InsertData.CreateVerifyCode(email) }, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public async Task<ActionResult> CheckCode(string email, string code, string password, string repassword)
-        {
-            string[] Data = { email, code, password, repassword };
-            if (Helpers.NullOrEmpty(Data))
-                return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" });
-            if(password != repassword)
-                return Json(new { code = HttpStatusCode.BadRequest, error = "password doesn't match" });
-            if (await Helpers.CheckVerifyCode(email, code, password))
-                return Json(new { code = HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
-
-            return Json(new { code = HttpStatusCode.InternalServerError, error = "please try again" });
         }
         [HttpGet]
         public async Task<ActionResult> Categories()

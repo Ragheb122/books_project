@@ -21,27 +21,8 @@ const Book = () => {
   const { id } = useParams();
   const [bookData, setBookData] = useState({});
 
-  const [rateBook, setRateBook] = useState(0);
-
   const startChat = () => {
     window.open(`https://wa.me/${bookData?.user?.mobile}`, "_blank");
-  };
-
-  const handelClick = (rate) => {
-    setRateBook(rate);
-
-    const token = cookie.load("token");
-    const formData = new FormData();
-
-    formData.append("token", token);
-    formData.append("rate", rate);
-    formData.append("id", id);
-
-    API.post("/posts/RateBook", formData).then(({ data }) => {
-      if (data.code == 200) {
-        getMsg("Success Added Rate", "success");
-      }
-    });
   };
 
   useEffect(() => {
@@ -96,19 +77,6 @@ const Book = () => {
                 {bookData.status}
               </span>
             </p>
-            {bookData?.url && (
-              <p className="mb-1 d-flex">
-                <span className="me-1">rate:</span>{" "}
-                <Rate
-                  handelClick={handelClick}
-                  isClickable
-                  numStars={bookData?.rate?.rate || rateBook}
-                />
-                <span>
-                  {bookData?.rate?.rate || 0} ({bookData?.rate?.amount || 0})
-                </span>
-              </p>
-            )}
             <p>
               <span>Description:</span>
 

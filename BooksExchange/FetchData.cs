@@ -548,7 +548,6 @@ namespace BooksExchange
                 throw;
             }
         }
-        // not relevant
         static public async Task<List<object>> TopBooks()
         {
             try

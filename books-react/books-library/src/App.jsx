@@ -14,7 +14,6 @@ import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Sign from "./pages/Sign";
-import ForgetPassword from "./pages/ForgetPassword";
 import RecommendedBooks from "./pages/RecommendedBooks";
 import Profile from "./pages/Profile";
 import Book from "./pages/Book";
@@ -78,7 +77,6 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/sign" element={<Sign />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="*" element={<Navigate replace to="/login" />} />
         </Routes>
       )}

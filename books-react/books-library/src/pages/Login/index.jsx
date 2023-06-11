@@ -100,10 +100,6 @@ const Login = () => {
                 <Link to={`/sign`}>
                   <p className="text-start">Register a new account</p>
                 </Link>
-                <span>or</span>
-                <Link to={`/forget-password`}>
-                  <p className="text-start">Forgot your password?</p>
-                </Link>
               </div>
 
               <Button
