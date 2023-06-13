@@ -316,7 +316,6 @@ namespace BooksExchange
                     char charToRemove1 = '[';
                     char charToRemove2 = ']';
                     char charToRemove3 = '\'';
-
                     string result1 = parts[0].Replace(charToRemove1.ToString(), string.Empty);
                     string result2 = parts[3].Replace(charToRemove2.ToString(), string.Empty);
                     string result3 = result2.Replace(charToRemove3.ToString(), string.Empty);
@@ -478,7 +477,7 @@ namespace BooksExchange
                             description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
                             + "ISBN:" + Environment.NewLine + book.ISBN,
                             traded = false,
-                            url = "-",
+                            url = "https://www.amazon.com/books-used-books-textbooks/b?ie=UTF8&node=283155",
                             rate = rate
                         };
                         if (!data.Contains(temp))

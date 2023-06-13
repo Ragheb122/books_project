@@ -33,13 +33,12 @@ namespace BooksExchange
                         {
                             foreach (int item in books)
                             {
-                                BooksRate rate = new BooksRate()
+                                favBook rate = new favBook()
                                 {
                                     book_id = item,
-                                    rate = 5,
                                     user_id = use.id
                                 };
-                                db.BooksRates.Add(rate);
+                                db.favBooks.Add(rate);
                             }
                         }
                     }

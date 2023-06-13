@@ -5,15 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="book_exchangeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BooksRates">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="book_id" Type="int" Nullable="false" />
-          <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="rate" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Cities">
           <Key>
             <PropertyRef Name="id" />
@@ -21,6 +12,14 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="favBooks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="book_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Generas">
           <Key>
@@ -76,24 +75,7 @@
           <Property Name="image" Type="nvarchar(max)" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="is_found" Type="bit" />
-        </EntityType>
-        <EntityType Name="Reviews">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="review1" Type="int" Nullable="false" />
-          <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="created_at" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserPreferences">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="generas_id" Type="int" Nullable="false" />
-          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="relevantPost" Type="int" />
         </EntityType>
         <EntityType Name="UserRates">
           <Key>
@@ -119,35 +101,26 @@
           <Property Name="image" Type="nvarchar(max)" Nullable="false" />
           <Property Name="admin" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="VerifyCodes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="created_at" Type="datetime" Nullable="false" />
-        </EntityType>
         <Association Name="FK_BooksRates_Posts">
           <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
-          <End Role="BooksRates" Type="Self.BooksRates" Multiplicity="*" />
+          <End Role="favBooks" Type="Self.favBooks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="BooksRates">
+            <Dependent Role="favBooks">
               <PropertyRef Name="book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BooksRates_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="BooksRates" Type="Self.BooksRates" Multiplicity="*" />
+          <End Role="favBooks" Type="Self.favBooks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="BooksRates">
+            <Dependent Role="favBooks">
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -212,42 +185,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Reviews_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Reviews">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserPreferences_Generas">
-          <End Role="Generas" Type="Self.Generas" Multiplicity="1" />
-          <End Role="UserPreferences" Type="Self.UserPreferences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Generas">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="UserPreferences">
-              <PropertyRef Name="generas_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserPreferences_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="UserPreferences" Type="Self.UserPreferences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="UserPreferences">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserRates_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserRates" Type="Self.UserRates" Multiplicity="*" />
@@ -284,38 +221,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VerifyCodes_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="VerifyCodes" Type="Self.VerifyCodes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="VerifyCodes">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="book_exchangeModelStoreContainer">
-          <EntitySet Name="BooksRates" EntityType="Self.BooksRates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="favBooks" EntityType="Self.favBooks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Generas" EntityType="Self.Generas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GiftRequests" EntityType="Self.GiftRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostsGeneras" EntityType="Self.PostsGeneras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="recommendtion" EntityType="Self.recommendtion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRates" EntityType="Self.UserRates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="VerifyCodes" EntityType="Self.VerifyCodes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BooksRates_Posts" Association="Self.FK_BooksRates_Posts">
             <End Role="Posts" EntitySet="Posts" />
-            <End Role="BooksRates" EntitySet="BooksRates" />
+            <End Role="favBooks" EntitySet="favBooks" />
           </AssociationSet>
           <AssociationSet Name="FK_BooksRates_Users" Association="Self.FK_BooksRates_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="BooksRates" EntitySet="BooksRates" />
+            <End Role="favBooks" EntitySet="favBooks" />
           </AssociationSet>
           <AssociationSet Name="FK_GiftRequests_Users" Association="Self.FK_GiftRequests_Users">
             <End Role="Users" EntitySet="Users" />
@@ -337,18 +259,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="recommendtion" EntitySet="recommendtion" />
           </AssociationSet>
-          <AssociationSet Name="FK_Reviews_Users" Association="Self.FK_Reviews_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Reviews" EntitySet="Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserPreferences_Generas" Association="Self.FK_UserPreferences_Generas">
-            <End Role="Generas" EntitySet="Generas" />
-            <End Role="UserPreferences" EntitySet="UserPreferences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserPreferences_Users" Association="Self.FK_UserPreferences_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UserPreferences" EntitySet="UserPreferences" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserRates_Users" Association="Self.FK_UserRates_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserRates" EntitySet="UserRates" />
@@ -361,114 +271,28 @@
             <End Role="Cities" EntitySet="Cities" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_VerifyCodes_Users" Association="Self.FK_VerifyCodes_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="VerifyCodes" EntitySet="VerifyCodes" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="book_exchangeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="book_exchangeEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BooksRates" EntityType="book_exchangeModel.BooksRate" />
-          <EntitySet Name="Cities" EntityType="book_exchangeModel.City" />
-          <EntitySet Name="Generas" EntityType="book_exchangeModel.Genera" />
-          <EntitySet Name="GiftRequests" EntityType="book_exchangeModel.GiftRequest" />
-          <EntitySet Name="Posts" EntityType="book_exchangeModel.Post" />
-          <EntitySet Name="PostsGeneras" EntityType="book_exchangeModel.PostsGenera" />
-          <EntitySet Name="recommendtions" EntityType="book_exchangeModel.recommendtion" />
-          <EntitySet Name="Reviews" EntityType="book_exchangeModel.Review" />
-          <EntitySet Name="UserPreferences" EntityType="book_exchangeModel.UserPreference" />
-          <EntitySet Name="UserRates" EntityType="book_exchangeModel.UserRate" />
-          <EntitySet Name="Users" EntityType="book_exchangeModel.User" />
-          <EntitySet Name="VerifyCodes" EntityType="book_exchangeModel.VerifyCode" />
-          <AssociationSet Name="FK_BooksRates_Posts" Association="book_exchangeModel.FK_BooksRates_Posts">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="BooksRate" EntitySet="BooksRates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BooksRates_Users" Association="book_exchangeModel.FK_BooksRates_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="BooksRate" EntitySet="BooksRates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Cities" Association="book_exchangeModel.FK_Users_Cities">
-            <End Role="City" EntitySet="Cities" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PostsGeneras_Generas" Association="book_exchangeModel.FK_PostsGeneras_Generas">
-            <End Role="Genera" EntitySet="Generas" />
-            <End Role="PostsGenera" EntitySet="PostsGeneras" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserPreferences_Generas" Association="book_exchangeModel.FK_UserPreferences_Generas">
-            <End Role="Genera" EntitySet="Generas" />
-            <End Role="UserPreference" EntitySet="UserPreferences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GiftRequests_Users" Association="book_exchangeModel.FK_GiftRequests_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="GiftRequest" EntitySet="GiftRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Posts_Users" Association="book_exchangeModel.FK_Posts_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PostsGeneras_Posts" Association="book_exchangeModel.FK_PostsGeneras_Posts">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="PostsGenera" EntitySet="PostsGeneras" />
-          </AssociationSet>
-          <AssociationSet Name="FK_recommendtion_Users" Association="book_exchangeModel.FK_recommendtion_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="recommendtion" EntitySet="recommendtions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Reviews_Users" Association="book_exchangeModel.FK_Reviews_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Review" EntitySet="Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserPreferences_Users" Association="book_exchangeModel.FK_UserPreferences_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserPreference" EntitySet="UserPreferences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRates_Users" Association="book_exchangeModel.FK_UserRates_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserRate" EntitySet="UserRates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRates_Users1" Association="book_exchangeModel.FK_UserRates_Users1">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserRate" EntitySet="UserRates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VerifyCodes_Users" Association="book_exchangeModel.FK_VerifyCodes_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="VerifyCode" EntitySet="VerifyCodes" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="BooksRate">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="book_id" Type="Int32" Nullable="false" />
-          <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="rate" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_BooksRates_Posts" FromRole="BooksRate" ToRole="Post" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_BooksRates_Users" FromRole="BooksRate" ToRole="User" />
-        </EntityType>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Users" Relationship="book_exchangeModel.FK_Users_Cities" FromRole="City" ToRole="User" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Cities" FromRole="Cities" ToRole="Users" />
         </EntityType>
         <EntityType Name="Genera">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="PostsGeneras" Relationship="book_exchangeModel.FK_PostsGeneras_Generas" FromRole="Genera" ToRole="PostsGenera" />
-          <NavigationProperty Name="UserPreferences" Relationship="book_exchangeModel.FK_UserPreferences_Generas" FromRole="Genera" ToRole="UserPreference" />
+          <NavigationProperty Name="PostsGeneras" Relationship="Self.FK_PostsGeneras_Generas" FromRole="Generas" ToRole="PostsGeneras" />
         </EntityType>
         <EntityType Name="GiftRequest">
           <Key>
@@ -480,16 +304,16 @@
           <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="sent" Type="Boolean" Nullable="false" />
           <Property Name="requested" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_GiftRequests_Users" FromRole="GiftRequest" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="Self.FK_GiftRequests_Users" FromRole="GiftRequests" ToRole="Users" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="approved" Type="Boolean" Nullable="false" />
           <Property Name="traded" Type="Boolean" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
@@ -497,9 +321,9 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="redeemed" Type="Boolean" Nullable="false" />
           <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BooksRates" Relationship="book_exchangeModel.FK_BooksRates_Posts" FromRole="Post" ToRole="BooksRate" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_Posts_Users" FromRole="Post" ToRole="User" />
-          <NavigationProperty Name="PostsGeneras" Relationship="book_exchangeModel.FK_PostsGeneras_Posts" FromRole="Post" ToRole="PostsGenera" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
+          <NavigationProperty Name="PostsGeneras" Relationship="Self.FK_PostsGeneras_Posts" FromRole="Posts" ToRole="PostsGeneras" />
+          <NavigationProperty Name="favBooks" Relationship="book_exchangeModel.FK_BooksRates_Posts1" FromRole="Post" ToRole="favBook" />
         </EntityType>
         <EntityType Name="PostsGenera">
           <Key>
@@ -508,42 +332,22 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="post_id" Type="Int32" Nullable="false" />
           <Property Name="genera_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Genera" Relationship="book_exchangeModel.FK_PostsGeneras_Generas" FromRole="PostsGenera" ToRole="Genera" />
-          <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_PostsGeneras_Posts" FromRole="PostsGenera" ToRole="Post" />
+          <NavigationProperty Name="Genera" Relationship="Self.FK_PostsGeneras_Generas" FromRole="PostsGeneras" ToRole="Generas" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_PostsGeneras_Posts" FromRole="PostsGeneras" ToRole="Posts" />
         </EntityType>
         <EntityType Name="recommendtion">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="recommendtion" ToRole="User" />
-          <Property Name="is_found" Type="Boolean" Nullable="true" />
-        </EntityType>
-        <EntityType Name="Review">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="review1" Type="Int32" Nullable="false" />
-          <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_Reviews_Users" FromRole="Review" ToRole="User" />
-        </EntityType>
-        <EntityType Name="UserPreference">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="generas_id" Type="Int32" Nullable="false" />
-          <Property Name="count" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Genera" Relationship="book_exchangeModel.FK_UserPreferences_Generas" FromRole="UserPreference" ToRole="Genera" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_UserPreferences_Users" FromRole="UserPreference" ToRole="User" />
+          <Property Name="is_found" Type="Boolean" />
+          <Property Name="relevantPost" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_recommendtion_Users" FromRole="recommendtion" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserRate">
           <Key>
@@ -553,145 +357,96 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="rate" Type="Int32" Nullable="false" />
           <Property Name="rated_by" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_UserRates_Users" FromRole="UserRate" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="book_exchangeModel.FK_UserRates_Users1" FromRole="UserRate" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserRates_Users" FromRole="UserRates" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_UserRates_Users1" FromRole="UserRates" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="mobile" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="city" Type="Int32" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="token" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="admin" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="BooksRates" Relationship="book_exchangeModel.FK_BooksRates_Users" FromRole="User" ToRole="BooksRate" />
-          <NavigationProperty Name="City1" Relationship="book_exchangeModel.FK_Users_Cities" FromRole="User" ToRole="City" />
-          <NavigationProperty Name="GiftRequests" Relationship="book_exchangeModel.FK_GiftRequests_Users" FromRole="User" ToRole="GiftRequest" />
-          <NavigationProperty Name="Posts" Relationship="book_exchangeModel.FK_Posts_Users" FromRole="User" ToRole="Post" />
-          <NavigationProperty Name="recommendtions" Relationship="book_exchangeModel.FK_recommendtion_Users" FromRole="User" ToRole="recommendtion" />
-          <NavigationProperty Name="Reviews" Relationship="book_exchangeModel.FK_Reviews_Users" FromRole="User" ToRole="Review" />
-          <NavigationProperty Name="UserPreferences" Relationship="book_exchangeModel.FK_UserPreferences_Users" FromRole="User" ToRole="UserPreference" />
-          <NavigationProperty Name="UserRates" Relationship="book_exchangeModel.FK_UserRates_Users" FromRole="User" ToRole="UserRate" />
-          <NavigationProperty Name="UserRates1" Relationship="book_exchangeModel.FK_UserRates_Users1" FromRole="User" ToRole="UserRate" />
-          <NavigationProperty Name="VerifyCodes" Relationship="book_exchangeModel.FK_VerifyCodes_Users" FromRole="User" ToRole="VerifyCode" />
+          <NavigationProperty Name="City1" Relationship="Self.FK_Users_Cities" FromRole="Users" ToRole="Cities" />
+          <NavigationProperty Name="GiftRequests" Relationship="Self.FK_GiftRequests_Users" FromRole="Users" ToRole="GiftRequests" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
+          <NavigationProperty Name="recommendtions" Relationship="Self.FK_recommendtion_Users" FromRole="Users" ToRole="recommendtion" />
+          <NavigationProperty Name="UserRates" Relationship="Self.FK_UserRates_Users" FromRole="Users" ToRole="UserRates" />
+          <NavigationProperty Name="UserRates1" Relationship="Self.FK_UserRates_Users1" FromRole="Users" ToRole="UserRates" />
+          <NavigationProperty Name="favBooks" Relationship="book_exchangeModel.FK_BooksRates_Users1" FromRole="User" ToRole="favBook" />
         </EntityType>
-        <EntityType Name="VerifyCode">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_VerifyCodes_Users" FromRole="VerifyCode" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_BooksRates_Posts">
-          <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="1" />
-          <End Type="book_exchangeModel.BooksRate" Role="BooksRate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Post">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BooksRate">
-              <PropertyRef Name="book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BooksRates_Users">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.BooksRate" Role="BooksRate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="BooksRate">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Users_Cities">
-          <End Type="book_exchangeModel.City" Role="City" Multiplicity="0..1" />
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="*" />
+          <End Role="Cities" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="City">
+            <Principal Role="Cities">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="Users">
               <PropertyRef Name="city" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PostsGeneras_Generas">
-          <End Type="book_exchangeModel.Genera" Role="Genera" Multiplicity="1" />
-          <End Type="book_exchangeModel.PostsGenera" Role="PostsGenera" Multiplicity="*" />
+          <End Role="Generas" Type="Self.Genera" Multiplicity="1" />
+          <End Role="PostsGeneras" Type="Self.PostsGenera" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Genera">
+            <Principal Role="Generas">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="PostsGenera">
+            <Dependent Role="PostsGeneras">
               <PropertyRef Name="genera_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserPreferences_Generas">
-          <End Type="book_exchangeModel.Genera" Role="Genera" Multiplicity="1" />
-          <End Type="book_exchangeModel.UserPreference" Role="UserPreference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genera">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="UserPreference">
-              <PropertyRef Name="generas_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_GiftRequests_Users">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.GiftRequest" Role="GiftRequest" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="GiftRequests" Type="Self.GiftRequest" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="GiftRequest">
+            <Dependent Role="GiftRequests">
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Posts_Users">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Post" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Post">
+            <Dependent Role="Posts">
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PostsGeneras_Posts">
-          <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="1" />
-          <End Type="book_exchangeModel.PostsGenera" Role="PostsGenera" Multiplicity="*" />
+          <End Role="Posts" Type="Self.Post" Multiplicity="1" />
+          <End Role="PostsGeneras" Type="Self.PostsGenera" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Post">
+            <Principal Role="Posts">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="PostsGenera">
+            <Dependent Role="PostsGeneras">
               <PropertyRef Name="post_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_recommendtion_Users">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.recommendtion" Role="recommendtion" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="recommendtion" Type="Self.recommendtion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="recommendtion">
@@ -699,203 +454,222 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Reviews_Users">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.Review" Role="Review" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Review">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserPreferences_Users">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.UserPreference" Role="UserPreference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="UserPreference">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserRates_Users">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.UserRate" Role="UserRate" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRates" Type="Self.UserRate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="UserRate">
+            <Dependent Role="UserRates">
               <PropertyRef Name="rated_by" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRates_Users1">
-          <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.UserRate" Role="UserRate" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRates" Type="Self.UserRate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="UserRate">
+            <Dependent Role="UserRates">
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VerifyCodes_Users">
+        <EntityContainer Name="book_exchangeEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="Generas" EntityType="Self.Genera" />
+          <EntitySet Name="GiftRequests" EntityType="Self.GiftRequest" />
+          <EntitySet Name="Posts" EntityType="Self.Post" />
+          <EntitySet Name="PostsGeneras" EntityType="Self.PostsGenera" />
+          <EntitySet Name="recommendtions" EntityType="Self.recommendtion" />
+          <EntitySet Name="UserRates" EntityType="Self.UserRate" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Users_Cities" Association="Self.FK_Users_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostsGeneras_Generas" Association="Self.FK_PostsGeneras_Generas">
+            <End Role="Generas" EntitySet="Generas" />
+            <End Role="PostsGeneras" EntitySet="PostsGeneras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GiftRequests_Users" Association="Self.FK_GiftRequests_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GiftRequests" EntitySet="GiftRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostsGeneras_Posts" Association="Self.FK_PostsGeneras_Posts">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="PostsGeneras" EntitySet="PostsGeneras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recommendtion_Users" Association="Self.FK_recommendtion_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="recommendtion" EntitySet="recommendtions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRates_Users" Association="Self.FK_UserRates_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRates" EntitySet="UserRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRates_Users1" Association="Self.FK_UserRates_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRates" EntitySet="UserRates" />
+          </AssociationSet>
+          <EntitySet Name="favBooks" EntityType="book_exchangeModel.favBook" />
+          <AssociationSet Name="FK_BooksRates_Posts1" Association="book_exchangeModel.FK_BooksRates_Posts1">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="favBook" EntitySet="favBooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BooksRates_Users1" Association="book_exchangeModel.FK_BooksRates_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="favBook" EntitySet="favBooks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="favBook">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="book_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_BooksRates_Posts1" FromRole="favBook" ToRole="Post" />
+          <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_BooksRates_Users1" FromRole="favBook" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_BooksRates_Posts1">
+          <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="book_exchangeModel.favBook" Role="favBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="favBook">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BooksRates_Users1">
           <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-          <End Type="book_exchangeModel.VerifyCode" Role="VerifyCode" Multiplicity="*" />
+          <End Type="book_exchangeModel.favBook" Role="favBook" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="VerifyCode">
+            <Dependent Role="favBook">
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="book_exchangeModelStoreContainer" CdmEntityContainer="book_exchangeEntities">
-          <EntitySetMapping Name="BooksRates">
-            <EntityTypeMapping TypeName="book_exchangeModel.BooksRate">
-              <MappingFragment StoreEntitySet="BooksRates">
-                <ScalarProperty Name="rate" ColumnName="rate" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="book_id" ColumnName="book_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="book_exchangeModelStoreContainer" CdmEntityContainer="book_exchangeEntities1">
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="book_exchangeModel.City">
               <MappingFragment StoreEntitySet="Cities">
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Generas">
             <EntityTypeMapping TypeName="book_exchangeModel.Genera">
               <MappingFragment StoreEntitySet="Generas">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GiftRequests">
             <EntityTypeMapping TypeName="book_exchangeModel.GiftRequest">
               <MappingFragment StoreEntitySet="GiftRequests">
-                <ScalarProperty Name="requested" ColumnName="requested" />
-                <ScalarProperty Name="sent" ColumnName="sent" />
-                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="sent" ColumnName="sent" />
+                <ScalarProperty Name="requested" ColumnName="requested" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="book_exchangeModel.Post">
               <MappingFragment StoreEntitySet="Posts">
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="redeemed" ColumnName="redeemed" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="traded" ColumnName="traded" />
-                <ScalarProperty Name="approved" ColumnName="approved" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="approved" ColumnName="approved" />
+                <ScalarProperty Name="traded" ColumnName="traded" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="redeemed" ColumnName="redeemed" />
+                <ScalarProperty Name="url" ColumnName="url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PostsGeneras">
             <EntityTypeMapping TypeName="book_exchangeModel.PostsGenera">
               <MappingFragment StoreEntitySet="PostsGeneras">
-                <ScalarProperty Name="genera_id" ColumnName="genera_id" />
-                <ScalarProperty Name="post_id" ColumnName="post_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="genera_id" ColumnName="genera_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="recommendtions">
             <EntityTypeMapping TypeName="book_exchangeModel.recommendtion">
               <MappingFragment StoreEntitySet="recommendtion">
-                <ScalarProperty Name="is_found" ColumnName="is_found" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Reviews">
-            <EntityTypeMapping TypeName="book_exchangeModel.Review">
-              <MappingFragment StoreEntitySet="Reviews">
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="review1" ColumnName="review1" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserPreferences">
-            <EntityTypeMapping TypeName="book_exchangeModel.UserPreference">
-              <MappingFragment StoreEntitySet="UserPreferences">
-                <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="generas_id" ColumnName="generas_id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="is_found" ColumnName="is_found" />
+                <ScalarProperty Name="relevantPost" ColumnName="relevantPost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRates">
             <EntityTypeMapping TypeName="book_exchangeModel.UserRate">
               <MappingFragment StoreEntitySet="UserRates">
-                <ScalarProperty Name="rated_by" ColumnName="rated_by" />
-                <ScalarProperty Name="rate" ColumnName="rate" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="rated_by" ColumnName="rated_by" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="book_exchangeModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="admin" ColumnName="admin" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="token" ColumnName="token" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="mobile" ColumnName="mobile" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="admin" ColumnName="admin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VerifyCodes">
-            <EntityTypeMapping TypeName="book_exchangeModel.VerifyCode">
-              <MappingFragment StoreEntitySet="VerifyCodes">
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <EntitySetMapping Name="favBooks">
+            <EntityTypeMapping TypeName="book_exchangeModel.favBook">
+              <MappingFragment StoreEntitySet="favBooks">
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

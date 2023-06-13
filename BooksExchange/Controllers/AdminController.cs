@@ -78,28 +78,6 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
-        // delete a user in admin's panel.
-        public async Task<ActionResult> DeleteUser(string token, string id)
-        {
-            try
-            {
-                string[] Data = { token, id };
-                if (Helpers.NullOrEmpty(Data))
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" });
-                if (!await Helpers.IsAdmin(token))
-                    return Json(new { code = HttpStatusCode.Forbidden });
-                if (await DeleteData.RemoveUser(id))
-                    return Json(new { code = HttpStatusCode.OK });
-
-                return Json(new { code = HttpStatusCode.InternalServerError, error = "please try again!" });
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        [HttpPost]
         // add or delete category from the admin's panel.
         public async Task<ActionResult> Category(string token, string name, string id, int update = 0)
         {
@@ -144,7 +122,7 @@ namespace BooksExchange.Controllers
                     return Json(new { code = HttpStatusCode.BadRequest, error = "something went wrong" }, JsonRequestBehavior.AllowGet);
                 if (!await Helpers.IsAdmin(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
-                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetAllPosts() }, JsonRequestBehavior.AllowGet);
+                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetPosts() }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {

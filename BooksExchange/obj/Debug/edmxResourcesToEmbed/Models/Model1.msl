@@ -1,137 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="book_exchangeModelStoreContainer" CdmEntityContainer="book_exchangeEntities">
-    <EntitySetMapping Name="BooksRates">
-      <EntityTypeMapping TypeName="book_exchangeModel.BooksRate">
-        <MappingFragment StoreEntitySet="BooksRates">
-          <ScalarProperty Name="rate" ColumnName="rate" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="book_id" ColumnName="book_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+  <EntityContainerMapping StorageEntityContainer="book_exchangeModelStoreContainer" CdmEntityContainer="book_exchangeEntities1">
     <EntitySetMapping Name="Cities">
       <EntityTypeMapping TypeName="book_exchangeModel.City">
         <MappingFragment StoreEntitySet="Cities">
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Generas">
       <EntityTypeMapping TypeName="book_exchangeModel.Genera">
         <MappingFragment StoreEntitySet="Generas">
-          <ScalarProperty Name="deleted" ColumnName="deleted" />
-          <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="GiftRequests">
       <EntityTypeMapping TypeName="book_exchangeModel.GiftRequest">
         <MappingFragment StoreEntitySet="GiftRequests">
-          <ScalarProperty Name="requested" ColumnName="requested" />
-          <ScalarProperty Name="sent" ColumnName="sent" />
-          <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+          <ScalarProperty Name="sent" ColumnName="sent" />
+          <ScalarProperty Name="requested" ColumnName="requested" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Posts">
       <EntityTypeMapping TypeName="book_exchangeModel.Post">
         <MappingFragment StoreEntitySet="Posts">
-          <ScalarProperty Name="url" ColumnName="url" />
-          <ScalarProperty Name="redeemed" ColumnName="redeemed" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="traded" ColumnName="traded" />
-          <ScalarProperty Name="approved" ColumnName="approved" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="image" ColumnName="image" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="approved" ColumnName="approved" />
+          <ScalarProperty Name="traded" ColumnName="traded" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="redeemed" ColumnName="redeemed" />
+          <ScalarProperty Name="url" ColumnName="url" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PostsGeneras">
       <EntityTypeMapping TypeName="book_exchangeModel.PostsGenera">
         <MappingFragment StoreEntitySet="PostsGeneras">
-          <ScalarProperty Name="genera_id" ColumnName="genera_id" />
-          <ScalarProperty Name="post_id" ColumnName="post_id" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="post_id" ColumnName="post_id" />
+          <ScalarProperty Name="genera_id" ColumnName="genera_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="recommendtions">
       <EntityTypeMapping TypeName="book_exchangeModel.recommendtion">
         <MappingFragment StoreEntitySet="recommendtion">
-          <ScalarProperty Name="is_found" ColumnName="is_found" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="image" ColumnName="image" />
-          <ScalarProperty Name="url" ColumnName="url" />
-          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Reviews">
-      <EntityTypeMapping TypeName="book_exchangeModel.Review">
-        <MappingFragment StoreEntitySet="Reviews">
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="image" ColumnName="image" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="review1" ColumnName="review1" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserPreferences">
-      <EntityTypeMapping TypeName="book_exchangeModel.UserPreference">
-        <MappingFragment StoreEntitySet="UserPreferences">
-          <ScalarProperty Name="count" ColumnName="count" />
-          <ScalarProperty Name="generas_id" ColumnName="generas_id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="is_found" ColumnName="is_found" />
+          <ScalarProperty Name="relevantPost" ColumnName="relevantPost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserRates">
       <EntityTypeMapping TypeName="book_exchangeModel.UserRate">
         <MappingFragment StoreEntitySet="UserRates">
-          <ScalarProperty Name="rated_by" ColumnName="rated_by" />
-          <ScalarProperty Name="rate" ColumnName="rate" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="rate" ColumnName="rate" />
+          <ScalarProperty Name="rated_by" ColumnName="rated_by" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="book_exchangeModel.User">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="admin" ColumnName="admin" />
-          <ScalarProperty Name="image" ColumnName="image" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="token" ColumnName="token" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="city" ColumnName="city" />
-          <ScalarProperty Name="mobile" ColumnName="mobile" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="admin" ColumnName="admin" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="VerifyCodes">
-      <EntityTypeMapping TypeName="book_exchangeModel.VerifyCode">
-        <MappingFragment StoreEntitySet="VerifyCodes">
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
+    <EntitySetMapping Name="favBooks">
+      <EntityTypeMapping TypeName="book_exchangeModel.favBook">
+        <MappingFragment StoreEntitySet="favBooks">
           <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="book_id" ColumnName="book_id" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

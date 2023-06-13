@@ -197,14 +197,6 @@ const Posts = () => {
       getData();
       setRowSelectionIdx({});
     };
-
-    getCheckModal({
-      title: "Do you want active selected Posts",
-      type: "warning",
-      confirmButtonText: "Yes, Active",
-      isConfirmedMsg: "Sucess active",
-      cb: deleteCallBack,
-    });
   };
   const saveHandelar = async (data) => {
     const permissions = personName
@@ -269,15 +261,6 @@ const Posts = () => {
       renderButtons={() => (
         <div className="flex-center">
           <ButtonGroup className="me-4">
-            <Button
-              onClick={activeSelection}
-              disabled={!isBtnActive}
-              variant="primary"
-              className="flex-center text-white"
-            >
-              <span className="me-1">Active</span>
-              <i className="bi bi-check2 fs-5 flex-center" />
-            </Button>
 
             <Button
               onClick={deleteRows}

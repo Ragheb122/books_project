@@ -156,18 +156,10 @@ const Accounts = () => {
 
       formData.append("token", token);
       formData.append("id", rowsIds?.join(","));
-      await API.post(`/admin/DeleteUser`, formData);
       getData();
       setRowSelectionIdx({});
     };
 
-    getCheckModal({
-      title: "Are you sure you want to delete the selected users",
-      type: "warning",
-      confirmButtonText: "Yes, Delete",
-      isConfirmedMsg: "Success deleted",
-      cb: deleteCallBack,
-    });
   };
   const activeSelection = () => {
     const rowsIds = getRowsIds();
@@ -286,16 +278,6 @@ const Accounts = () => {
             </Button>
 
             {}
-
-            <Button
-              onClick={deleteRows}
-              disabled={!isBtnActive}
-              variant="danger"
-              className="flex-center text-white"
-            >
-              <span className="me-1">Delete</span>
-              <i className="bi bi-trash3" />
-            </Button>
           </ButtonGroup>
 
           <Button

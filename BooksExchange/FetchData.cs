@@ -72,7 +72,6 @@ namespace BooksExchange
                                 userImage = item.User.image,
                                 locationID = item.User.city,
                                 location = item.User.City1.name,
-                                rate = await bookRate(item.id),
                                 cateories = generas
                             };
                             if (!Obj.Contains(temp))
@@ -88,96 +87,6 @@ namespace BooksExchange
                 throw;
             }
         } 
-        static public async Task<List<object>> GetAllPosts()
-        {
-            try
-            {
-                using (book_exchangeEntities db = new book_exchangeEntities())
-                {
-                    List<Post> posts = await db.Posts.Where(o => o.approved == false && o.url == null).OrderByDescending(p => p.id).ToListAsync();
-                    List<object> Obj = new List<object>();
-                    foreach (Post item in posts)
-                    {
-                        if (item != null)
-                        {
-                            List<object> generas = new List<object>();
-                            List<PostsGenera> gens = await db.PostsGeneras.Where(o => o.post_id == item.id).ToListAsync();
-                            foreach (PostsGenera items in gens)
-                            {
-                                if (items != null)
-                                {
-                                    object tem = new
-                                    {
-                                        id = items.genera_id,
-                                        name = items.Genera.name
-                                    };
-                                    if (!generas.Contains(tem))
-                                        generas.Add(tem);
-                                }
-                            }
-                            object temp = new
-                            {
-                                id = item.id,
-                                title = item.title,
-                                image = item.image,
-                                description = item.description,
-                                traded = item.traded,
-                                userID = item.User.id,
-                                userName = item.User.name,
-                                userImage = item.User.image,
-                                locationID = item.User.city,
-                                location = item.User.City1.name,
-                                rate = await bookRate(item.id),
-                                categories = generas
-                            };
-                            if (!Obj.Contains(temp))
-                                Obj.Add(temp);
-                        }
-                    }
-                    return Obj;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        // not relevant
-        static public async Task<List<object>> GetStaticsPosts()
-        {
-            try
-            {
-                using (book_exchangeEntities db = new book_exchangeEntities())
-                {
-                    List<Post> posts = await db.Posts.Where(o => o.url != null).OrderByDescending(p => p.id).ToListAsync();
-                    List<object> Obj = new List<object>();
-                    foreach (Post item in posts)
-                    {
-                        if (item != null)
-                        {
-                            object temp = new
-                            {
-                                id = item.id,
-                                title = item.title,
-                                image = item.image,
-                                description = item.description,
-                                url = item.url,
-                                rate = await bookRate(item.id)
-                            };
-                            if (!Obj.Contains(temp))
-                                Obj.Add(temp);
-                        }
-                    }
-                    return Obj;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
         static public async Task<object> GivenBooksCount(bool vistor, int? id, string token)
         {
             if (vistor == false)
@@ -240,7 +149,6 @@ namespace BooksExchange
                             url = post.url,
                             locationID = post.User.city,
                             locattion = post.User.City1.name,
-                            rate = await bookRate(post.id),
                             categories = categoryName
                         };
                         return data;
@@ -284,7 +192,6 @@ namespace BooksExchange
                                     description = item.description,
                                     locationID = item.User.city,
                                     location = item.User.City1.name,
-                                    rate = await bookRate(item.id)
                                 };
                                 if (!Obj.Contains(temp))
                                     Obj.Add(temp);
@@ -477,45 +384,7 @@ namespace BooksExchange
                 throw;
             }
         }
-        // not relevant
-        static public async Task<object> bookRate(int id)
-        {
-            try
-            {
-                using (book_exchangeEntities db = new book_exchangeEntities())
-                {
-                    List<BooksRate> rate = await db.BooksRates.Where(o => o.book_id == id).ToListAsync();
-                    List<object> obj = new List<object>();
-                    int Rate = 0;
-                    foreach (BooksRate item in rate)
-                    {
-                        if (item != null)
-                        {
-                            object temp = new
-                            {
-                                id = item.id
-                            };
-                            if (!obj.Contains(temp))
-                            {
-                                obj.Add(temp);
-                                Rate = item.rate;
-                            }
-                        }
-                    }
-                    object result = new
-                    {
-                        rate = Rate,
-                        amount = obj.Count()
-                    };
-                    return result;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+        
         static public async Task<List<object>> TopBooks()
         {
             try
@@ -557,12 +426,12 @@ namespace BooksExchange
                 using (book_exchangeEntities db = new book_exchangeEntities())
                 {
                     int id = await Helpers.GetUserIDByToken(token);
-                    List<BooksRate> rate = await db.BooksRates.Where(o => o.user_id == id).ToListAsync();
+                    List<favBook> rate = await db.favBooks.Where(o => o.user_id == id).ToListAsync();
                     List<Post> posts = await db.Posts.Where(o => o.user_id == id && o.approved == true).OrderByDescending(p => p.id).ToListAsync();
 
                     string[] results = new string[rate.Count + posts.Count];
                     int count = 0;
-                    foreach (BooksRate item in rate)
+                    foreach (favBook item in rate)
                     {
                         if (item != null)
                         {

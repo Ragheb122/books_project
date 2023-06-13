@@ -1,14 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="book_exchangeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="BooksRates">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="book_id" Type="int" Nullable="false" />
-    <Property Name="user_id" Type="int" Nullable="false" />
-    <Property Name="rate" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="Cities">
     <Key>
       <PropertyRef Name="id" />
@@ -16,6 +7,14 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="created_at" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="favBooks">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="book_id" Type="int" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Generas">
     <Key>
@@ -71,24 +70,7 @@
     <Property Name="image" Type="nvarchar(max)" Nullable="false" />
     <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="is_found" Type="bit" />
-  </EntityType>
-  <EntityType Name="Reviews">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="review1" Type="int" Nullable="false" />
-    <Property Name="user_id" Type="int" Nullable="false" />
-    <Property Name="created_at" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="UserPreferences">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="user_id" Type="int" Nullable="false" />
-    <Property Name="generas_id" Type="int" Nullable="false" />
-    <Property Name="count" Type="int" Nullable="false" />
+    <Property Name="relevantPost" Type="int" />
   </EntityType>
   <EntityType Name="UserRates">
     <Key>
@@ -114,35 +96,26 @@
     <Property Name="image" Type="nvarchar(max)" Nullable="false" />
     <Property Name="admin" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="VerifyCodes">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="user_id" Type="int" Nullable="false" />
-    <Property Name="created_at" Type="datetime" Nullable="false" />
-  </EntityType>
   <Association Name="FK_BooksRates_Posts">
     <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
-    <End Role="BooksRates" Type="Self.BooksRates" Multiplicity="*" />
+    <End Role="favBooks" Type="Self.favBooks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Posts">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="BooksRates">
+      <Dependent Role="favBooks">
         <PropertyRef Name="book_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_BooksRates_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="BooksRates" Type="Self.BooksRates" Multiplicity="*" />
+    <End Role="favBooks" Type="Self.favBooks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="BooksRates">
+      <Dependent Role="favBooks">
         <PropertyRef Name="user_id" />
       </Dependent>
     </ReferentialConstraint>
@@ -207,42 +180,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Reviews_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Reviews">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserPreferences_Generas">
-    <End Role="Generas" Type="Self.Generas" Multiplicity="1" />
-    <End Role="UserPreferences" Type="Self.UserPreferences" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Generas">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserPreferences">
-        <PropertyRef Name="generas_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserPreferences_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="UserPreferences" Type="Self.UserPreferences" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserPreferences">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_UserRates_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="UserRates" Type="Self.UserRates" Multiplicity="*" />
@@ -279,38 +216,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_VerifyCodes_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="VerifyCodes" Type="Self.VerifyCodes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="VerifyCodes">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="book_exchangeModelStoreContainer">
-    <EntitySet Name="BooksRates" EntityType="Self.BooksRates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="favBooks" EntityType="Self.favBooks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Generas" EntityType="Self.Generas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiftRequests" EntityType="Self.GiftRequests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PostsGeneras" EntityType="Self.PostsGeneras" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="recommendtion" EntityType="Self.recommendtion" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserPreferences" EntityType="Self.UserPreferences" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRates" EntityType="Self.UserRates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="VerifyCodes" EntityType="Self.VerifyCodes" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_BooksRates_Posts" Association="Self.FK_BooksRates_Posts">
       <End Role="Posts" EntitySet="Posts" />
-      <End Role="BooksRates" EntitySet="BooksRates" />
+      <End Role="favBooks" EntitySet="favBooks" />
     </AssociationSet>
     <AssociationSet Name="FK_BooksRates_Users" Association="Self.FK_BooksRates_Users">
       <End Role="Users" EntitySet="Users" />
-      <End Role="BooksRates" EntitySet="BooksRates" />
+      <End Role="favBooks" EntitySet="favBooks" />
     </AssociationSet>
     <AssociationSet Name="FK_GiftRequests_Users" Association="Self.FK_GiftRequests_Users">
       <End Role="Users" EntitySet="Users" />
@@ -332,18 +254,6 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="recommendtion" EntitySet="recommendtion" />
     </AssociationSet>
-    <AssociationSet Name="FK_Reviews_Users" Association="Self.FK_Reviews_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Reviews" EntitySet="Reviews" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserPreferences_Generas" Association="Self.FK_UserPreferences_Generas">
-      <End Role="Generas" EntitySet="Generas" />
-      <End Role="UserPreferences" EntitySet="UserPreferences" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserPreferences_Users" Association="Self.FK_UserPreferences_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="UserPreferences" EntitySet="UserPreferences" />
-    </AssociationSet>
     <AssociationSet Name="FK_UserRates_Users" Association="Self.FK_UserRates_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="UserRates" EntitySet="UserRates" />
@@ -355,10 +265,6 @@
     <AssociationSet Name="FK_Users_Cities" Association="Self.FK_Users_Cities">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
-    <AssociationSet Name="FK_VerifyCodes_Users" Association="Self.FK_VerifyCodes_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="VerifyCodes" EntitySet="VerifyCodes" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
