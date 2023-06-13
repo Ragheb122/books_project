@@ -46,7 +46,7 @@ const Login = () => {
 
           return window.location.reload();
         }
-        alert("username or password is not correct");
+        alert("You are not Admin!");
       })
       .catch(() => {
         alert("unknown error");
