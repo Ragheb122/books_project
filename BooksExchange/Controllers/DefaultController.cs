@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using BooksExchange.Models;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace BooksExchange.Controllers
 {
@@ -45,15 +46,16 @@ namespace BooksExchange.Controllers
                 string[] Data = { name, email, mobile };
                 if (Helpers.NullOrEmpty(Data))
                     return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required!" });
-                if(password != repassword && id == null)
+                if (password != repassword && id == null)
                     return Json(new { code = HttpStatusCode.BadRequest, error = "password doesn't match!" });
                 if (await Helpers.EmailExist(email.Trim()) && id == null)
                     return Json(new { code = HttpStatusCode.BadRequest, error = "email already exist!" });
                 if (await Helpers.MobileExist(mobile.Trim()) && id == null)
                     return Json(new { code = HttpStatusCode.BadRequest, error = "mobile already exist!" });
                 if (id == null)
-                    if (await InsertData.NewUser(name, email, mobile, password, city, img, books))
-                    return Json(new { code = HttpStatusCode.OK });
+                    if (await InsertData.NewUser(name, email, mobile, password, city, img, books)) {
+                        return Json(new { code = HttpStatusCode.OK});
+            }
                 else if(id != null)
                 {
                     string token = await Helpers.GetUserTokenByID(id.Value);
@@ -84,7 +86,10 @@ namespace BooksExchange.Controllers
                 if (Info == null)
                     return Json(new { code = HttpStatusCode.Forbidden });
                 else
+                {
+
                     return Json(new { code = HttpStatusCode.OK, Data = Info });
+                }
             }
             catch (Exception)
             {

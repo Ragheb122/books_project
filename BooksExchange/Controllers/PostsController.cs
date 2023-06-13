@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Net;
+using BooksExchange.Models;
 
 namespace BooksExchange.Controllers
 {
@@ -49,10 +50,8 @@ namespace BooksExchange.Controllers
         {
             try
             {
-                if(await Helpers.HaveRecommendtion(await Helpers.GetUserIDByToken(token)))
                     return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetRecommendedData(await Helpers.GetUserIDByToken(token)) }, JsonRequestBehavior.AllowGet);
-                else
-                    return Json(new { code = HttpStatusCode.OK, Data = await Helpers.recommentionSysAsync(token,0) },JsonRequestBehavior.AllowGet);
+                   // return Json(new { code = HttpStatusCode.OK, Data = await Helpers.recommentionSysAsync(token) },JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
@@ -111,7 +110,14 @@ namespace BooksExchange.Controllers
                 if (!await Helpers.UserExist(token))
                     return Json(new { code = HttpStatusCode.Forbidden });
                 if (await InsertData.NewPost(title, description, await Helpers.GetUserIDByToken(token), await UploadImage(image), genera))
+                {
+                    _ = Task.Run(async () =>
+                    {
+                        int a = await Helpers.recommentionSysAsync(token);
+                        // Perform any necessary background operations here
+                    });
                     return Json(new { code = HttpStatusCode.OK });
+                }
                 else
                     return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
 

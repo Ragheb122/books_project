@@ -47,9 +47,12 @@ function BookDescriptionGenerator() {
   };
 const message = "Generating response..."
 const linkStartIndex = description.indexOf('http://');
-const first_message = description.substring(0, linkStartIndex) + ":";
-const lastCharacterIndex = description.length - 1;
-const link = description.substring(linkStartIndex, lastCharacterIndex);
+const first_message = description.substring(0, linkStartIndex);
+const lastCharacterIndex = description.length;
+var link = description.substring(linkStartIndex, lastCharacterIndex);
+if (description.charAt(lastCharacterIndex+1) == '.'){
+  link = description.substring(linkStartIndex, lastCharacterIndex-1);
+}
   return (
     
     <Layout>
@@ -70,7 +73,9 @@ const link = description.substring(linkStartIndex, lastCharacterIndex);
             ):
             <div id="result">
               <p>{first_message}</p>
-              <p><a href={link}>{link}</a></p>
+              <p>{description == "please insert input"? 
+              description
+              : <a href={link}>{link}</a>}</p>
             </div>
     }
           </div>

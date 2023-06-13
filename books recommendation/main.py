@@ -59,21 +59,26 @@ similarity_score = cosine_similarity(pt)
 
 # Function to recommend similar books based on a given book name
 def recommend(book_name):
-    index = np.where(pt.index == book_name)[0][0]
-    similar_books = sorted(list(enumerate(similarity_score[index])), key=lambda x: x[1], reverse=True)[1:10]
+    index = np.where(pt.index == book_name)[0]
+    # check if the book's name exists in the database.
+    if len(index) > 0:
+        index = np.where(pt.index == book_name)[0][0]
+        similar_books = sorted(list(enumerate(similarity_score[index])), key=lambda x: x[1], reverse=True)[1:10]
 
-    data = []
+        data = []
 
-    for i in similar_books:
-        item = []
-        temp_df = books[books['Book-Title'] == pt.index[i[0]]]
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['ISBN'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Title'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Author'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
+        for i in similar_books:
+            item = []
+            temp_df = books[books['Book-Title'] == pt.index[i[0]]]
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['ISBN'].values))
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Title'].values))
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Author'].values))
+            item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
 
-        data.append(item)
-    return data
+            data.append(item)
+        return data
+    else:
+        return []
 
 def recommendBooks(books):
     res = []

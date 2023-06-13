@@ -271,13 +271,9 @@ namespace BooksExchange
         //
         // mend list of books to user based on his choices of favorite books.
         // got the template of the code from ChatGPT.
-        static public async Task<List<object>> recommentionSysAsync(string token, int check)
+        static public async Task<int> recommentionSysAsync(string token)
         {
             string pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\main.py";
-            if (check == 1)
-            {
-                pythonFilePath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\top100.py";
-            }
             string booksCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Books.csv";
             string usersCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Users.csv";
             string ratingsCsvPath = @"C:\computer science\4th\project\cloneGithub-BooksExchange\books_project\books recommendation\Ratings.csv";
@@ -399,7 +395,7 @@ namespace BooksExchange
                             data.Add(temp);
                     }
                     await db.SaveChangesAsync();
-                    return data;
+                    return 1;
                 }
             }
         }

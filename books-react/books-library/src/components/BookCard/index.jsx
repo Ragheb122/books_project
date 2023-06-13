@@ -115,7 +115,9 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                 className="cu-pointer text-decoration-none"
               >
                 <div className="top">
-                  <h5 className="text-dark">{data.name}</h5>
+                  <h5 className="text-dark">{data.name?.length > 30
+                  ?`${data.name?.slice(0, 30)}...`
+                  : data.name}</h5>
                   <p className="text-muted" style={{ wordBreak: "break-all" }}>
                     {data.description?.length > 50
                       ? `${data.description?.slice(0, 50)}...`

@@ -5,16 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4396b645-cece-47b6-88cc-1e427b4fd6b8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/ab803f2c-3245-4a31-8a20-51c13ec839cc.vsidx" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/004.testlog" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/004.testlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/testlog.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/testlog.manifest" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BooksExchange/Controllers/PostsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Controllers/PostsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/InsertData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/InsertData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/Models/Model1.edmx.diagram" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Models/Model1.edmx.diagram" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/Models/recommendtion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Models/recommendtion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatgpt.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatgpt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/components/BookCard/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/components/BookCard/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/pages/findBook/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/pages/findBook/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/style/helper.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/style/helper.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />

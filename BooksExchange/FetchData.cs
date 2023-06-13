@@ -558,7 +558,9 @@ namespace BooksExchange
                 {
                     int id = await Helpers.GetUserIDByToken(token);
                     List<BooksRate> rate = await db.BooksRates.Where(o => o.user_id == id).ToListAsync();
-                    string[] results = new string[rate.Count];
+                    List<Post> posts = await db.Posts.Where(o => o.user_id == id && o.approved == true).OrderByDescending(p => p.id).ToListAsync();
+
+                    string[] results = new string[rate.Count + posts.Count];
                     int count = 0;
                     foreach (BooksRate item in rate)
                     {
@@ -568,7 +570,16 @@ namespace BooksExchange
                             count++;
                         }
                     }
+                    foreach (Post p in posts)
+                    {
+                        if (p != null)
+                        {
+                            results[count] = p.title;
+                            count++;
+                        }
+                    }
                     return results;
+
                 }
             }
             catch (Exception)

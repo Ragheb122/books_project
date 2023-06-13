@@ -44,7 +44,15 @@ namespace BooksExchange
                         }
                     }
                     if (await db.SaveChangesAsync() > 0)
+                    {
+                        _ = Task.Run(async () =>
+                        {
+                            int a = await Helpers.recommentionSysAsync(use.token);
+                            // Perform any necessary background operations here
+                        });
+
                         return true;
+                    }
                     else
                         return false;
                 }
@@ -70,6 +78,7 @@ namespace BooksExchange
                         image = "http://localhost:1338/" + img,
                         created_at = DateTime.Now,
                         updated_at = DateTime.Now,
+                        approved = true
                     };
                     db.Posts.Add(post);
                     if (genera != null)
