@@ -18,6 +18,12 @@ const Home = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const toggleChatWindow = () => {
+      setIsOpen(!isOpen);
+    };
+  
 
 
   useEffect(() => {
@@ -167,6 +173,12 @@ const Home = () => {
         </div>
       </div>
       </div>
+      <div className={`chat-window ${isOpen ? "open" : ""}`}>
+      <button className="chat-toggle-button" onClick={toggleChatWindow}>
+        Open Chat
+      </button>
+      {/* Your chat interface components */}
+    </div>
 
     </Layout>
   );

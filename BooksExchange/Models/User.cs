@@ -23,6 +23,7 @@ namespace BooksExchange.Models
             this.UserRates = new HashSet<UserRate>();
             this.UserRates1 = new HashSet<UserRate>();
             this.favBooks = new HashSet<favBook>();
+            this.comments = new HashSet<comment>();
         }
     
         public int id { get; set; }
@@ -49,5 +50,7 @@ namespace BooksExchange.Models
         public virtual ICollection<UserRate> UserRates1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<favBook> favBooks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<comment> comments { get; set; }
     }
 }

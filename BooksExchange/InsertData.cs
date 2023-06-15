@@ -109,6 +109,33 @@ namespace BooksExchange
                 throw;
             }
         }
+        static public async Task<bool> NewComment(string description, int post_id, int user_id)
+        {
+            try
+            {
+
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    User u = await db.Users.Where(o => o.id == user_id).FirstOrDefaultAsync();
+                    comment com = new comment()
+                    {
+                        description = description,
+                        user_id = user_id,
+                        image = u.image,
+                        post_id=post_id,
+                    };
+                    db.comments.Add(com);
+                    if (await db.SaveChangesAsync() > 0)
+                        return true;
+                    else return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         static public async Task<bool> MakeRedeemRequest(string token, int amount)
         {

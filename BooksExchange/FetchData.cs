@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data.Entity;
 using BooksExchange.Models;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 
 namespace BooksExchange
 {
@@ -100,6 +101,42 @@ namespace BooksExchange
                 return Info;
             }
         }
+        static public async Task<object> GetCommentsByPostID(int id)
+        {
+            try
+            {
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<comment> comments = await db.comments.Where(o => o.post_id == id).ToListAsync();
+                    List<object> Obj = new List<object>();
+                    foreach (comment item in comments)
+                    {
+                        if (item != null)
+                        {
+                            User u = await db.Users.Where(o => o.id == item.user_id).FirstOrDefaultAsync();
+                            object temp = new
+                            {
+                                id = item.id,
+                                userName = u.name,
+                                description = item.description,
+                                image = u.image,
+                                userID = item.user_id,
+                                postID = item.post_id
+                            };
+                            if (!Obj.Contains(temp))
+                                Obj.Add(temp);
+                        }
+                    }
+                    return Obj;
+
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         static public async Task<object> GetPostByID(int id)
         {

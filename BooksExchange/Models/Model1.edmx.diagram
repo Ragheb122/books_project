@@ -24,6 +24,9 @@
         <EntityTypeShape EntityType="book_exchangeModel.favBook" Width="1.5" PointX="8.625" PointY="8.5" />
         <AssociationConnector Association="book_exchangeModel.FK_BooksRates_Posts1" />
         <AssociationConnector Association="book_exchangeModel.FK_BooksRates_Users1" />
+        <EntityTypeShape EntityType="book_exchangeModel.comment" Width="1.5" PointX="9.25" PointY="5.375" />
+        <AssociationConnector Association="book_exchangeModel.FK_comments_Posts" />
+        <AssociationConnector Association="book_exchangeModel.FK_comments_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

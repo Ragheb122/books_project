@@ -34,5 +34,6 @@ namespace BooksExchange.Models
         public virtual DbSet<UserRate> UserRates { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<favBook> favBooks { get; set; }
+        public virtual DbSet<comment> comments { get; set; }
     }
 }

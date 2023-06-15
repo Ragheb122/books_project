@@ -45,6 +45,14 @@ namespace BooksExchange
                                             db.Entry(item).State = EntityState.Deleted;
                                         }
                                     }
+                                    List<comment> comms = await db.comments.Where(o => o.post_id == id).ToListAsync();
+                                    foreach (comment item in comms)
+                                    {
+                                        if (item != null)
+                                        {
+                                            db.Entry(item).State = EntityState.Deleted;
+                                        }
+                                    }
                                     db.Entry(post).State = EntityState.Deleted;
                                 }
                             }

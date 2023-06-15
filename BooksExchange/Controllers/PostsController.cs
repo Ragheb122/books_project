@@ -141,5 +141,45 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        public async Task<ActionResult> getComments(int id)
+        {
+            try
+            {
+                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetCommentsByPostID(id) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddComment(string token, int postID, string description = "")
+        {
+            try
+            {
+                string img = string.Empty;
+                //if (image == null)
+                //    return Json(new { code = HttpStatusCode.BadRequest, error = "image is required!" });
+                string[] Data = {description };
+                if (Helpers.NullOrEmpty(Data))
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "description is required!" });
+                if (!await Helpers.UserExist(token))
+                    return Json(new { code = HttpStatusCode.Forbidden });
+                if (await InsertData.NewComment(description, postID, await Helpers.GetUserIDByToken(token)))
+                {
+                    return Json(new { code = HttpStatusCode.OK });
+                }
+                else
+                    return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

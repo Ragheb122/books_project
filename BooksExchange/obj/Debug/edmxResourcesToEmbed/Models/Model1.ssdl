@@ -8,6 +8,16 @@
     <Property Name="name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="created_at" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="comments">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="post_id" Type="int" />
+    <Property Name="image" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="favBooks">
     <Key>
       <PropertyRef Name="id" />
@@ -120,6 +130,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_comments_Posts">
+    <End Role="Posts" Type="Self.Posts" Multiplicity="0..1" />
+    <End Role="comments" Type="Self.comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_comments_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="comments" Type="Self.comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GiftRequests_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="GiftRequests" Type="Self.GiftRequests" Multiplicity="*" />
@@ -218,6 +252,7 @@
   </Association>
   <EntityContainer Name="book_exchangeModelStoreContainer">
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="comments" EntityType="Self.comments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="favBooks" EntityType="Self.favBooks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Generas" EntityType="Self.Generas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiftRequests" EntityType="Self.GiftRequests" Schema="dbo" store:Type="Tables" />
@@ -233,6 +268,14 @@
     <AssociationSet Name="FK_BooksRates_Users" Association="Self.FK_BooksRates_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="favBooks" EntitySet="favBooks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_comments_Posts" Association="Self.FK_comments_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="comments" EntitySet="comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_comments_Users" Association="Self.FK_comments_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="comments" EntitySet="comments" />
     </AssociationSet>
     <AssociationSet Name="FK_GiftRequests_Users" Association="Self.FK_GiftRequests_Users">
       <End Role="Users" EntitySet="Users" />
