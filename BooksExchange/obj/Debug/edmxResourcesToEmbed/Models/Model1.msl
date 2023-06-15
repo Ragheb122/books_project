@@ -1,12 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="book_exchangeModelStoreContainer" CdmEntityContainer="book_exchangeEntities1">
+  <EntityContainerMapping StorageEntityContainer="book_exchangeModelStoreContainer" CdmEntityContainer="book_exchangeEntities">
     <EntitySetMapping Name="Cities">
       <EntityTypeMapping TypeName="book_exchangeModel.City">
         <MappingFragment StoreEntitySet="Cities">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="comments">
+      <EntityTypeMapping TypeName="book_exchangeModel.comment">
+        <MappingFragment StoreEntitySet="comments">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="post_id" ColumnName="post_id" />
+          <ScalarProperty Name="image" ColumnName="image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="favBooks">
+      <EntityTypeMapping TypeName="book_exchangeModel.favBook">
+        <MappingFragment StoreEntitySet="favBooks">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="book_id" ColumnName="book_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -28,6 +48,15 @@
           <ScalarProperty Name="updated_at" ColumnName="updated_at" />
           <ScalarProperty Name="sent" ColumnName="sent" />
           <ScalarProperty Name="requested" ColumnName="requested" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="messages">
+      <EntityTypeMapping TypeName="book_exchangeModel.message">
+        <MappingFragment StoreEntitySet="messages">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="message1" ColumnName="message" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -94,26 +123,6 @@
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="image" ColumnName="image" />
           <ScalarProperty Name="admin" ColumnName="admin" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="favBooks">
-      <EntityTypeMapping TypeName="book_exchangeModel.favBook">
-        <MappingFragment StoreEntitySet="favBooks">
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="book_id" ColumnName="book_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="comments">
-      <EntityTypeMapping TypeName="book_exchangeModel.comment">
-        <MappingFragment StoreEntitySet="comments">
-          <ScalarProperty Name="image" ColumnName="image" />
-          <ScalarProperty Name="post_id" ColumnName="post_id" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -26,14 +26,15 @@ namespace BooksExchange.Models
         }
     
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<comment> comments { get; set; }
+        public virtual DbSet<favBook> favBooks { get; set; }
         public virtual DbSet<Genera> Generas { get; set; }
         public virtual DbSet<GiftRequest> GiftRequests { get; set; }
+        public virtual DbSet<message> messages { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostsGenera> PostsGeneras { get; set; }
         public virtual DbSet<recommendtion> recommendtions { get; set; }
         public virtual DbSet<UserRate> UserRates { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<favBook> favBooks { get; set; }
-        public virtual DbSet<comment> comments { get; set; }
     }
 }

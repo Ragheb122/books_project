@@ -45,6 +45,14 @@
     <Property Name="sent" Type="bit" Nullable="false" />
     <Property Name="requested" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="messages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="message" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Posts">
     <Key>
       <PropertyRef Name="id" />
@@ -166,6 +174,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_messages_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="messages" Type="Self.messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="messages">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Posts_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
@@ -256,6 +276,7 @@
     <EntitySet Name="favBooks" EntityType="Self.favBooks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Generas" EntityType="Self.Generas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiftRequests" EntityType="Self.GiftRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="messages" EntityType="Self.messages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PostsGeneras" EntityType="Self.PostsGeneras" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="recommendtion" EntityType="Self.recommendtion" Schema="dbo" store:Type="Tables" />
@@ -280,6 +301,10 @@
     <AssociationSet Name="FK_GiftRequests_Users" Association="Self.FK_GiftRequests_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="GiftRequests" EntitySet="GiftRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_messages_Users" Association="Self.FK_messages_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="messages" EntitySet="messages" />
     </AssociationSet>
     <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
       <End Role="Users" EntitySet="Users" />

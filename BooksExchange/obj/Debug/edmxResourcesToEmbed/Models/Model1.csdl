@@ -9,6 +9,28 @@
     <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Users" Relationship="Self.FK_Users_Cities" FromRole="Cities" ToRole="Users" />
   </EntityType>
+  <EntityType Name="comment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="post_id" Type="Int32" />
+    <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Post" Relationship="Self.FK_comments_Posts" FromRole="comments" ToRole="Posts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_comments_Users" FromRole="comments" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="favBook">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="book_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Post" Relationship="Self.FK_BooksRates_Posts" FromRole="favBooks" ToRole="Posts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_BooksRates_Users" FromRole="favBooks" ToRole="Users" />
+  </EntityType>
   <EntityType Name="Genera">
     <Key>
       <PropertyRef Name="id" />
@@ -30,6 +52,15 @@
     <Property Name="requested" Type="Int32" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.FK_GiftRequests_Users" FromRole="GiftRequests" ToRole="Users" />
   </EntityType>
+  <EntityType Name="message">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="message1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_messages_Users" FromRole="messages" ToRole="Users" />
+  </EntityType>
   <EntityType Name="Post">
     <Key>
       <PropertyRef Name="id" />
@@ -45,10 +76,10 @@
     <Property Name="user_id" Type="Int32" Nullable="false" />
     <Property Name="redeemed" Type="Boolean" Nullable="false" />
     <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="comments" Relationship="Self.FK_comments_Posts" FromRole="Posts" ToRole="comments" />
+    <NavigationProperty Name="favBooks" Relationship="Self.FK_BooksRates_Posts" FromRole="Posts" ToRole="favBooks" />
     <NavigationProperty Name="User" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
     <NavigationProperty Name="PostsGeneras" Relationship="Self.FK_PostsGeneras_Posts" FromRole="Posts" ToRole="PostsGeneras" />
-    <NavigationProperty Name="favBooks" Relationship="book_exchangeModel.FK_BooksRates_Posts1" FromRole="Post" ToRole="favBook" />
-    <NavigationProperty Name="comments" Relationship="book_exchangeModel.FK_comments_Posts" FromRole="Post" ToRole="comment" />
   </EntityType>
   <EntityType Name="PostsGenera">
     <Key>
@@ -100,13 +131,14 @@
     <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="admin" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="City1" Relationship="Self.FK_Users_Cities" FromRole="Users" ToRole="Cities" />
+    <NavigationProperty Name="comments" Relationship="Self.FK_comments_Users" FromRole="Users" ToRole="comments" />
+    <NavigationProperty Name="favBooks" Relationship="Self.FK_BooksRates_Users" FromRole="Users" ToRole="favBooks" />
     <NavigationProperty Name="GiftRequests" Relationship="Self.FK_GiftRequests_Users" FromRole="Users" ToRole="GiftRequests" />
+    <NavigationProperty Name="messages" Relationship="Self.FK_messages_Users" FromRole="Users" ToRole="messages" />
     <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
     <NavigationProperty Name="recommendtions" Relationship="Self.FK_recommendtion_Users" FromRole="Users" ToRole="recommendtion" />
     <NavigationProperty Name="UserRates" Relationship="Self.FK_UserRates_Users" FromRole="Users" ToRole="UserRates" />
     <NavigationProperty Name="UserRates1" Relationship="Self.FK_UserRates_Users1" FromRole="Users" ToRole="UserRates" />
-    <NavigationProperty Name="favBooks" Relationship="book_exchangeModel.FK_BooksRates_Users1" FromRole="User" ToRole="favBook" />
-    <NavigationProperty Name="comments" Relationship="book_exchangeModel.FK_comments_Users" FromRole="User" ToRole="comment" />
   </EntityType>
   <Association Name="FK_Users_Cities">
     <End Role="Cities" Type="Self.City" Multiplicity="0..1" />
@@ -117,6 +149,54 @@
       </Principal>
       <Dependent Role="Users">
         <PropertyRef Name="city" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_comments_Posts">
+    <End Role="Posts" Type="Self.Post" Multiplicity="0..1" />
+    <End Role="comments" Type="Self.comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="post_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_comments_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="comments" Type="Self.comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BooksRates_Posts">
+    <End Role="Posts" Type="Self.Post" Multiplicity="1" />
+    <End Role="favBooks" Type="Self.favBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="favBooks">
+        <PropertyRef Name="book_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BooksRates_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="favBooks" Type="Self.favBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="favBooks">
+        <PropertyRef Name="user_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -140,6 +220,18 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="GiftRequests">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_messages_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="messages" Type="Self.message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="messages">
         <PropertyRef Name="user_id" />
       </Dependent>
     </ReferentialConstraint>
@@ -204,10 +296,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="book_exchangeEntities1" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="book_exchangeEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="comments" EntityType="Self.comment" />
+    <EntitySet Name="favBooks" EntityType="Self.favBook" />
     <EntitySet Name="Generas" EntityType="Self.Genera" />
     <EntitySet Name="GiftRequests" EntityType="Self.GiftRequest" />
+    <EntitySet Name="messages" EntityType="Self.message" />
     <EntitySet Name="Posts" EntityType="Self.Post" />
     <EntitySet Name="PostsGeneras" EntityType="Self.PostsGenera" />
     <EntitySet Name="recommendtions" EntityType="Self.recommendtion" />
@@ -217,6 +312,22 @@
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
+    <AssociationSet Name="FK_comments_Posts" Association="Self.FK_comments_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="comments" EntitySet="comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_comments_Users" Association="Self.FK_comments_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="comments" EntitySet="comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BooksRates_Posts" Association="Self.FK_BooksRates_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="favBooks" EntitySet="favBooks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BooksRates_Users" Association="Self.FK_BooksRates_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="favBooks" EntitySet="favBooks" />
+    </AssociationSet>
     <AssociationSet Name="FK_PostsGeneras_Generas" Association="Self.FK_PostsGeneras_Generas">
       <End Role="Generas" EntitySet="Generas" />
       <End Role="PostsGeneras" EntitySet="PostsGeneras" />
@@ -224,6 +335,10 @@
     <AssociationSet Name="FK_GiftRequests_Users" Association="Self.FK_GiftRequests_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="GiftRequests" EntitySet="GiftRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_messages_Users" Association="Self.FK_messages_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="messages" EntitySet="messages" />
     </AssociationSet>
     <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
       <End Role="Users" EntitySet="Users" />
@@ -245,93 +360,5 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="UserRates" EntitySet="UserRates" />
     </AssociationSet>
-    <EntitySet Name="favBooks" EntityType="book_exchangeModel.favBook" />
-    <AssociationSet Name="FK_BooksRates_Posts1" Association="book_exchangeModel.FK_BooksRates_Posts1">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="favBook" EntitySet="favBooks" />
-    </AssociationSet>
-    <AssociationSet Name="FK_BooksRates_Users1" Association="book_exchangeModel.FK_BooksRates_Users1">
-      <End Role="User" EntitySet="Users" />
-      <End Role="favBook" EntitySet="favBooks" />
-    </AssociationSet>
-    <EntitySet Name="comments" EntityType="book_exchangeModel.comment" />
-    <AssociationSet Name="FK_comments_Posts" Association="book_exchangeModel.FK_comments_Posts">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="comment" EntitySet="comments" />
-    </AssociationSet>
-    <AssociationSet Name="FK_comments_Users" Association="book_exchangeModel.FK_comments_Users">
-      <End Role="User" EntitySet="Users" />
-      <End Role="comment" EntitySet="comments" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="favBook">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="book_id" Type="Int32" Nullable="false" />
-    <Property Name="user_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_BooksRates_Posts1" FromRole="favBook" ToRole="Post" />
-    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_BooksRates_Users1" FromRole="favBook" ToRole="User" />
-  </EntityType>
-  <Association Name="FK_BooksRates_Posts1">
-    <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="1" />
-    <End Type="book_exchangeModel.favBook" Role="favBook" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="favBook">
-        <PropertyRef Name="book_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_BooksRates_Users1">
-    <End Type="book_exchangeModel.User" Role="User" Multiplicity="1" />
-    <End Type="book_exchangeModel.favBook" Role="favBook" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="favBook">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="comment">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="user_id" Type="Int32" />
-    <Property Name="post_id" Type="Int32" />
-    <NavigationProperty Name="Post" Relationship="book_exchangeModel.FK_comments_Posts" FromRole="comment" ToRole="Post" />
-    <NavigationProperty Name="User" Relationship="book_exchangeModel.FK_comments_Users" FromRole="comment" ToRole="User" />
-    <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <Association Name="FK_comments_Posts">
-    <End Type="book_exchangeModel.Post" Role="Post" Multiplicity="0..1" />
-    <End Type="book_exchangeModel.comment" Role="comment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="comment">
-        <PropertyRef Name="post_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_comments_Users">
-    <End Type="book_exchangeModel.User" Role="User" Multiplicity="0..1" />
-    <End Type="book_exchangeModel.comment" Role="comment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="comment">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

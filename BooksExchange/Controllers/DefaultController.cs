@@ -34,7 +34,7 @@ namespace BooksExchange.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> Register(int? id, int city,string name, string email, string mobile, int[] books, string password = "", string repassword = "", HttpPostedFileBase image = null)
+        public async Task<ActionResult> Register(int? id, int city, string name, string email, string mobile, int[] books, string password = "", string repassword = "", HttpPostedFileBase image = null)
         {
             try
             {
@@ -53,19 +53,20 @@ namespace BooksExchange.Controllers
                 if (await Helpers.MobileExist(mobile.Trim()) && id == null)
                     return Json(new { code = HttpStatusCode.BadRequest, error = "mobile already exist!" });
                 if (id == null)
-                    if (await InsertData.NewUser(name, email, mobile, password, city, img, books)) {
-                        return Json(new { code = HttpStatusCode.OK});
-            }
-                else if(id != null)
-                {
-                    string token = await Helpers.GetUserTokenByID(id.Value);
-                    if (await UpdateData.UpdateUser(token, name, email, mobile, password, img))
-                        return Json(new { code = HttpStatusCode.OK });
-                    else
+                    if (await InsertData.NewUser(name, email, mobile, password, city, img, books))
                     {
-                        return Json(new { code = HttpStatusCode.BadRequest, error = "use with the email exist please try another email!" });
+                        return Json(new { code = HttpStatusCode.OK });
                     }
-                }
+                    else if (id != null)
+                    {
+                        string token = await Helpers.GetUserTokenByID(id.Value);
+                        if (await UpdateData.UpdateUser(token, name, email, mobile, password, img))
+                            return Json(new { code = HttpStatusCode.OK });
+                        else
+                        {
+                            return Json(new { code = HttpStatusCode.BadRequest, error = "use with the email exist please try another email!" });
+                        }
+                    }
                 return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
             }
             catch (Exception)
@@ -105,13 +106,13 @@ namespace BooksExchange.Controllers
                 if (id == null)
                 {
                     id = await Helpers.GetUserIDByToken(token);
-                    if(id.Value == 0)
-                    return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" }, JsonRequestBehavior.AllowGet);
+                    if (id.Value == 0)
+                        return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required" }, JsonRequestBehavior.AllowGet);
                 }
                 string token_ = await Helpers.GetUserTokenByID(id.Value);
                 if (!await Helpers.UserExist(token_))
                     return Json(new { code = HttpStatusCode.BadRequest, error = "user not found" }, JsonRequestBehavior.AllowGet);
-                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.UserInfoById(id.Value, profile)}, JsonRequestBehavior.AllowGet);
+                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.UserInfoById(id.Value, profile) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
@@ -161,5 +162,46 @@ namespace BooksExchange.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> AddMessage(string token, string description = "")
+        {
+            try
+            {
+                string img = string.Empty;
+                //if (image == null)
+                //    return Json(new { code = HttpStatusCode.BadRequest, error = "image is required!" });
+                string[] Data = { description };
+                if (Helpers.NullOrEmpty(Data))
+                    return Json(new { code = HttpStatusCode.BadRequest, error = "description is required!" });
+                if (!await Helpers.UserExist(token))
+                    return Json(new { code = HttpStatusCode.Forbidden });
+                if (await InsertData.NewMessage(description, await Helpers.GetUserIDByToken(token)))
+                {
+                    return Json(new { code = HttpStatusCode.OK });
+                }
+                else
+                    return Json(new { code = HttpStatusCode.InternalServerError, error = "something went wrong please try again!" });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        [HttpGet]
+        public async Task<ActionResult> getMessages()
+        {
+            try
+            {
+                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetMessages() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
-}
+    }

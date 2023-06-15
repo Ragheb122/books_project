@@ -136,6 +136,41 @@ namespace BooksExchange
                 throw;
             }
         }
+        static public async Task<object> GetMessages()
+        {
+            try
+            {
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    List<message> messages = await db.messages.ToListAsync();
+                    List<object> Obj = new List<object>();
+                    foreach (message item in messages)
+                    {
+                        if (item != null)
+                        {
+                            User u = await db.Users.Where(o => o.id == item.user_id).FirstOrDefaultAsync();
+                            object temp = new
+                            {
+                                id = item.id,
+                                userName = u.name,
+                                message = item.message1,
+                                image = u.image,
+                                userID = item.user_id,
+                                token = u.token
+                            };
+                            if (!Obj.Contains(temp))
+                                Obj.Add(temp);
+                        }
+                    }
+                    return Obj;
+
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
 
         static public async Task<object> GetPostByID(int id)
