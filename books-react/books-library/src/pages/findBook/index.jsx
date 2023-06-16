@@ -126,21 +126,23 @@ if (description2.charAt(lastCharacterIndex2) === '.'){
               value={userInput}
               onChange={event => setUserInput(event.target.value)}
             />
-      
+            <div>
             <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-outline-primary" onClick={generateDescription}>Generate Description</button>
+            </div>
+            <div>
             <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-outline-primary" onClick={generateBook}>suggest book according to messages</button>
-
+            </div>
             {isLoading ?(
               <LoadingBooks parameter = {message}/>
             ):
             <div id="result">
-              <p><b>A recommended book according to your input:</b></p>
+              <p><b>A recommended book according to your input </b></p>
               <p>{first_message}</p>
               <p>{description === "please insert input"? 
               description
               : <a href={link}>{link}</a>}</p>
               <hr></hr>
-              <p><b>A recommended book according to your messages:</b></p>
+              <p><b>A recommended book according to your messages</b></p>
               <p>{first_message2}</p>
 
               <p><a href={link2}>{link2}</a></p>
