@@ -177,7 +177,7 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                     "open link"
                     : myBooks
                     ? "Mark as given"
-                    : "Start chat"}
+                    : "Chat via whatsapp"}
                 </span>
               </button>
             </div>

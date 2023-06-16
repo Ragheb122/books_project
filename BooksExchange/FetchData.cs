@@ -114,6 +114,9 @@ namespace BooksExchange
                         if (item != null)
                         {
                             User u = await db.Users.Where(o => o.id == item.user_id).FirstOrDefaultAsync();
+                            DateTime now = (DateTime)item.created_at;
+                            string formattedDate = now.ToString("MM/dd/yyyy HH:mm");
+
                             object temp = new
                             {
                                 id = item.id,
@@ -121,7 +124,8 @@ namespace BooksExchange
                                 description = item.description,
                                 image = u.image,
                                 userID = item.user_id,
-                                postID = item.post_id
+                                postID = item.post_id,
+                                time = formattedDate
                             };
                             if (!Obj.Contains(temp))
                                 Obj.Add(temp);
@@ -144,10 +148,15 @@ namespace BooksExchange
                 {
                     List<message> messages = await db.messages.ToListAsync();
                     List<object> Obj = new List<object>();
+
                     foreach (message item in messages)
                     {
                         if (item != null)
                         {
+                            DateTime now = (DateTime)item.created_at;
+                            string formattedDate = now.ToString("MM/dd/yyyy HH:mm");
+
+
                             User u = await db.Users.Where(o => o.id == item.user_id).FirstOrDefaultAsync();
                             object temp = new
                             {
@@ -156,10 +165,54 @@ namespace BooksExchange
                                 message = item.message1,
                                 image = u.image,
                                 userID = item.user_id,
-                                token = u.token
+                                token = u.token,
+                                time = formattedDate
+
                             };
                             if (!Obj.Contains(temp))
                                 Obj.Add(temp);
+                        }
+                    }
+                    return Obj;
+
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        static public async Task<object> GetMessagesOfUser(string token)
+        {
+            try
+            {
+                using (book_exchangeEntities db = new book_exchangeEntities())
+                {
+                    User u = await db.Users.Where(o => o.token == token).FirstOrDefaultAsync();
+                    int ID = await Helpers.GetUserIDByToken(token);
+                    List<message> messages = await db.messages.ToListAsync();
+                    List<object> Obj = new List<object>();
+
+                    foreach (message item in messages)
+                    {
+                        if (item != null)
+                        {
+                            DateTime now = (DateTime)item.created_at;
+                            string formattedDate = now.ToString("MM/dd/yyyy HH:mm");
+                            if (item.user_id == ID) {
+                                object temp = new
+                                {
+                                    id = item.id,
+                                    userName = u.name,
+                                    message = item.message1,
+                                    image = u.image,
+                                    userID = item.user_id,
+                                    token = u.token,
+                                    time = formattedDate
+                                };
+                                if (!Obj.Contains(temp))
+                                    Obj.Add(temp);
+                            }
                         }
                     }
                     return Obj;

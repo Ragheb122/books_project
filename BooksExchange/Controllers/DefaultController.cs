@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using BooksExchange.Models;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using System.Reflection.Emit;
 
 namespace BooksExchange.Controllers
 {
@@ -196,6 +197,19 @@ namespace BooksExchange.Controllers
             try
             {
                 return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetMessages() }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult> getMessagesPerUser(string token)
+        {
+            try
+            {
+                return Json(new { code = HttpStatusCode.OK, Data = await FetchData.GetMessagesOfUser(token) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {

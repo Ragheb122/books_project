@@ -123,6 +123,7 @@ namespace BooksExchange
                         user_id = user_id,
                         image = u.image,
                         post_id=post_id,
+                        created_at = DateTime.Now,
                     };
                     db.comments.Add(com);
                     if (await db.SaveChangesAsync() > 0)
@@ -144,10 +145,13 @@ namespace BooksExchange
                 using (book_exchangeEntities db = new book_exchangeEntities())
                 {
                     User u = await db.Users.Where(o => o.id == user_id).FirstOrDefaultAsync();
+                    DateTime now = DateTime.Now;
+                    string formattedDate = now.ToString("MM/dd/yyyy HH:mm");
                     message com = new message()
                     {
                         message1 = description,
                         user_id = user_id,
+                        created_at = now,
                     };
                     db.messages.Add(com);
                     if (await db.SaveChangesAsync() > 0)

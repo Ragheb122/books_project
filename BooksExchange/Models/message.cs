@@ -17,6 +17,7 @@ namespace BooksExchange.Models
         public int id { get; set; }
         public Nullable<int> user_id { get; set; }
         public string message1 { get; set; }
+        public Nullable<System.DateTime> created_at { get; set; }
     
         public virtual User User { get; set; }
     }

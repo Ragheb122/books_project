@@ -5,7 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4396b645-cece-47b6-88cc-1e427b4fd6b8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/0c033a30-423f-44f4-99b6-e625bee2c036.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/0fad5ff5-a265-49c5-a2e6-e101ff41f8f2.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/a05c389f-682b-45ca-811b-2348e2885e07.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/004.testlog" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/004.testlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll.config" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/FetchData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/FetchData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/InsertData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/InsertData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/Models/Model1.edmx" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Models/Model1.edmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/Models/comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Models/comment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/Models/message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Models/message.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.Designer.cs.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.Designer.cs.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.cs.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.cs.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/edmxResourcesToEmbed/Models/Model1.csdl" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/edmxResourcesToEmbed/Models/Model1.csdl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/edmxResourcesToEmbed/Models/Model1.msl" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/edmxResourcesToEmbed/Models/Model1.msl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/edmxResourcesToEmbed/Models/Model1.ssdl" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/edmxResourcesToEmbed/Models/Model1.ssdl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatgpt.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatgpt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/components/ChatBox/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/components/ChatBox/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/pages/Book/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/pages/Book/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,5 +90,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/chatgpt.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

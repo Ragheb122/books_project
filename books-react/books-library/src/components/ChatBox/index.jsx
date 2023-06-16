@@ -29,7 +29,7 @@ const ChatBox = () => {
                 description: newMessage,
                 image: data?.Data?.image,
                 userName: data?.Data?.userName,
-                date: data?.Data?.date,
+                time: data?.Data?.time,
                 messageToken: token
               };
       
@@ -38,7 +38,7 @@ const ChatBox = () => {
               setMessageCount((prevCount) => prevCount + 1); // Increment the comment count
             } else {
               // Handle the error response if needed
-              getMsg("Error Adding Comment", "error");
+              getMsg("your input is empty", "error");
             }
           })
           .catch((error) => {
@@ -59,7 +59,8 @@ const ChatBox = () => {
                 image: message?.image,
                 userName: message?.userName,
                 userID: message?.userID,
-                messageToken: message?.token
+                messageToken: message?.token,
+                time: message?.time
               }));
               setMessagesData(fetchedMessages);
             }
@@ -106,7 +107,7 @@ const ChatBox = () => {
                     {message.description}
                 </p>
                 <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
-                    00:06
+                    {message.time}
                 </p>
               </div>
               <a href={`/profile/${message?.userID}`} >
@@ -122,29 +123,23 @@ const ChatBox = () => {
               </div>
                 
               
-              ))};
+              ))}
 
               </div>
               <div className="card-footer text-muted d-flex justify-content-start align-items-center p-3">
               <Form onSubmit={handleMessageSubmit} className="d-flex flex-grow-1">
+              <Button type="submit">
+      <i class="bi bi-send"></i>
+    </Button>
     <Form.Group controlId="commentInput" className="flex-grow-1 me-2 mb-0">
       <Form.Control
         type="text"
-        placeholder="Add a comment..."
+        placeholder="add a message..."
         value={newMessage}
         onChange={handleMessageChange}
       />
     </Form.Group>
-    <Button type="submit">
-      <i class="bi bi-send"></i>
-    </Button>
   </Form>
-                <a className="ms-1 text-muted" href="#!">
-                  <i className="fas fa-paperclip"></i>
-                </a>
-                <a className="ms-3 text-muted" href="#!">
-                  <i className="fas fa-smile"></i>
-                </a>
                 <a className="ms-3" href="#!">
                   <i className="fas fa-paper-plane"></i>
                 </a>

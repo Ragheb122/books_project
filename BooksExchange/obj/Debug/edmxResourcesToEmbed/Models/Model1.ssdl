@@ -17,6 +17,7 @@
     <Property Name="user_id" Type="int" />
     <Property Name="post_id" Type="int" />
     <Property Name="image" Type="nvarchar(max)" />
+    <Property Name="created_at" Type="datetime" />
   </EntityType>
   <EntityType Name="favBooks">
     <Key>
@@ -52,6 +53,7 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="user_id" Type="int" />
     <Property Name="message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="created_at" Type="datetime" />
   </EntityType>
   <EntityType Name="Posts">
     <Key>

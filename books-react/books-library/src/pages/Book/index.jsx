@@ -35,7 +35,7 @@ const Book = () => {
     forData.append("token", token);
     forData.append("postID", id);
     forData.append("description", newComment);
-  
+
     API.post(`/posts/addcomment`, forData)
       .then(({ data }) => {
         if (data?.code === 200) {
@@ -45,7 +45,7 @@ const Book = () => {
             description: newComment,
             image: data?.Data?.image,
             userName: data?.Data?.userName,
-            date: data?.Data?.date,
+            time: data?.Data?.time,
           };
   
           setCommentsData((prevComments) => [...prevComments, newCommentData]);
@@ -75,7 +75,8 @@ const Book = () => {
             description: comment?.description,
             image: comment?.image,
             userName: comment?.userName,
-            userID: comment?.userID
+            userID: comment?.userID,
+            time: comment?.time
           }));
           setCommentsData(fetchedComments);
         }
@@ -102,7 +103,7 @@ const Book = () => {
             rate: data?.Data?.rate,
             category: data?.Data?.categories,
             userID: data?.Data?.userID,
-            userName: data?.Data?.userName
+            userName: data?.Data?.userName,
           });
         } else {
           navigate("/home");
@@ -175,7 +176,7 @@ const Book = () => {
                 className="btn btn-success mb-2 flex-center"
               >
                 <i className={`me-2 bi bi-chat-dots-fill`} />
-                <span> Start chat</span>
+                <span>Chat via whatsapp</span>
               </button>
             )}
           </div>
@@ -215,7 +216,7 @@ const Book = () => {
         </h6>
 
         <div class="d-flex align-items-center mb-2">
-        <p class="mb-0 comment-date">1.1.2022</p>
+        <p class="mb-0 comment-date"> {comment.time}</p>
 
         </div>
         <p class="mb-0">{comment.description}</p>

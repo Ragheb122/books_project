@@ -20,6 +20,7 @@
     <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Post" Relationship="Self.FK_comments_Posts" FromRole="comments" ToRole="Posts" />
     <NavigationProperty Name="User" Relationship="Self.FK_comments_Users" FromRole="comments" ToRole="Users" />
+    <Property Name="created_at" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="favBook">
     <Key>
@@ -60,6 +61,7 @@
     <Property Name="user_id" Type="Int32" />
     <Property Name="message1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.FK_messages_Users" FromRole="messages" ToRole="Users" />
+    <Property Name="created_at" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="Post">
     <Key>

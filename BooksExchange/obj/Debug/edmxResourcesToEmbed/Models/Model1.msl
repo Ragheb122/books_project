@@ -13,6 +13,7 @@
     <EntitySetMapping Name="comments">
       <EntityTypeMapping TypeName="book_exchangeModel.comment">
         <MappingFragment StoreEntitySet="comments">
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
@@ -54,6 +55,7 @@
     <EntitySetMapping Name="messages">
       <EntityTypeMapping TypeName="book_exchangeModel.message">
         <MappingFragment StoreEntitySet="messages">
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
           <ScalarProperty Name="message1" ColumnName="message" />

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="book_exchangeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="book_exchangeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cities">
           <Key>
             <PropertyRef Name="id" />
@@ -22,6 +22,7 @@
           <Property Name="user_id" Type="int" />
           <Property Name="post_id" Type="int" />
           <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="created_at" Type="datetime" />
         </EntityType>
         <EntityType Name="favBooks">
           <Key>
@@ -57,6 +58,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" />
           <Property Name="message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
@@ -340,8 +342,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="book_exchangeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -365,6 +366,7 @@
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Post" Relationship="Self.FK_comments_Posts" FromRole="comments" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="Self.FK_comments_Users" FromRole="comments" ToRole="Users" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="favBook">
           <Key>
@@ -405,6 +407,7 @@
           <Property Name="user_id" Type="Int32" />
           <Property Name="message1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_messages_Users" FromRole="messages" ToRole="Users" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -724,6 +727,7 @@
           <EntitySetMapping Name="comments">
             <EntityTypeMapping TypeName="book_exchangeModel.comment">
               <MappingFragment StoreEntitySet="comments">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
@@ -765,6 +769,7 @@
           <EntitySetMapping Name="messages">
             <EntityTypeMapping TypeName="book_exchangeModel.message">
               <MappingFragment StoreEntitySet="messages">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="message1" ColumnName="message" />
