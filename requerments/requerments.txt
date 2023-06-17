@@ -10,6 +10,7 @@ python backend:
 
 c# backend:
 	asp.net verion 4.8
+	packages list -> see in packages folder
 
 frontend:
  	node.js
