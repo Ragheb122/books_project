@@ -1,6 +1,8 @@
 # books_project
 To start the project you need to:
 
+1- download the relevant libraries from requerments.txt
+
 # to start the backend:
 1-open BookExchange.sln then go to models then to model1.edmx in the solution explorer
 
