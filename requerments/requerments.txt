@@ -1,0 +1,16 @@
+python backend:
+	libraries: 
+ 	  flask
+	  flask-cors
+	  requests
+ 	  openai
+	  numpy
+	  pandas
+          matplotlib.pyplot
+
+c# backend:
+	asp.net verion 4.8
+
+frontend:
+ 	node.js
+	

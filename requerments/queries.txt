@@ -1,0 +1,20 @@
+INSERT INTO Cities (name, created_at)
+VALUES 
+  ('City 1', '2023-06-12 19:10:56.880'),
+  ('City 2', '2023-06-12 19:10:56.880'),
+  ('City 3', '2023-06-12 19:10:56.880')
+
+INSERT INTO users (name, email, mobile, city, created_at, token, password, image, admin)
+VALUES 
+  ('Admin', 'admin@gmail.com', '1234567890', 1, '2021-06-12 19:10:56.880', 'random_token', 'admin', 'profile.jpg', 1);
+
+INSERT INTO posts (image, title, description,traded,approved, created_at, updated_at, user_id, redeemed, url)
+VALUES 
+  ('random_string1.jpg', 'The Testament', 'Description 1',0,0, '2023-06-12 19:10:56.880', '2023-06-12 19:10:56.880' ,1, 0, 'random_string1'),
+  ('random_string2.jpg', 'Wild Animus', 'Description 2',0,0, '2023-06-12 19:10:56.880', '2023-06-12 19:10:56.880', 1, 0, 'random_string2'),
+  ('random_string3.jpg', 'Timeline', 'Description 3', 0,0, '2023-06-12 19:10:56.880', '2023-06-12 19:10:56.880', 1, 0, 'random_string3'),
+  ('random_string4.jpg', 'To Kill a Mockingbird', 'Description 4', 0,0, '2023-06-12 19:10:56.880','2023-06-12 19:10:56.880', 1, 0, 'random_string4'),
+  ('random_string5.jpg', 'The Street Lawyer', 'Description 5', 0,0, '2023-06-12 19:10:56.880', '2023-06-12 19:10:56.880', 1, 0, 'random_string5');
+
+
+
