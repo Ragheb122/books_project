@@ -23,6 +23,7 @@ To start the project you need to:
 7- Now you can run the backend server
 
 8- to start the flask server for the recommendation systems
+   - open books recommendation folder
    -run chatgpt.py
 
 # now to start the frontend:
