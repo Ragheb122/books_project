@@ -10,7 +10,7 @@ To start the project you need to:
 
 3- open sql server managment then create new data base, name it book_exchange.
 
-4- create new query and paste on it the copied string and then execute the query and run the queries that is in quiries.txt.
+4- create new query and paste on it the copied string and then execute the query and run the queries that is in requerments -> quiries.txt to get the main needed data to use in the web.
 
 5- Open web.config file and go to the connectionstring section. Change data source=DESKTOP-BPQ03DC to the source of your SQL Server.
 ![connect (1)](https://github.com/yousefm3/books_project/assets/96112309/a49bdf34-6bc0-425b-870a-627a10c211d3)
