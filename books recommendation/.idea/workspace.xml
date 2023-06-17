@@ -5,8 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4396b645-cece-47b6-88cc-1e427b4fd6b8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/ae79325f-20c5-4fb7-9bd6-f21c7c4a7104.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/b8dbd0f6-2f0a-44f2-8c1a-06c0cabb6891.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/FileContentIndex/ceec8be2-9d57-462b-8426-134107233565.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/004.testlog" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/BooksExchange/v17/TestStore/0/004.testlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.UnitTests.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll.config" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.dll.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/bin/Debug/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange.UnitTests/obj/Debug/BooksExchange.UnitTests.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/FetchData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/FetchData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/Models/Model1.edmx.diagram" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Models/Model1.edmx.diagram" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/Web.config" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/Web.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll.config" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.dll.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/bin/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/BooksExchange.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.Designer.cs.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.Designer.cs.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.cs.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../BooksExchange/obj/Debug/TempPE/Models.Model1.cs.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books-react/books-library/src/pages/findBook/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../books-react/books-library/src/pages/findBook/index.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

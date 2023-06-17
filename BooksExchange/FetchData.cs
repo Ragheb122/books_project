@@ -591,7 +591,6 @@ namespace BooksExchange
                 {
                     List<recommendtion> r = await db.recommendtions.Where(o => o.user_id == id).ToListAsync();
                     List<object> results = new List<object>();
-                    List<string> booksNames = new List<string>();
                     List<object> posts = await FetchData.GetPosts();
                     List<string> poststitlesList = posts.Select(obj => obj.GetType().GetProperty("title").GetValue(obj, null).ToString()).ToList();
                     foreach (recommendtion item in r)
@@ -606,12 +605,13 @@ namespace BooksExchange
                             // t1 is recommended Book's title
                             string t1 = (string)t.GetType().GetProperty("title").GetValue(t, null).ToString();
                             // t1 is recommended Book's relevant post ID
+                            
                             int t_PostID = (int)t.GetType().GetProperty("id").GetValue(t, null);
                             if (t1 == item.title)
                             {
                                 found = true;
                                 relevantPostID = t_PostID;
-                                    relevantUrl = "http://localhost:3000/book/" + relevantPostID;
+                                relevantUrl = "http://localhost:3000/book/" + relevantPostID;
                             }
                         }
                             object rate = new { rate = 0, amount = 0 };

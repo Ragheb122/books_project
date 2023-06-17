@@ -14,14 +14,12 @@ function BookDescriptionGenerator() {
 
   // State for user input
   const [userInput, setUserInput] = useState('');
-  const [userInput2, setUserInput2] = useState('');
 
   // State for loading spinner visibility
   const [isLoading, setIsLoading] = useState(false);
 
   // State for generated description
   const [description, setDescription] = useState('');
-  const [description2, setDescription2] = useState('');
 
   useEffect(() => {
     // Call the getMessagesPython function only once when the component mounts
@@ -57,12 +55,12 @@ function BookDescriptionGenerator() {
       // Hide loading spinner
       setIsLoading(false);
       // Set the generated description
-      setDescription2(data.description);
+      setDescription(data.description);
     } catch (error) {
       // Hide loading spinner
       setIsLoading(false);
       // Display error message
-      setDescription2('Error: ' + error);
+      setDescription('Error: ' + error);
     }
   };
 
@@ -104,13 +102,6 @@ var link = description.substring(linkStartIndex, lastCharacterIndex+1);
 if (description.charAt(lastCharacterIndex) === '.'){
   link = description.substring(linkStartIndex, lastCharacterIndex);
 }
-const linkStartIndex2 = description2.indexOf('http://');
-const first_message2 = description2.substring(0, linkStartIndex2);
-const lastCharacterIndex2 = description2.length-1;
-var link2 = description2.substring(linkStartIndex2, lastCharacterIndex2+1);
-if (description2.charAt(lastCharacterIndex2) === '.'){
-  link2 = description2.substring(linkStartIndex2, lastCharacterIndex2);
-}
   return (
     
     <Layout>
@@ -136,16 +127,11 @@ if (description2.charAt(lastCharacterIndex2) === '.'){
               <LoadingBooks parameter = {message}/>
             ):
             <div id="result">
-              <p><b>A recommended book according to your input </b></p>
               <p>{first_message}</p>
               <p>{description === "please insert input"? 
               description
               : <a href={link}>{link}</a>}</p>
               <hr></hr>
-              <p><b>A recommended book according to your messages</b></p>
-              <p>{first_message2}</p>
-
-              <p><a href={link2}>{link2}</a></p>
 
             </div>
             
