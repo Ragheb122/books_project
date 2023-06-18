@@ -24,8 +24,6 @@ ratings_with_name.drop(columns=["ISBN", "Image-URL-S", "Image-URL-M"], axis=1, i
 # Merge complete rating data with user information, dropping the 'Age' column
 complete_df = ratings_with_name.merge(users.drop("Age", axis=1), on="User-ID")
 
-# Extract the last part of the 'Location' column and remove leading/trailing whitespaces
-complete_df['Location'] = complete_df['Location'].str.split(',').str[-1].str.strip()
 
 # Calculate average ratings per book
 avg_rating_df = complete_df.groupby('Book-Title').mean()['Book-Rating'].reset_index()

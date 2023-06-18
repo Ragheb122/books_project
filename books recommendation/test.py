@@ -12,7 +12,6 @@ ratings = pd.read_csv("Ratings.csv")
 ratings_with_name = ratings.merge(books,on='ISBN')
 ratings_with_name.drop(columns=["ISBN","Image-URL-S","Image-URL-M"],axis=1,inplace=True)
 complete_df = ratings_with_name.merge(users.drop("Age", axis=1), on="User-ID")
-complete_df['Location'] = complete_df['Location'].str.split(',').str[-1].str.strip()
 
 
 avg_rating_df = complete_df.groupby('Book-Title').mean()['Book-Rating'].reset_index()

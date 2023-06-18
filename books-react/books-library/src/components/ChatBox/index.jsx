@@ -98,7 +98,7 @@ const ChatBox = () => {
                   <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: '#f5f6f7' }}>
                     {message.description}
                   </p>
-                  <p className="small ms-3 mb-3 rounded-3 text-muted">00:11</p>
+                  <p className="small ms-3 mb-3 rounded-3 text-muted">{message.time}</p>
                 </div>
               </div>) :
               (<div class="d-flex flex-row justify-content-end mb-4 pt-1">
