@@ -115,12 +115,12 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                 className="cu-pointer text-decoration-none"
               >
                 <div className="top">
-                  <h5 className="text-dark">{data.name?.length > 30
-                  ?`${data.name?.slice(0, 30)}...`
+                  <h5 className="text-dark">{data.name?.length > 15
+                  ?`${data.name?.slice(0, 10)}...`
                   : data.name}</h5>
                   <p className="text-muted" style={{ wordBreak: "break-all" }}>
-                    {data.description?.length > 50
-                      ? `${data.description?.slice(0, 50)}...`
+                    {data.description?.length > 10
+                      ? `${data.description?.slice(0, 10)}...`
                       : data.description}
                   </p>
                 </div>
@@ -132,7 +132,7 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
                 ""
               ) : data.traded ? (
                 <div className="trade-paper text-danger mb-3 fw-bold">
-                  Trade
+                  Not Available
                 </div>
               ) : (
                 <div className="trade-paper text-success mb-3 fw-bold">
@@ -172,9 +172,9 @@ const BookCard = ({ data, myBooks, getPosts, staticBooks }) => {
 
                 <span>
                   {staticBooks && data.is_found?
-                     "Go To relevant post"
+                     "Relevant Post"
                     :staticBooks?
-                    "open link"
+                    "Amazon Link"
                     : myBooks
                     ? "Mark as given"
                     : "Chat via whatsapp"}

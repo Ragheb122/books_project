@@ -149,7 +149,7 @@ const Book = () => {
                         <p>
               <span>Category:</span>
 
-              <span className="d-block">{bookData.category}</span>
+              <span className="d-block">{bookData?.category}</span>
             </p>
               <p className="text-muted">
               <span>Owner: </span>
@@ -167,7 +167,7 @@ const Book = () => {
                 onClick={() => window.open(bookData.url)}
                 className="btn btn-success mb-2 flex-center"
               >
-                <span>Open Link</span>
+                <span>Amazon Link</span>
               </button>
             ) : (
               <button

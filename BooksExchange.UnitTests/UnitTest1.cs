@@ -86,7 +86,6 @@ public class DefaultControllerTests
         var token = "FJw4qfEExm17U78FA3c1QBmXdt7HJ37BvZCFFKn4UIalt8C7HXm9TJ2E5EnPZ3mx";
         var genera = new int[]{ };
         var description = "book15";
-
         // Act
         var result = await controller.AddPost(title,token,genera,description,null) as JsonResult;
 

@@ -280,14 +280,6 @@ const Accounts = () => {
             {}
           </ButtonGroup>
 
-          <Button
-            onClick={() => openModal(0)}
-            variant="primary"
-            className="flex-center text-white"
-          >
-            <span className="me-1">Add</span>
-            <AiOutlinePlus size={20} />
-          </Button>
         </div>
       )}
     >

@@ -69,12 +69,17 @@ namespace BooksExchange
             {
                 using (book_exchangeEntities db = new book_exchangeEntities())
                 {
+                    string image = "http://localhost:1338/" + img;
+                    if (img == null)
+                    {
+                        image = "http://localhost:1338//images/הורדה.jpg";
+                    }
                     Post post = new Post()
                     {
                         title = title,
                         description = description,
                         user_id = id,
-                        image = "http://localhost:1338/" + img,
+                        image = image,
                         created_at = DateTime.Now,
                         updated_at = DateTime.Now,
                         approved = true

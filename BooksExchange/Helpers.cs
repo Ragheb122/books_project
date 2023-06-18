@@ -362,20 +362,7 @@ namespace BooksExchange
                                 relevantPostID = t_PostID;
                             }
                         }
-                        object temp = new
-                        {
-                            relevantPost = relevantPostID,
-                            id = book.ISBN,
-                            isFound = found,
-                            title = book.Title,
-                            image = book.image,
-                            description = "Author:" + Environment.NewLine + book.Author + Environment.NewLine
-                            + "ISBN:" + Environment.NewLine + book.ISBN,
-                            traded = false,
-                            url = "-",
-                            rate = rate
-                        };
-
+                        int user_ID = await GetUserIDByToken(token);
                         recommendtion r = new recommendtion()
                         {
                             relevantPost = relevantPostID,
@@ -385,13 +372,13 @@ namespace BooksExchange
                             image = book.image,
                             title = book.Title,
                             url = book.image,
-                            user_id = await GetUserIDByToken(token)
+                            user_id = user_ID
                         };
-                        db.recommendtions.Add(r);
-                        string newName = (string)temp.GetType().GetProperty("title").GetValue(temp, null);
-                        if (!data.Contains(temp))
-                            booksNames.Add(newName);
-                            data.Add(temp);
+                        if (!db.recommendtions.Any(o => o.user_id == user_ID && o.title == r.title))
+                        {
+                            db.recommendtions.Add(r);
+                        }
+
                     }
                     await db.SaveChangesAsync();
                     return 1;

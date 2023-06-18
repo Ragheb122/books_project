@@ -105,7 +105,7 @@ namespace BooksExchange.Controllers
                 //if (image == null)
                 //    return Json(new { code = HttpStatusCode.BadRequest, error = "image is required!" });
                 string[] Data = { title, description };
-                if (Helpers.NullOrEmpty(Data))
+                if (Helpers.NullOrEmpty(Data) || genera == null)
                     return Json(new { code = HttpStatusCode.BadRequest, error = "all fields are required!" });
                 if (!await Helpers.UserExist(token))
                     return Json(new { code = HttpStatusCode.Forbidden });

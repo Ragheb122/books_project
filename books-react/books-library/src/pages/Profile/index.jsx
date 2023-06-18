@@ -41,7 +41,7 @@ const Profile = () => {
   );
   const [profileImg, setProfileImg] = useState({});
   const [defaultRate, setDefailtRate] = useState({});
-  const [rateBook, setRateBook] = useState(0);
+  const [rateBook, setRate] = useState(0);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -59,7 +59,7 @@ const Profile = () => {
         .then(({ data }) => {
           if (data?.code == 200) {
             setLocation(data?.Data?.location);
-            setRateBook(data?.Data?.rate);
+            setRate(data?.Data?.rate);
             setDefailtRate(data?.Data?.rate);
             setUserId(data?.Data?.userID);
             setName(data?.Data?.name);
@@ -131,7 +131,7 @@ const Profile = () => {
   };
 
   const handelClick = (rate) => {
-    setRateBook(rate);
+    setRate(rate);
 
     const token = cookie.load("token");
     const formData = new FormData();

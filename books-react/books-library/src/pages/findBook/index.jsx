@@ -118,10 +118,10 @@ if (description.charAt(lastCharacterIndex) === '.'){
               onChange={event => setUserInput(event.target.value)}
             />
             <div>
-            <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-outline-primary" onClick={generateDescription}>Generate Description</button>
+            <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-outline-primary" onClick={generateDescription}>Find a relevant book</button>
             </div>
             <div>
-            <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-outline-primary" onClick={generateBook}>suggest book according to messages</button>
+            <button id="generate-btn" class="mt-3 mx-auto d-block btn btn-outline-primary" onClick={generateBook}>Advanced AI driven suggestion</button>
             </div>
             {isLoading ?(
               <LoadingBooks parameter = {message}/>
