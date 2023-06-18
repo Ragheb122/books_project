@@ -92,10 +92,6 @@ if __name__ == '__main__':
     if len(sys.argv) < 4:
         print("Usage: python main.py <Books_CSV_Path> <Users_CSV_Path> <Ratings_CSV_Path> [additional_args...]")
         sys.exit(1)
-    books_csv_path = sys.argv[1]
-    users_csv_path = sys.argv[2]
-    ratings_csv_path = sys.argv[3]
-    additional_args = sys.argv[4:]
     if len(additional_args) == 0:
         books_data = pd.read_csv(sys.argv[1])
         ratings_data = pd.read_csv(sys.argv[3])
@@ -114,7 +110,6 @@ if __name__ == '__main__':
             book_name = row['Book-Title']
             book_author = row['Book-Author']
             image_url = row['Image-URL-M']
-            print([book_ISBN, book_name, book_author, image_url])
 
         # Print the book and image pairs in the array
     # Read the CSV files into DataFrames
