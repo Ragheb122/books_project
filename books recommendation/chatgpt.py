@@ -12,7 +12,7 @@ CORS(app)
 # ]
 
 # Set up OpenAI API credentials
-openai.api_key = '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'
+openai.api_key = ''
 
 # Define a route for the root URL
 @app.route('/')
